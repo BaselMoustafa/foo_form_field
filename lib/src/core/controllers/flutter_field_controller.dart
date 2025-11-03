@@ -1,18 +1,27 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 
 class FlutterFieldController<T> extends ChangeNotifier {
   
-  T? _value;
+  T? get value => _formFieldState.value;
 
-  T? get value => _value;
+  late final FormFieldState<T> _formFieldState;
+
+  void setFormFieldState(FormFieldState<T> formFieldState){
+    this._formFieldState = formFieldState;
+  }
 
   set value(T? value) {
-    _value = value;
+    _formFieldState.didChange(value);
     notifyListeners();
   }
   
   void clear(){
-    _value = null;
+    _formFieldState.didChange(null);
+    notifyListeners();
+  }
+
+  void validate(){
+    _formFieldState.validate();
     notifyListeners();
   }
   
