@@ -196,7 +196,8 @@ class IntTextFormField extends StatelessWidget {
       stylusHandwritingEnabled: stylusHandwritingEnabled,
       canRequestFocus: canRequestFocus,
       keyboardType: TextInputType.numberWithOptions(
-        signed: true,
+        signed: _effectiveFormatter.allowNegative,
+        decimal: false,
       ),
       inputFormatters: [
         _effectiveFormatter,

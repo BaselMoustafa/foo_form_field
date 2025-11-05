@@ -21,7 +21,21 @@ class IntegerTextInputFormatter extends FooTextInputFormatter {
     }
   }
 
-  int? get _effectiveMaxLength => maxLength==null? null: maxLength!+(allowNegative ? 1 : 0);
+  int? _effectiveMaxLength(String value) {
+    if (maxLength==null) {
+      return null;
+    }
+
+    if (! allowNegative) {
+      return maxLength!;
+    }
+
+    if (value.isNotEmpty && value[0]=='-') {
+      return maxLength!+1;
+    }
+
+    return maxLength!;
+  }
 
   @override
   String? canWrite(String value) {
@@ -29,7 +43,7 @@ class IntegerTextInputFormatter extends FooTextInputFormatter {
       return containsNonIntegerMessage;
     }
 
-    if(_effectiveMaxLength!=null && value.length > _effectiveMaxLength!){
+    if(_effectiveMaxLength(value)!=null && value.length > _effectiveMaxLength(value)!){
       return exceedMaxLengthMessage;
     }
 

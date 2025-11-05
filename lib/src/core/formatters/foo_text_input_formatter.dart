@@ -10,7 +10,6 @@ abstract class FooTextInputFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-
     if (canWrite(newValue.text) == null) {
       return newValue;
     }
