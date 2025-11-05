@@ -19,7 +19,6 @@ class FieldWithErrorTextWidget extends StatelessWidget {
       children: [
 
         fieldWidget,
-        
         ErrorTextWidget(
           errorText: errorText, 
           style: errorTextStyle,
