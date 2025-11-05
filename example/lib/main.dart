@@ -13,6 +13,8 @@ class MyApp extends StatelessWidget {
       
       home: const TestScreen(),
       theme: ThemeData(
+        disabledColor: Colors.brown,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.transparent,primary: Colors.blueAccent,secondary:  Colors.black),
         inputDecorationTheme: InputDecorationTheme(
           errorStyle: TextStyle(
             color: Colors.red,

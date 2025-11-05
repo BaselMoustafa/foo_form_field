@@ -30,7 +30,7 @@ class _TestScreenState extends State<TestScreen> {
               
               BooleanFormField(
                 controller: _controller,
-                yesText: 'Antch YesAntch YesAntch YesAntch Yes esAntch YesAntch Y',
+                yesText: 'Antch YesAntch YesAnt',
                 noText: 'Antch No',
                 validator: (value) {
                   log("On Validated =====> $value");

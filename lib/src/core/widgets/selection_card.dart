@@ -15,8 +15,10 @@ class SelectionCard extends StatelessWidget {
     this.height, 
     this.width, 
     this.defaultTextStyle,
+    this.enabled = true,
   });
 
+  final bool enabled;
   final EdgeInsetsGeometry? padding;
   final BorderRadiusGeometry? borderRadius;
   final Border? border;
@@ -32,20 +34,21 @@ class SelectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTextStyle(
       style: defaultTextStyle?? TextStyle(
-        color: isSelected ? Colors.white : PackageColors.primary(context),
+        color: isSelected ? Colors.white : _effectiveColor(context),
       ),
       child: GestureDetector(
-        onTap: onTap,
-        child: Container(
+        onTap: enabled? onTap: null,
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 300),
           alignment: Alignment.center,
           height: height,
           width: width,
           padding: padding?? EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           decoration: BoxDecoration(
             borderRadius: borderRadius?? BorderRadius.circular(10),
-            color: color?? (isSelected ? PackageColors.primary(context) : PackageColors.transparent),
+            color: color?? (isSelected ? _effectiveColor(context) : PackageColors.transparent),
             border: border?? Border.all(
-              color: PackageColors.primary(context),
+              color: _effectiveColor(context),
             ),
           ),
           child: child,
@@ -53,4 +56,6 @@ class SelectionCard extends StatelessWidget {
       ),
     );
   }
+
+  Color _effectiveColor(BuildContext context) => enabled? (color??PackageColors.primary(context)) : PackageColors.disabled(context);
 }

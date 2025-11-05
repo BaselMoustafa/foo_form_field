@@ -79,21 +79,19 @@ class _BooleanFormFieldState extends State<BooleanFormField> {
   Widget _builder(BuildContext context, bool enabled, bool? value , String? errorText){
     return FieldWithErrorTextWidget(
       errorText: errorText,
-      fieldWidget: widget.builder!=null? widget.builder!(context, enabled, value): IntrinsicHeight(
-        child: Row(
-          spacing: 10,
-          children: [
-            _ActionButton(
-              state: this, 
-              isYesButton: true,
-            ),
-        
-            _ActionButton(
-              state: this, 
-              isYesButton: false,
-            ),
-          ],
-        ),
+      fieldWidget: widget.builder!=null? widget.builder!(context, enabled, value): Row(
+        spacing: 6,
+        children: [
+          _ActionButton(
+            state: this, 
+            isYesButton: true,
+          ),
+      
+          _ActionButton(
+            state: this, 
+            isYesButton: false,
+          ),
+        ],
       ),
     );
   }
@@ -110,19 +108,12 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          minWidth: 70,
-          minHeight: 40,
-        ),
-        child: SelectionCard(
-          onTap: _onTap, 
-          isSelected: state._controller.value == isYesButton, 
-          child: Text(
-            isYesButton ? state.widget.yesText : state.widget.noText
-          ),
-        ),
+    return SelectionCard(
+      enabled: state._controller.enabled,
+      onTap: _onTap, 
+      isSelected: state._controller.value == isYesButton, 
+      child: Text(
+        isYesButton ? state.widget.yesText : state.widget.noText
       ),
     );
   }
