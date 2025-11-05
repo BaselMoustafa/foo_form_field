@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foo_form_field/src/core/controllers/foo_field_controller.dart';
+import 'package:foo_form_field/src/core/widgets/field_with_error_text_widget.dart';
 import 'package:foo_form_field/src/form_fields/base/foo_form_field.dart';
 
 class BooleanFormField extends StatefulWidget {
@@ -17,7 +18,7 @@ class BooleanFormField extends StatefulWidget {
   });
 
   final FooFieldController<bool>? controller;
-  final Widget Function(BuildContext context, bool? value , String? errorText)? builder;
+  final Widget Function(BuildContext context, bool enabled, bool? value , String? errorText)? builder;
   final void Function(bool? value)? onSaved;
   final String? Function(bool? value)? validator;
   final AutovalidateMode? autovalidateMode;
@@ -65,45 +66,55 @@ class _BooleanFormFieldState extends State<BooleanFormField> {
       forceErrorText: widget.forceErrorText,
       restorationId: widget.restorationId,
       onChanged: widget.onChanged,
-      builder: widget.builder ?? (BuildContext context, bool? value, String? errorText){
-        return Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                if (_controller.value == true) {
-                  _controller.value = null;
-                }else{
-                  _controller.value = true;
-                }
-                widget.onChanged?.call(_controller.value);
-              },
-              child: Container(
-                width: 100,
-                height: 20,
-                color: value==null|| !_controller.value!? Colors.grey:Colors.green,
-                child: Text("Yes"),
-              ),
-            ),
-
-            GestureDetector(
-              onTap: () {
-                if (_controller.value == false) {
-                  _controller.value = null;
-                }else{
-                  _controller.value = false;
-                }
-                widget.onChanged?.call(_controller.value);
-              },
-              child: Container(
-                width: 100,
-                height: 20,
-                color: value==null|| _controller.value!? Colors.grey:Colors.green,
-                child: Text("No"),
-              ),
-            ),
-
-
-          ],
+      builder: widget.builder ?? (BuildContext context, bool enabled, bool? value, String? errorText){
+        if(!enabled){
+          return Container(
+            width: 100,
+            height: 20,
+            color: Colors.grey,
+            child: Text("Disabled Now"),
+          );
+        }
+        return FieldWithErrorTextWidget(
+          errorText: errorText,
+          fieldWidget: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (_controller.value == true) {
+                      _controller.value = null;
+                    }else{
+                      _controller.value = true;
+                    }
+                    widget.onChanged?.call(_controller.value);
+                  },
+                  child: Container(
+                    width: 100,
+                    height: 20,
+                    color: value==null|| !_controller.value!? Colors.grey:Colors.green,
+                    child: Text("Yes"),
+                  ),
+                ),
+            
+                GestureDetector(
+                  onTap: () {
+                    if (_controller.value == false) {
+                      _controller.value = null;
+                    }else{
+                      _controller.value = false;
+                    }
+                    widget.onChanged?.call(_controller.value);
+                  },
+                  child: Container(
+                    width: 100,
+                    height: 20,
+                    color: value==null|| _controller.value!? Colors.grey:Colors.green,
+                    child: Text("No"),
+                  ),
+                ),
+              ],
+            ), 
+          
         );
       },
     );

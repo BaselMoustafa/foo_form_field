@@ -10,7 +10,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       home: const TestScreen(),
+      theme: ThemeData(
+        c
+        inputDecorationTheme: InputDecorationTheme(
+          errorStyle: TextStyle(
+            color: Colors.red,
+            fontSize: 24
+          ),
+        )
+      ),
     );
   }
 }

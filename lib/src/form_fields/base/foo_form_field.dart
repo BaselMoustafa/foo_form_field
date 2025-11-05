@@ -17,7 +17,7 @@ class FooFormField<T> extends StatefulWidget {
   });
 
   final FooFieldController<T>? controller;
-  final Widget Function(BuildContext context, T? value , String? errorText) builder;
+  final Widget Function(BuildContext context,bool enabled ,T? value , String? errorText) builder;
   final void Function(T? value)? onSaved;
   final String? Function(T? value)? validator;
   final AutovalidateMode? autovalidateMode;
@@ -67,15 +67,17 @@ class _FooFormFieldState<T> extends State<FooFormField<T>> {
   }
 
   void _notifyChangeInValue(){
-    widget.onChanged?.call(controller.value);
     setState(() {});
+    if(controller.enabled){
+      widget.onChanged?.call(controller.value);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return FormField<T>(
       key: _formFieldKey,
-      builder: (field) => widget.builder(context, field.value, field.errorText),
+      builder: (field) => widget.builder(context, controller.enabled, field.value, field.errorText),
       onSaved: widget.onSaved,
       validator: widget.validator,
       errorBuilder: widget.errorBuilder,
