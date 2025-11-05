@@ -13,7 +13,6 @@ class MyApp extends StatelessWidget {
       
       home: const TestScreen(),
       theme: ThemeData(
-        c
         inputDecorationTheme: InputDecorationTheme(
           errorStyle: TextStyle(
             color: Colors.red,

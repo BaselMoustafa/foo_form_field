@@ -4,6 +4,8 @@ abstract class PackageColors {
   
   static ThemeData _themeData(BuildContext context) => Theme.of(context);
 
+  static Color transparent = Colors.transparent;
+
   static Color primary(BuildContext context){
     return _themeData(context).colorScheme.primary;
   }
