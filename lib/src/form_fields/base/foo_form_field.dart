@@ -45,7 +45,7 @@ class _FooFormFieldState<T> extends State<FooFormField<T>> {
 
   @override
   void dispose() {
-    controller.removeListener(_rebuild);
+    controller.removeListener(_notifyChangeInValue);
     if(_controllerLocallyInitialized){
       controller.dispose();
     }
@@ -62,12 +62,12 @@ class _FooFormFieldState<T> extends State<FooFormField<T>> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.setFormFieldState(_formFieldKey.currentState!);
-      controller.addListener(_rebuild);
-      widget.onChanged?.call(controller.value);
+      controller.addListener(_notifyChangeInValue);
     });
   }
 
-  void _rebuild(){
+  void _notifyChangeInValue(){
+    widget.onChanged?.call(controller.value);
     setState(() {});
   }
 

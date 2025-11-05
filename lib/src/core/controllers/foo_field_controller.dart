@@ -12,6 +12,7 @@ class FooFieldController<T> extends BaseFooFieldController<T> {
 
   void setFormFieldState(FormFieldState<T> formFieldState){
     _formFieldState = formFieldState;
+    value = _initialValue;
     notifyListeners();
   }
   
