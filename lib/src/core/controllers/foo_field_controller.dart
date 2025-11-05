@@ -1,28 +1,69 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:foo_form_field/foo_form_field.dart';
 
-class FooFieldController<T> extends ChangeNotifier {
+class FooFieldController<T> extends BaseFooFieldController<T> {
   
-  T? get value => _formFieldState.value;
+  FooFieldController([this._initialValue]);
 
-  late final FormFieldState<T> _formFieldState;
+  final T? _initialValue;
+
+  FormFieldState<T>? _formFieldState;
+
 
   void setFormFieldState(FormFieldState<T> formFieldState){
-    this._formFieldState = formFieldState;
-  }
-
-  set value(T? value) {
-    _formFieldState.didChange(value);
+    _formFieldState = formFieldState;
     notifyListeners();
   }
   
-  void clear(){
-    _formFieldState.didChange(null);
-    notifyListeners();
+  @override
+  void clear() {
+    return _excuteAfterCheckStateExistence<void>(
+      toExecute: (formFieldState) {
+        formFieldState.didChange(null);
+        notifyListeners();
+      },
+    );
+  }
+  
+  @override
+  void save() {
+    return _excuteAfterCheckStateExistence<void>(
+      toExecute: (formFieldState) {
+        formFieldState.save();
+        notifyListeners();
+      },
+    );
+  }
+  
+  @override
+  bool validate() {
+    return _excuteAfterCheckStateExistence<bool>(
+      toExecute: (formFieldState) {
+        return formFieldState.validate();
+      },
+    );
   }
 
-  void validate(){
-    _formFieldState.validate();
-    notifyListeners();
+  T? get value => _formFieldState==null? _initialValue: _formFieldState!.value;
+
+  set value(T? value) {
+    return _excuteAfterCheckStateExistence<void>(
+      toExecute: (formFieldState) {
+        formFieldState.didChange(value);
+        notifyListeners();
+      },
+    );
+  }
+
+  R _excuteAfterCheckStateExistence<R>({
+    required R Function(FormFieldState<T> formFieldState) toExecute,
+  }) {
+    if (_formFieldState == null) {
+      throw Exception(
+        "This Controller is not attached to a any Foo Form Field",
+      );
+    }
+    return toExecute(_formFieldState!);
   }
   
 }
