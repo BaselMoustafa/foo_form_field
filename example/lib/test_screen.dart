@@ -1,5 +1,7 @@
 
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:foo_form_field/foo_form_field.dart';
 class TestScreen extends StatefulWidget {
@@ -11,7 +13,7 @@ class TestScreen extends StatefulWidget {
 
 class _TestScreenState extends State<TestScreen> {
 
-  final FooFieldController<bool> _controller = FooFieldController<bool>(false);
+  final FooFieldController<String> _controller = FooFieldController<String>("Iniadnaskjdnajsk");
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -26,11 +28,9 @@ class _TestScreenState extends State<TestScreen> {
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              
-              BooleanFormField(
+              FooTextFormField(
                 controller: _controller,
-                yesText: 'Antch YesAntch YesAnt',
-                noText: 'Antch No',
+                
                 validator: (value) {
                   if (value == null) {
                     return 'This field is required This f  ';
@@ -38,11 +38,10 @@ class _TestScreenState extends State<TestScreen> {
                   return null;
                 },
                 onSaved: (value) {
+                  log("onSaved: $value");
                 },
                 onChanged: (value) {
-                  setState(() {
-                    
-                  });
+                  log("onChanged: $value");
                 },
               ),
               TextButton(
@@ -61,14 +60,14 @@ class _TestScreenState extends State<TestScreen> {
           
               TextButton(
                 onPressed: () {
-                  _controller.value = true;
+                  _controller.value = "true";
                 },
                 child: Text('Mark As True')
               ),
           
               TextButton(
                 onPressed: () {
-                  _controller.value = false;
+                  _controller.value = "false";
                 },
                 child: Text('Mark As False')
               ),

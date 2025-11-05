@@ -68,9 +68,7 @@ class _FooFormFieldState<T> extends State<FooFormField<T>> {
 
   void _notifyChangeInValue(){
     setState(() {});
-    if(controller.enabled){
-      widget.onChanged?.call(controller.value);
-    }
+    widget.onChanged?.call(controller.value);
   }
 
   @override
