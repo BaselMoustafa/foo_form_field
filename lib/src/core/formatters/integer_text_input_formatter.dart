@@ -1,3 +1,4 @@
+import 'package:foo_form_field/src/core/extentions/string_extension.dart';
 import 'package:foo_form_field/src/core/formatters/foo_text_input_formatter.dart';
 
 class IntegerTextInputFormatter extends FooTextInputFormatter {
@@ -21,46 +22,17 @@ class IntegerTextInputFormatter extends FooTextInputFormatter {
     }
   }
 
-  int? _effectiveMaxLength(String value) {
-    if (maxLength==null) {
-      return null;
-    }
-
-    if (! allowNegative) {
-      return maxLength!;
-    }
-
-    if (value.isNotEmpty && value[0]=='-') {
-      return maxLength!+1;
-    }
-
-    return maxLength!;
-  }
+  
 
   @override
   String? canWrite(String value) {
-    if (value.trim().length != value.length) {
-      return containsNonIntegerMessage;
-    }
-
-    if(_effectiveMaxLength(value)!=null && value.length > _effectiveMaxLength(value)!){
-      return exceedMaxLengthMessage;
-    }
-
-    for (var i = 0; i < value.length; i++) {
-      if (i==0 && value[i]=='-') {
-        if(!allowNegative) {
-          return invalidNegativeMessage;
-        }
-        
-        continue ;
-      }
-
-      if (int.tryParse(value[i])==null) {
-        return containsNonIntegerMessage;
-      }
-    }
-    return null;
+    return value.canBeIntText(
+      allowNegative: allowNegative,
+      maxLength: maxLength,
+      invalidNegativeMessage: invalidNegativeMessage,
+      containsNonIntegerMessage: containsNonIntegerMessage,
+      exceedMaxLengthMessage: exceedMaxLengthMessage,
+    );
   }
 
   @override
