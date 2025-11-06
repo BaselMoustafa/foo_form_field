@@ -1,15 +1,17 @@
 
 import 'dart:ui';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:foo_form_field/foo_form_field.dart';
+import 'package:foo_form_field/src/core/controllers/foo_text_editing_controller.dart';
+import 'package:foo_form_field/src/core/extentions/foo_text_input_formatter_list_extension.dart';
+import 'package:foo_form_field/src/core/formatters/foo_text_input_formatter.dart';
 
-class FooTextFormField extends StatefulWidget {
+class FooTextFormField<O> extends StatefulWidget {
 
   const FooTextFormField({
     required this.controller,
+    this.fooInputFormatters = const [],
     super.key,
     this.groupId = EditableText,
     this.focusNode,
@@ -82,8 +84,10 @@ class FooTextFormField extends StatefulWidget {
 
   // ─── Final Fields ────────────────────────────────────────────────────────────────
 
-  final ValueFieldController<String> controller;
+  final FooTextEditingController<O> controller;
+  final List<FooTextInputFormatter> fooInputFormatters;
 
+  final List<TextInputFormatter>? inputFormatters;
   final Object groupId;
   final FocusNode? focusNode;
   final String? forceErrorText;
@@ -110,17 +114,16 @@ class FooTextFormField extends StatefulWidget {
   final int? minLines;
   final bool? expands;
   final int? maxLength;
-  final void Function(String? value)? onChanged;
+  final void Function(O? value)? onChanged;
   final GestureTapCallback? onTap;
   final bool? onTapAlwaysCalled;
   final TapRegionCallback? onTapOutside;
   final TapRegionUpCallback? onTapUpOutside;
   final VoidCallback? onEditingComplete;
-  final ValueChanged<String>? onFieldSubmitted;
-  final void Function(String?)? onSaved;
-  final String? Function(String?)? validator;
+  final ValueChanged<O?>? onFieldSubmitted;
+  final void Function(O? value)? onSaved;
+  final String? Function(O? value)? validator;
   final FormFieldErrorBuilder? errorBuilder;
-  final List<TextInputFormatter>? inputFormatters;
   final bool? ignorePointers;
   final double? cursorWidth;
   final double? cursorHeight;
@@ -156,7 +159,7 @@ class FooTextFormField extends StatefulWidget {
   State<StatefulWidget> createState()=> _FooTextFormFieldState();
 }
 
-class _FooTextFormFieldState extends State<FooTextFormField> {
+class _FooTextFormFieldState<O> extends State<FooTextFormField<O>> {
   
   final GlobalKey<FormFieldState<String>> _formFieldKey = GlobalKey<FormFieldState<String>>();
 
@@ -185,7 +188,7 @@ class _FooTextFormFieldState extends State<FooTextFormField> {
     return TextFormField(
       key: _formFieldKey,
       enabled: widget.controller.enabled,
-      initialValue: widget.controller.value,
+      initialValue: widget.controller.initialValueAsFieldValue,
 
       //Gives access to the TextFormField's properties
       groupId: widget.groupId,
@@ -214,15 +217,11 @@ class _FooTextFormFieldState extends State<FooTextFormField> {
       minLines: widget.minLines,
       expands: widget.expands?? false,
       maxLength: widget.maxLength,
-      onChanged: widget.onChanged,
       onTap: widget.onTap,
       onTapAlwaysCalled: widget.onTapAlwaysCalled?? false,
       onTapOutside: widget.onTapOutside,
       onTapUpOutside: widget.onTapUpOutside,
       onEditingComplete: widget.onEditingComplete,
-      onFieldSubmitted: widget.onFieldSubmitted,
-      onSaved: widget.onSaved,
-      validator: widget.validator,
       errorBuilder: widget.errorBuilder,
       inputFormatters: widget.inputFormatters,
       ignorePointers: widget.ignorePointers,
@@ -255,6 +254,34 @@ class _FooTextFormFieldState extends State<FooTextFormField> {
       clipBehavior: widget.clipBehavior?? Clip.hardEdge,
       stylusHandwritingEnabled: widget.stylusHandwritingEnabled?? true,
       canRequestFocus: widget.canRequestFocus?? true,
+      onFieldSubmitted: (String? value) {
+        if(_validToNotifyUserBy(value)){
+          widget.onFieldSubmitted?.call(widget.controller.value);
+        }
+      },
+      onChanged: (String? value) {
+        if(_validToNotifyUserBy(value)){
+          widget.onChanged?.call(widget.controller.value);
+        }
+      },
+      onSaved: (String? value) {
+        if(_validToNotifyUserBy(value)){
+          widget.onSaved?.call(widget.controller.value);
+        }
+      },
+      validator: (String? value) {
+        if (value!=null && widget.fooInputFormatters.validate(value)!=null) {
+          return widget.fooInputFormatters.validate(value);
+        }
+        return widget.validator?.call(widget.controller.value);
+      },
     );
+  }
+
+  bool _validToNotifyUserBy(String? value){
+    if(value==null){
+      return true;
+    }
+    return widget.fooInputFormatters.validate(value) == null;
   }
 }

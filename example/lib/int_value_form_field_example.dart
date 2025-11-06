@@ -11,7 +11,7 @@ class IntValueFormFieldExample extends StatefulWidget {
 }
 
 class _IntValueFormFieldExampleState extends State<IntValueFormFieldExample> {
-  final ValueFieldController<int> _controller = ValueFieldController<int>(
+  final IntegerTextEditingController _controller = IntegerTextEditingController(
     initialValue: 123,
     enabled: false,
   );

@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:foo_form_field/foo_form_field.dart';
 
-class ValueFieldController<T> extends FooFieldController<T> {
-  
-  ValueFieldController({
-    T? initialValue,
-    super.enabled = true,
-  }): _initialValue = initialValue;
+class ConvertableValueFieldController<O, I> extends FooFieldController<O,I> {
 
-  final T? _initialValue;
+  ConvertableValueFieldController({
+    super.initialValue,
+    super.enabled,
+    required super.fromFieldValue,
+    required super.toFieldValue,
+    
+  });
 
-  FormFieldState<T>? _formFieldState;
 
-  void setFormFieldState(FormFieldState<T> formFieldState){
+  FormFieldState<I>? _formFieldState;
+
+  void setFormFieldState(FormFieldState<I> formFieldState){
     _formFieldState = formFieldState;
-    value = _initialValue;
+    value = initialValue;
     notifyListeners();
   }
   
@@ -47,19 +49,26 @@ class ValueFieldController<T> extends FooFieldController<T> {
     );
   }
 
-  T? get value => _formFieldState==null? _initialValue: _formFieldState!.value;
+  @override
+  O? get value{
+    if (_formFieldState == null) {
+      return initialValue;
+    }
+    return fromFieldValue(_formFieldState!.value);
+  }
 
-  set value(T? value) {
+  @override
+  set value(O? value) {
     return _excuteAfterCheckStateExistence<void>(
       toExecute: (formFieldState) {
-        formFieldState.didChange(value);
+        formFieldState.didChange(toFieldValue(value));
         notifyListeners();
       },
     );
   }
 
   R _excuteAfterCheckStateExistence<R>({
-    required R Function(FormFieldState<T> formFieldState) toExecute,
+    required R Function(FormFieldState<I> formFieldState) toExecute,
   }) {
     if (_formFieldState == null) {
       throw Exception(
@@ -69,4 +78,15 @@ class ValueFieldController<T> extends FooFieldController<T> {
     return toExecute(_formFieldState!);
   }
   
+}
+
+class ValueFieldController<T> extends ConvertableValueFieldController<T,T> {
+
+  ValueFieldController({
+    super.initialValue,
+    super.enabled,
+  }): super(
+    fromFieldValue: (i) => i,
+    toFieldValue: (o) => o,
+  );
 }

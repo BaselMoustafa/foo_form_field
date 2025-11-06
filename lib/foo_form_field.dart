@@ -1,9 +1,13 @@
 export 'src/core/formatters/integer_text_input_formatter.dart';
-export 'src/core/controllers/foo_field_controller.dart';
-export 'src/form_fields/implementations/boolean_form_field.dart';
-export 'src/core/controllers/value_field_controller.dart';
-export 'src/form_fields/base/foo_text_form_field.dart';
-export 'src/form_fields/implementations/int_text_form_field.dart';
-export 'src/form_fields/implementations/int_value_form_field.dart';
 export 'src/core/formatters/integer_value_input_formatter.dart';
+
+export 'src/form_fields/implementations/int_text_form_field.dart';
+export 'src/form_fields/implementations/boolean_form_field.dart';
+export 'src/form_fields/implementations/int_value_form_field.dart';
+export 'src/form_fields/base/foo_text_form_field.dart';
+
+
+export 'src/core/controllers/value_field_controller.dart';
+export 'src/core/controllers/foo_field_controller.dart';
 export 'src/core/controllers/range_field_controller.dart';
+export 'src/core/controllers/foo_text_editing_controller.dart';

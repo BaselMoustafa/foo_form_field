@@ -72,7 +72,7 @@ class IntTextFormField extends StatelessWidget {
     this.canRequestFocus, 
   });
 
-  final ValueFieldController<String> controller;
+  final StringTextEditingController controller;
   final IntegerTextInputFormatter? formatter;
 
   final Object groupId;
@@ -138,7 +138,7 @@ class IntTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FooTextFormField(
+    return FooTextFormField<String>(
       controller: controller,
       focusNode: focusNode,
       forceErrorText: forceErrorText,
@@ -199,35 +199,14 @@ class IntTextFormField extends StatelessWidget {
         signed: _effectiveFormatter.allowNegative,
         decimal: false,
       ),
-      inputFormatters: [
+      fooInputFormatters: [
         _effectiveFormatter,
       ],
-      onChanged: (String? value){
-        if (_validToNotifyUserBy(value)) {
-          onChanged?.call(value);
-        }
-      },
-      onFieldSubmitted: (String? value){
-        if (_validToNotifyUserBy(value)) {
-          onFieldSubmitted?.call(value);
-        }
-      },
-      onSaved: (String? value){
-        if (_validToNotifyUserBy(value)) {
-          onSaved?.call(value);
-        }
-      },
-      validator: (String? value){
-        if(value!=null && _effectiveFormatter.validate(value)!=null){
-          return _effectiveFormatter.validate(value);
-        }
-        return validator?.call(value);
-      },
+      onChanged: onChanged,
+      onFieldSubmitted: onFieldSubmitted,
+      onSaved: onSaved,
+      validator: validator,
     );
-  }
-
-  bool _validToNotifyUserBy(String? value){
-    return value==null || _effectiveFormatter.validate(value) == null;
   }
 
   IntegerTextInputFormatter get _effectiveFormatter{

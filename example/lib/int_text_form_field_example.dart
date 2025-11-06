@@ -11,10 +11,7 @@ class IntTextFormFieldExample extends StatefulWidget {
 }
 
 class _IntTextFormFieldExampleState extends State<IntTextFormFieldExample> {
-  final ValueFieldController<String> _controller = ValueFieldController<String>(
-    initialValue: '123456789123',
-    enabled: false,
-  );
+  final StringTextEditingController _controller = StringTextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override

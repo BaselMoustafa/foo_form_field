@@ -4,7 +4,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:foo_form_field/foo_form_field.dart';
-import 'package:foo_form_field/src/core/formatters/integer_value_input_formatter.dart';
 
 class IntValueFormField extends StatefulWidget {
   const IntValueFormField({
@@ -73,7 +72,7 @@ class IntValueFormField extends StatefulWidget {
     this.canRequestFocus, 
   });
 
-  final ValueFieldController<int> controller;
+  final IntegerTextEditingController controller;
   final IntegerValueInputFormatter? formatter;
 
   final Object groupId;
@@ -96,15 +95,15 @@ class IntValueFormField extends StatefulWidget {
   final MaxLengthEnforcement? maxLengthEnforcement;
   final bool? expands;
   final int? maxLength;
-  final void Function(String? value)? onChanged;
+  final void Function(int? value)? onChanged;
   final GestureTapCallback? onTap;
   final bool? onTapAlwaysCalled;
   final TapRegionCallback? onTapOutside;
   final TapRegionUpCallback? onTapUpOutside;
   final VoidCallback? onEditingComplete;
-  final ValueChanged<String?>? onFieldSubmitted;
-  final void Function(String?)? onSaved;
-  final String? Function(String?)? validator;
+  final ValueChanged<int?>? onFieldSubmitted;
+  final void Function(int?)? onSaved;
+  final String? Function(int?)? validator;
   final FormFieldErrorBuilder? errorBuilder;
   final bool? ignorePointers;
   final double? cursorWidth;
@@ -143,35 +142,10 @@ class IntValueFormField extends StatefulWidget {
 
 class _IntValueFormFieldState extends State<IntValueFormField> {
 
-  late final ValueFieldController<String> _stringController;
-
-  @override
-  void initState() {
-    super.initState();
-    _stringController = ValueFieldController<String>(
-      initialValue: widget.controller.value?.toString(),
-      enabled: widget.controller.enabled,
-    );
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _stringController.addListener(_notifyIntegerController);
-    });
-  }
-  
-  @override
-  void dispose() {
-    _stringController.removeListener(_notifyIntegerController);
-    _stringController.dispose();
-    super.dispose();
-  }
-
-  void _notifyIntegerController(){
-    widget.controller.value = int.tryParse(_stringController.value??"");
-  }
-  
   @override
   Widget build(BuildContext context) {
-    return FooTextFormField(
-      controller: _stringController,
+    return FooTextFormField<int>(
+      controller: widget.controller,
       focusNode: widget.focusNode,
       forceErrorText: widget.forceErrorText,
       decoration: widget.decoration,
@@ -231,35 +205,14 @@ class _IntValueFormFieldState extends State<IntValueFormField> {
         signed: _effectiveFormatter.allowNegative,
         decimal: false,
       ),
-      inputFormatters: [
+      fooInputFormatters: [
         _effectiveFormatter,
       ],
-      onChanged: (String? value){
-        if (_validToNotifyUserBy(value)) {
-          widget.onChanged?.call(value);
-        }
-      },
-      onFieldSubmitted: (String? value){
-        if (_validToNotifyUserBy(value)) {
-          widget.onFieldSubmitted?.call(value);
-        }
-      },
-      onSaved: (String? value){
-        if (_validToNotifyUserBy(value)) {
-          widget.onSaved?.call(value);
-        }
-      },
-      validator: (String? value){
-        if(value!=null && _effectiveFormatter.validate(value)!=null){
-          return _effectiveFormatter.validate(value);
-        }
-        return widget.validator?.call(value);
-      },
+      onChanged: widget.onChanged,
+      onFieldSubmitted: widget.onFieldSubmitted,
+      onSaved: widget.onSaved,
+      validator: widget.validator,
     );
-  }
-
-  bool _validToNotifyUserBy(String? value){
-    return value==null || _effectiveFormatter.validate(value) == null;
   }
 
   IntegerValueInputFormatter get _effectiveFormatter{
