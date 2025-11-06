@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foo_form_field/src/core/controllers/foo_field_controller.dart';
+import 'package:foo_form_field/src/core/controllers/value_field_controller.dart';
 import 'package:foo_form_field/src/core/widgets/field_with_error_text_widget.dart';
 import 'package:foo_form_field/src/core/widgets/selection_card.dart';
 import 'package:foo_form_field/src/form_fields/base/foo_form_field.dart';
@@ -23,7 +23,7 @@ class BooleanFormField extends StatelessWidget {
   final String yesText;
   final String noText;
 
-  final FooFieldController<bool> controller;
+  final ValueFieldController<bool> controller;
   final Widget Function(BuildContext context, String? errorText)? builder;
   final void Function(bool? value)? onSaved;
   final String? Function(bool? value)? validator;
@@ -78,7 +78,7 @@ class _ActionButton extends StatelessWidget {
   final bool isYesButton;
   final BooleanFormField parentWidget;
 
-  FooFieldController<bool> get _controller => parentWidget.controller;
+  ValueFieldController<bool> get _controller => parentWidget.controller;
 
   @override
   Widget build(BuildContext context) {

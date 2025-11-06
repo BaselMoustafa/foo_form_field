@@ -73,7 +73,7 @@ class IntValueFormField extends StatefulWidget {
     this.canRequestFocus, 
   });
 
-  final FooFieldController<int> controller;
+  final ValueFieldController<int> controller;
   final IntegerValueInputFormatter? formatter;
 
   final Object groupId;
@@ -143,12 +143,12 @@ class IntValueFormField extends StatefulWidget {
 
 class _IntValueFormFieldState extends State<IntValueFormField> {
 
-  late final FooFieldController<String> _stringController;
+  late final ValueFieldController<String> _stringController;
 
   @override
   void initState() {
     super.initState();
-    _stringController = FooFieldController<String>(
+    _stringController = ValueFieldController<String>(
       initialValue: widget.controller.value?.toString(),
       enabled: widget.controller.enabled,
     );

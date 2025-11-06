@@ -11,7 +11,7 @@ class IntValueFormFieldExample extends StatefulWidget {
 }
 
 class _IntValueFormFieldExampleState extends State<IntValueFormFieldExample> {
-  final FooFieldController<int> _controller = FooFieldController<int>(
+  final ValueFieldController<int> _controller = ValueFieldController<int>(
     initialValue: 123,
     enabled: false,
   );

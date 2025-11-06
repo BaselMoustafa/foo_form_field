@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foo_form_field/src/core/controllers/foo_field_controller.dart';
+import 'package:foo_form_field/src/core/controllers/value_field_controller.dart';
 
 class FooFormField<T> extends StatefulWidget {
 
@@ -16,7 +16,7 @@ class FooFormField<T> extends StatefulWidget {
     this.onChanged,
   });
 
-  final FooFieldController<T> controller;
+  final ValueFieldController<T> controller;
   final Widget Function(BuildContext context,String? errorText) builder;
   
   final void Function(T? value)? onSaved;

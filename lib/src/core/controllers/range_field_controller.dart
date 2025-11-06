@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foo_form_field/foo_form_field.dart';
 
-class FooRangeFieldController<T> extends BaseFooFieldController<T> {
+class RangeFieldController<T> extends FooFieldController<T> {
 
-  FooRangeFieldController({
+  RangeFieldController({
     super.enabled = true,
   });
   late final FormFieldState<T> _minFormFieldState;

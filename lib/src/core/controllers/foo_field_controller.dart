@@ -1,72 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:foo_form_field/foo_form_field.dart';
 
-class FooFieldController<T> extends BaseFooFieldController<T> {
+abstract class FooFieldController<T> extends ChangeNotifier {
   
+
   FooFieldController({
-    T? initialValue,
-    super.enabled = true,
-  }): _initialValue = initialValue;
+    required bool enabled,
+  }): _enabled = enabled;
 
-  final T? _initialValue;
+  bool _enabled;
 
-  FormFieldState<T>? _formFieldState;
+  bool get enabled => _enabled;
 
-  void setFormFieldState(FormFieldState<T> formFieldState){
-    _formFieldState = formFieldState;
-    value = _initialValue;
+  set enabled(bool value) {
+    _enabled = value;
     notifyListeners();
   }
-  
-  @override
-  void clear() {
-    return _excuteAfterCheckStateExistence<void>(
-      toExecute: (formFieldState) {
-        formFieldState.didChange(null);
-        notifyListeners();
-      },
-    );
-  }
-  
-  @override
-  void save() {
-    return _excuteAfterCheckStateExistence<void>(
-      toExecute: (formFieldState) {
-        formFieldState.save();
-        notifyListeners();
-      },
-    );
-  }
-  
-  @override
-  bool validate() {
-    return _excuteAfterCheckStateExistence<bool>(
-      toExecute: (formFieldState) {
-        return formFieldState.validate();
-      },
-    );
-  }
 
-  T? get value => _formFieldState==null? _initialValue: _formFieldState!.value;
+  bool validate();
 
-  set value(T? value) {
-    return _excuteAfterCheckStateExistence<void>(
-      toExecute: (formFieldState) {
-        formFieldState.didChange(value);
-        notifyListeners();
-      },
-    );
-  }
+  void clear();
 
-  R _excuteAfterCheckStateExistence<R>({
-    required R Function(FormFieldState<T> formFieldState) toExecute,
-  }) {
-    if (_formFieldState == null) {
-      throw Exception(
-        "This Controller is not attached to a any Foo Form Field",
-      );
-    }
-    return toExecute(_formFieldState!);
-  }
+  void save();
   
 }

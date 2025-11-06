@@ -72,7 +72,7 @@ class IntTextFormField extends StatelessWidget {
     this.canRequestFocus, 
   });
 
-  final FooFieldController<String> controller;
+  final ValueFieldController<String> controller;
   final IntegerTextInputFormatter? formatter;
 
   final Object groupId;

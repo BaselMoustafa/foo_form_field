@@ -13,7 +13,7 @@ class TestScreen extends StatefulWidget {
 
 class _TestScreenState extends State<TestScreen> {
 
-  final FooFieldController<String> _controller = FooFieldController<String>(
+  final ValueFieldController<String> _controller = ValueFieldController<String>(
   
   );
   final _formKey = GlobalKey<FormState>();

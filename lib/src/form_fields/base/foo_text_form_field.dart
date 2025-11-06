@@ -82,7 +82,7 @@ class FooTextFormField extends StatefulWidget {
 
   // ─── Final Fields ────────────────────────────────────────────────────────────────
 
-  final FooFieldController<String> controller;
+  final ValueFieldController<String> controller;
 
   final Object groupId;
   final FocusNode? focusNode;
