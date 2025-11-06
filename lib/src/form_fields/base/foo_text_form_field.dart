@@ -156,7 +156,7 @@ class FooTextFormField<O> extends StatefulWidget {
   final bool? canRequestFocus;
 
   @override
-  State<StatefulWidget> createState()=> _FooTextFormFieldState();
+  State<StatefulWidget> createState()=> _FooTextFormFieldState<O>();
 }
 
 class _FooTextFormFieldState<O> extends State<FooTextFormField<O>> {
@@ -223,7 +223,10 @@ class _FooTextFormFieldState<O> extends State<FooTextFormField<O>> {
       onTapUpOutside: widget.onTapUpOutside,
       onEditingComplete: widget.onEditingComplete,
       errorBuilder: widget.errorBuilder,
-      inputFormatters: widget.inputFormatters,
+      inputFormatters: [
+        ...?widget.inputFormatters,
+        ...widget.fooInputFormatters,
+      ],
       ignorePointers: widget.ignorePointers,
       cursorWidth: widget.cursorWidth?? 2.0,
       cursorHeight: widget.cursorHeight,

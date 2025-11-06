@@ -5,20 +5,16 @@ class IntegerValueInputFormatter extends FooTextInputFormatter {
 
 
   final bool allowNegative;
-  final int? minValue;
   final int? maxValue;
 
   final String invalidNegativeMessage;
-  final String exceedMinValueMessage;
   final String exceedMaxValueMessage;
   final String invalidIntegerMessage;
 
   IntegerValueInputFormatter({
     this.allowNegative = false,
-    this.minValue,
     this.maxValue,
     this.invalidNegativeMessage = "Invalid negative number",
-    this.exceedMinValueMessage = "Exceed min value",
     this.exceedMaxValueMessage = "Exceed max value",
     this.invalidIntegerMessage = "Invalid",
   });
@@ -35,16 +31,16 @@ class IntegerValueInputFormatter extends FooTextInputFormatter {
       return validationResult;
     }
 
+    if (value.isEmpty || value=="-") {
+      return null;
+    }
+
     int? parsedValue = int.tryParse(
       value.formatAsIntValue(allowNegative: allowNegative)
     );
 
     if (parsedValue == null) {
       return invalidIntegerMessage;
-    }
-
-    if (minValue != null && parsedValue < minValue!) {
-      return exceedMinValueMessage;
     }
 
     if (maxValue != null && parsedValue > maxValue!) {

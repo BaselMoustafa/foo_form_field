@@ -32,7 +32,8 @@ class _IntValueFormFieldExampleState extends State<IntValueFormFieldExample> {
               IntValueFormField(
                 controller: _controller,
                 formatter: IntegerValueInputFormatter(
-                  allowNegative: true,
+                  allowNegative: false,
+                  maxValue: 150
                 ),
                 validator: (value) {
                   if (value == null) {
