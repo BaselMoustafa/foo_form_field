@@ -33,7 +33,8 @@ abstract class FooFieldController<O,I> extends ChangeNotifier {
   }
 
   void _forceErrorResetter(){
-    forcedErrorText = null;
+    _forcedErrorText = null;
+    notifyListeners();
   }
 
   bool get enabled => _enabled;
