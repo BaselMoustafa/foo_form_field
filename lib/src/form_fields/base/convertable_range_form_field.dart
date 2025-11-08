@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:foo_form_field/foo_form_field.dart';
 import 'package:foo_form_field/src/form_fields/base/convertable_value_form_field.dart';
@@ -50,18 +52,29 @@ class ConvertableRangeFormField<O,I> extends StatelessWidget {
   }
 
   void _onChanged(Range<O>? value){
-    // if (controller.minValueController.forcedErrorText != null) {
-    //   controller.minValueController.forcedErrorText =null;
-    // }
-    // if (controller.maxValueController.forcedErrorText != null) {
-    //   controller.maxValueController.forcedErrorText =null;
-    // }
+    throw UnimplementedError("Will be implemented later");
+    if (controller.minValueController.forcedErrorText != null) {
+      controller.minValueController.forcedErrorText =null;
+    }
+    if (controller.maxValueController.forcedErrorText != null) {
+      controller.maxValueController.forcedErrorText =null;
+    }
+    if (controller.forcedErrorText != null) {
+      controller.forcedErrorText = null;
+    }
     onChanged?.call(value);
   }
 
   String? _validator(Range<O?>? value){
+    log("Validator Called with value: $value");
     if (value == null) {
       return validator?.call(value);
+    }
+
+    String? equalityError = rangeValidator.validateEquality(value);
+    if (equalityError != null) {
+      controller.forcedErrorText = equalityError;
+      return null;
     }
 
     String? minError = rangeValidator.validateMin(value);
@@ -75,13 +88,6 @@ class ConvertableRangeFormField<O,I> extends StatelessWidget {
       controller.maxValueController.forcedErrorText = maxError;
       return null;
     }
-
-    String? equalityError = rangeValidator.validateEquality(value);
-    if (equalityError != null) {
-      controller.forcedErrorText = equalityError;
-      return null;
-    }
-
     return validator?.call(value);
   }
 

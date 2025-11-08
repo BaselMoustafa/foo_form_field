@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'range.dart';
 
 class RangeValidator<T> {
@@ -43,10 +45,10 @@ class RangeValidator<T> {
   }
 
   String? validateEquality(Range<T?> value){
+    log("validateEquality: $value");
     if (allowEqual || value.min == null || value.max == null) {
       return null;
     }
-
     if (areEqual(value.min!, value.max!)) {
       return equalMinAndMaxMessage;
     }
