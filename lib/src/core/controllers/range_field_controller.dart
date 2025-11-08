@@ -1,179 +1,145 @@
-import 'package:flutter/material.dart';
 import 'package:foo_form_field/foo_form_field.dart';
 import 'package:foo_form_field/src/core/models/range.dart';
 
-class ConvertableRangeFieldController<O, I> extends FooFieldController<Range<O?>, Range<I?>> {
+class RangeFieldController<T> extends FooFieldController<Range<T?>, Range<T?>> {
 
-  ConvertableRangeFieldController({
+  late final ValueFieldController<T> _minValueController;
+  late final ValueFieldController<T> _maxValueController;
+
+  RangeFieldController({
     super.enabled,
     super.initialValue,
-    required super.fromFieldValue,
-    required super.toFieldValue,
-  });
-
-  FormFieldState<I>? _minFormFieldState;
-  FormFieldState<I>? _maxFormFieldState;
-
-  void setFormFieldStates({
-    required FormFieldState<I> minFormFieldState,
-    required FormFieldState<I> maxFormFieldState,
-  }){
-    _minFormFieldState = minFormFieldState;
-    _maxFormFieldState = maxFormFieldState;
-  }
-
-  set minValue(I? value) {
-    return _excuteAfterCheckMinAndMaxFormFieldStatesExistence<void>(
-      toExecute: (minFormFieldState, maxFormFieldState) {
-        minFormFieldState.didChange(value);
-        notifyListeners();
-      },
-    );
-  }
-
-  set maxValue(I? value) {
-    return _excuteAfterCheckMinAndMaxFormFieldStatesExistence<void>(
-      toExecute: (minFormFieldState, maxFormFieldState) {
-        maxFormFieldState.didChange(value);
-        notifyListeners();
-      },
-    );
-  }
-
-  I? get minValue=>_minFormFieldState?.value;
+  }):
+  _minValueController = ValueFieldController<T>(
+    initialValue: initialValue?.min,
+    enabled: enabled,
+  ), 
+  _maxValueController = ValueFieldController<T>(
+    initialValue: initialValue?.max,
+    enabled: enabled,
+  ),super(
+    fromFieldValue: (range) => range,
+    toFieldValue: (range) => range,
+  );
   
-  I? get maxValue=>_maxFormFieldState?.value;
+
+  set minValue(T? value) => _excuteThenNotifyListeners(
+    toExecute: () => _minValueController.value = value,
+  );
+
+  set maxValue(T? value) => _excuteThenNotifyListeners(
+    toExecute: () => _maxValueController.value = value,
+  );
+
+  T? get minValue=>_minValueController.value;
+  
+  T? get maxValue=>_maxValueController.value;
 
   @override
-  set value(Range<O?>? value) {
-    return _excuteAfterCheckMinAndMaxFormFieldStatesExistence<void>(
-      toExecute: (minFormFieldState, maxFormFieldState) {
-        Range<I?>? fieldRange = toFieldValue(value);
-        minFormFieldState.didChange(fieldRange?.min);
-        maxFormFieldState.didChange(fieldRange?.max);
-        notifyListeners();
+  set value(Range<T?>? value) {
+    _excuteThenNotifyListeners(
+      toExecute: () {
+        _minValueController.value = value?.min;
+        _maxValueController.value = value?.max;
       },
     );
   }
 
   @override
-  Range<O?>? get value{
-    if (_minFormFieldState == null || _maxFormFieldState == null) {
-      return initialValue;
-    }
-    return fromFieldValue(
-      Range<I?>(
-        min: _minFormFieldState!.value,
-        max: _maxFormFieldState!.value,
-      ),
-    );
-  }
+  Range<T?>? get value => Range<T?>(
+    min: _minValueController.value,
+    max: _maxValueController.value,
+  );
 
   @override
-  void clear() {
-    return _excuteAfterCheckMinAndMaxFormFieldStatesExistence<void>(
-      toExecute: (minFormFieldState, maxFormFieldState) {
-        minFormFieldState.didChange(null);
-        maxFormFieldState.didChange(null);
-        notifyListeners();
-      },
-    );
-  }
+  void clear() => _excuteThenNotifyListeners(
+    toExecute: () {
+      _minValueController.clear();
+      _maxValueController.clear();
+    },
+  );
 
   void clearMinValue() {
-    return _excuteAfterCheckMinAndMaxFormFieldStatesExistence<void>(
-      toExecute: (minFormFieldState, maxFormFieldState) {
-        minFormFieldState.didChange(null);
-        notifyListeners();
+    return _excuteThenNotifyListeners(
+      toExecute: () {
+        _minValueController.clear();
       },
     );
   }
 
   void clearMaxValue() {
-    return _excuteAfterCheckMinAndMaxFormFieldStatesExistence<void>(
-      toExecute: (minFormFieldState, maxFormFieldState) {
-        maxFormFieldState.didChange(null);
-        notifyListeners();
+    return _excuteThenNotifyListeners(
+      toExecute: () {
+        _maxValueController.clear();
       },
     );
   }
   
   @override
   void save() {
-    return _excuteAfterCheckMinAndMaxFormFieldStatesExistence<void>(
-      toExecute: (minFormFieldState, maxFormFieldState) {
-        minFormFieldState.save();
-        maxFormFieldState.save();
-        notifyListeners();
+    return _excuteThenNotifyListeners(
+      toExecute: () {
+        _minValueController.save();
+        _maxValueController.save();
       },
     );
   }
 
   void saveMinValue() {
-    return _excuteAfterCheckMinAndMaxFormFieldStatesExistence<void>(
-      toExecute: (minFormFieldState, maxFormFieldState) {
-        minFormFieldState.save();
-        notifyListeners();
+    return _excuteThenNotifyListeners(
+      toExecute: () {
+        _minValueController.save();
       },
     );
   }
   void saveMaxValue() {
-    return _excuteAfterCheckMinAndMaxFormFieldStatesExistence<void>(
-      toExecute: (minFormFieldState, maxFormFieldState) {
-        maxFormFieldState.save();
-        notifyListeners();
+    return _excuteThenNotifyListeners(
+      toExecute: () {
+        _maxValueController.save();
       },
     );
   }
-  
 
   bool validateMinValue() {
-    return _excuteAfterCheckMinAndMaxFormFieldStatesExistence<bool>(
-      toExecute: (minFormFieldState, maxFormFieldState) {
-        return minFormFieldState.validate();
+    return _excuteThenNotifyListeners<bool>(
+      toExecute: () {
+        return _minValueController.validate();
       },
     );
   }
 
   bool validateMaxValue() {
-    return _excuteAfterCheckMinAndMaxFormFieldStatesExistence<bool>(
-      toExecute: (minFormFieldState, maxFormFieldState) {
-        return maxFormFieldState.validate();
+    return _excuteThenNotifyListeners<bool>(
+      toExecute: () {
+        return _maxValueController.validate();
       },
     );
   }
 
   @override
   bool validate() {
-    return _excuteAfterCheckMinAndMaxFormFieldStatesExistence<bool>(
-      toExecute: (minFormFieldState, maxFormFieldState) {
-        bool isValidMin = minFormFieldState.validate();
-        bool isValidMax = maxFormFieldState.validate();
+    return _excuteThenNotifyListeners<bool>(
+      toExecute: () {
+        bool isValidMin = _minValueController.validate();
+        bool isValidMax = _maxValueController.validate();
         return isValidMin && isValidMax;
       },
     );
   }
 
-  R _excuteAfterCheckMinAndMaxFormFieldStatesExistence<R>({
-    required R Function(FormFieldState<I> minFormFieldState, FormFieldState<I> maxFormFieldState) toExecute,
+  R _excuteThenNotifyListeners<R>({
+    required R Function() toExecute,
   }) {
-    if (_minFormFieldState == null || _maxFormFieldState == null) {
-      throw Exception(
-        "Min or Max form field state is not set",
-      );
-    }
-    return toExecute(_minFormFieldState!, _maxFormFieldState!);
+    final result = toExecute();
+    notifyListeners();
+    return result;
+  }
+
+  @override
+  void dispose() {
+    _minValueController.dispose();
+    _maxValueController.dispose();
+    super.dispose();
   }
   
-}
-
-class RangeFieldController<T> extends ConvertableRangeFieldController<T, T> {
-
-  RangeFieldController({
-    super.enabled,
-    super.initialValue,
-  }): super(
-    fromFieldValue: (i) => i,
-    toFieldValue: (o) => o,
-  );
 }
