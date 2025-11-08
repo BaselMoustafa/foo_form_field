@@ -1,141 +1,101 @@
+import 'package:flutter/widgets.dart';
 import 'package:foo_form_field/foo_form_field.dart';
 import 'package:foo_form_field/src/core/models/range.dart';
 
 class RangeFieldController<T> extends ValueFieldController<Range<T?>> {
 
-  late final ValueFieldController<T> _minValueController;
-  late final ValueFieldController<T> _maxValueController;
+  late final ValueFieldController<T> minValueController;
+  late final ValueFieldController<T> maxValueController;
 
   RangeFieldController({
     super.enabled,
     super.initialValue,
   }):
-  _minValueController = ValueFieldController<T>(
+  minValueController = ValueFieldController<T>(
     initialValue: initialValue?.min,
     enabled: enabled,
   ), 
-  _maxValueController = ValueFieldController<T>(
+  maxValueController = ValueFieldController<T>(
     initialValue: initialValue?.max,
     enabled: enabled,
   );
-  
-
-  set minValue(T? value) => _excuteThenNotifyListeners(
-    toExecute: () => _minValueController.value = value,
-  );
-
-  set maxValue(T? value) => _excuteThenNotifyListeners(
-    toExecute: () => _maxValueController.value = value,
-  );
-
-  T? get minValue=>_minValueController.value;
-  
-  T? get maxValue=>_maxValueController.value;
 
   @override
-  set value(Range<T?>? value) {
-    _excuteThenNotifyListeners(
-      toExecute: () {
-        _minValueController.value = value?.min;
-        _maxValueController.value = value?.max;
-      },
-    );
+  void setFormFieldState(FormFieldState<Range<T?>> formFieldState) {
+    super.setFormFieldState(formFieldState);
+    _invokeSyncers();
   }
 
   @override
-  Range<T?>? get value => Range<T?>(
-    min: _minValueController.value,
-    max: _maxValueController.value,
-  );
-
-  @override
-  void clear() => _excuteThenNotifyListeners(
-    toExecute: () {
-      _minValueController.clear();
-      _maxValueController.clear();
-    },
-  );
-
-  void clearMinValue() {
-    return _excuteThenNotifyListeners(
-      toExecute: () {
-        _minValueController.clear();
-      },
-    );
+  set enabled(bool value) {
+    minValueController.enabled = value;
+    maxValueController.enabled = value;
+    super.enabled = value;
   }
 
-  void clearMaxValue() {
-    return _excuteThenNotifyListeners(
-      toExecute: () {
-        _maxValueController.clear();
-      },
-    );
-  }
-  
   @override
   void save() {
-    return _excuteThenNotifyListeners(
-      toExecute: () {
-        _minValueController.save();
-        _maxValueController.save();
-      },
-    );
-  }
-
-  void saveMinValue() {
-    return _excuteThenNotifyListeners(
-      toExecute: () {
-        _minValueController.save();
-      },
-    );
-  }
-  void saveMaxValue() {
-    return _excuteThenNotifyListeners(
-      toExecute: () {
-        _maxValueController.save();
-      },
-    );
-  }
-
-  bool validateMinValue() {
-    return _excuteThenNotifyListeners<bool>(
-      toExecute: () {
-        return _minValueController.validate();
-      },
-    );
-  }
-
-  bool validateMaxValue() {
-    return _excuteThenNotifyListeners<bool>(
-      toExecute: () {
-        return _maxValueController.validate();
+    return excute(
+      toExecute: (FormFieldState<Range<T?>> formFieldState) {
+        minValueController.save();
+        maxValueController.save();
+        super.save();
       },
     );
   }
 
   @override
   bool validate() {
-    return _excuteThenNotifyListeners<bool>(
-      toExecute: () {
-        bool isValidMin = _minValueController.validate();
-        bool isValidMax = _maxValueController.validate();
-        return isValidMin && isValidMax;
+    return excute<bool>(
+      toExecute: (FormFieldState<Range<T?>> formFieldState) {
+        bool isValidMin = minValueController.validate();
+        bool isValidMax = maxValueController.validate();
+        if (isValidMin && isValidMax) {
+          return super.validate();
+        }
+        return false;
       },
     );
   }
 
-  R _excuteThenNotifyListeners<R>({
-    required R Function() toExecute,
-  }) {
-    final result = toExecute();
-    notifyListeners();
-    return result;
+  void _invokeSyncers(){
+    addListener(_onRangeChanged);
+    minValueController.addListener(_onMinValueChanged);
+    maxValueController.addListener(_onMaxValueChanged);
+  }
+  void _removeSyncers(){
+    removeListener(_onRangeChanged);
+    minValueController.removeListener(_onMinValueChanged);
+    maxValueController.removeListener(_onMaxValueChanged);
+  }
+
+  void _onRangeChanged(){
+    if (value?.min==minValueController.value && value?.max==maxValueController.value) {
+      return;
+    }
+    minValueController.value = value?.min;
+    maxValueController.value = value?.max;
+  }
+
+  void _onMinValueChanged(){
+    if (value?.min==minValueController.value) {
+      return;
+    }
+    minValueController.value = value?.min;
+  }
+
+  void _onMaxValueChanged(){
+    if (value?.max==maxValueController.value) {
+      return;
+    }
+    maxValueController.value = value?.max;
   }
 
   @override
   void dispose() {
-    _minValueController.dispose();
-    _maxValueController.dispose();
+    _removeSyncers();
+    minValueController.dispose();
+    maxValueController.dispose();
     super.dispose();
   }
   

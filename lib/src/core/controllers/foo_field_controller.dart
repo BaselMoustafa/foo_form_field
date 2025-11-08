@@ -46,7 +46,7 @@ abstract class FooFieldController<O,I> extends ChangeNotifier {
   }
 
   set value(O? value){
-    return _excuteAfterCheckStateExistence<void>(
+    return excute<void>(
       toExecute: (FormFieldState<I> formFieldState) {
         formFieldState.didChange(_toFieldValue(value));
       },
@@ -54,7 +54,7 @@ abstract class FooFieldController<O,I> extends ChangeNotifier {
   }
 
   bool validate(){
-    return _excuteAfterCheckStateExistence<bool>(
+    return excute<bool>(
       toExecute: (FormFieldState<I> formFieldState) {
         return formFieldState.validate();
       },
@@ -62,7 +62,7 @@ abstract class FooFieldController<O,I> extends ChangeNotifier {
   }
 
   void clear(){
-    return _excuteAfterCheckStateExistence<void>(
+    return excute<void>(
       toExecute: (FormFieldState<I> formFieldState) {
         formFieldState.didChange(null);
       },
@@ -70,7 +70,7 @@ abstract class FooFieldController<O,I> extends ChangeNotifier {
   }
 
   void save(){
-    return _excuteAfterCheckStateExistence<void>(
+    return excute<void>(
       toExecute: (FormFieldState<I> formFieldState) {
         formFieldState.save();
       },
@@ -87,7 +87,7 @@ abstract class FooFieldController<O,I> extends ChangeNotifier {
   }
 
   String? get errorText{
-    return _excuteAfterCheckStateExistence<String?>(
+    return excute<String?>(
       toExecute: (FormFieldState<I> formFieldState) {
         return formFieldState.errorText;
       },
@@ -95,7 +95,7 @@ abstract class FooFieldController<O,I> extends ChangeNotifier {
   }
 
   bool get hasError{
-    return _excuteAfterCheckStateExistence<bool>(
+    return excute<bool>(
       toExecute: (FormFieldState<I> formFieldState) {
         return formFieldState.hasError;
       },
@@ -103,14 +103,15 @@ abstract class FooFieldController<O,I> extends ChangeNotifier {
   }
 
   bool get isValid{
-    return _excuteAfterCheckStateExistence<bool>(
+    return excute<bool>(
       toExecute: (FormFieldState<I> formFieldState) {
         return formFieldState.isValid;
       },
     );
   }
 
-  R _excuteAfterCheckStateExistence<R>({
+  @protected
+  R excute<R>({
     required R Function(FormFieldState<I> formFieldState) toExecute,
   }) {
     if (_formFieldState == null) {
