@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:foo_form_field/src/core/controllers/value_field_controller.dart';
+import 'package:foo_form_field/src/core/widgets/field_with_error_text_widget.dart';
 
 class ValueFormField<T> extends StatefulWidget {
 
   const ValueFormField({
     super.key,
     required this.controller,
-    required this.builder,
+    required this.fieldBuilder,
+    this.layoutBuilder,
     this.onSaved,
     this.validator,
     this.autovalidateMode,
@@ -16,8 +18,9 @@ class ValueFormField<T> extends StatefulWidget {
   });
 
   final ValueFieldController<T> controller;
-  final Widget Function(BuildContext context,String? errorText) builder;
-  
+  final Widget Function(BuildContext context) fieldBuilder;
+
+  final Widget Function(BuildContext context,Widget fieldWidget,String? errorText)? layoutBuilder;
   final void Function(T? value)? onSaved;
   final String? Function(T? value)? validator;
   final AutovalidateMode? autovalidateMode;
@@ -58,7 +61,6 @@ class _ValueFormFieldState<T> extends State<ValueFormField<T>> {
   Widget build(BuildContext context) {
     return FormField<T>(
       key: _formFieldKey,
-      builder: (FormFieldState<T> field) => widget.builder(context,field.errorText),
       onSaved: widget.onSaved,
       validator: widget.validator,
       errorBuilder: widget.errorBuilder,
@@ -67,6 +69,19 @@ class _ValueFormFieldState<T> extends State<ValueFormField<T>> {
       autovalidateMode: widget.autovalidateMode,
       restorationId: widget.restorationId,
       forceErrorText: widget.controller.forcedErrorText,
+      builder: (_){
+        final errorText = widget.controller.errorText;
+        final fieldWidget = widget.fieldBuilder(context);
+
+        if (widget.layoutBuilder!=null) {
+          return widget.layoutBuilder!(context,fieldWidget,errorText);
+        }
+
+        return FieldWithErrorTextWidget(
+          fieldWidget: fieldWidget, 
+          errorText: errorText,
+        );
+      },
     );
   }
 }

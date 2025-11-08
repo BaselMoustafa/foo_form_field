@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:foo_form_field/src/core/controllers/value_field_controller.dart';
-import 'package:foo_form_field/src/core/widgets/field_with_error_text_widget.dart';
 import 'package:foo_form_field/src/core/widgets/selection_card.dart';
 import 'package:foo_form_field/src/form_fields/base/value_form_field.dart';
 
@@ -8,6 +7,7 @@ class BooleanFormField extends StatelessWidget {
   const BooleanFormField({
     super.key,
     required this.controller,
+    this.layoutBuilder,
     this.yesText = "Yes",
     this.noText = "No",
     this.onSaved,
@@ -17,14 +17,16 @@ class BooleanFormField extends StatelessWidget {
     this.forceErrorText,
     this.restorationId,
     this.onChanged,
-    this.builder,
+    this.fieldBuilder,
   });
 
   final String yesText;
   final String noText;
 
   final ValueFieldController<bool> controller;
-  final Widget Function(BuildContext context, String? errorText)? builder;
+  final Widget Function(BuildContext context,)? fieldBuilder;
+  final Widget Function(BuildContext context,Widget fieldWidget,String? errorText)? layoutBuilder;
+  
   final void Function(bool? value)? onSaved;
   final String? Function(bool? value)? validator;
   final AutovalidateMode? autovalidateMode;
@@ -43,27 +45,29 @@ class BooleanFormField extends StatelessWidget {
       errorBuilder: errorBuilder,
       restorationId: restorationId,
       onChanged: onChanged,
-      builder: _builder,
+      fieldBuilder: _fieldBuilder,
+      layoutBuilder: layoutBuilder,
     );
   }
 
-  Widget _builder(BuildContext context, String? errorText){
-    return FieldWithErrorTextWidget(
-      errorText: errorText,
-      fieldWidget: builder!=null? builder!(context,errorText): Row(
-        spacing: 6,
-        children: [
-          _ActionButton(
-            parentWidget: this, 
-            isYesButton: true,
-          ),
-      
-          _ActionButton(
-            parentWidget: this, 
-            isYesButton: false,
-          ),
-        ],
-      ),
+  Widget _fieldBuilder(BuildContext context){
+    if (fieldBuilder!=null) {
+      return fieldBuilder!(context);
+    }
+
+    return Row(
+      spacing: 6,
+      children: [
+        _ActionButton(
+          parentWidget: this, 
+          isYesButton: true,
+        ),
+    
+        _ActionButton(
+          parentWidget: this, 
+          isYesButton: false,
+        ),
+      ],
     );
   }
 }

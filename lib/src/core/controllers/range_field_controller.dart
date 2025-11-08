@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:foo_form_field/foo_form_field.dart';
 import 'package:foo_form_field/src/core/models/range.dart';
 
-class RangeFieldController<T> extends ValueFieldController<Range<T?>> {
+class RangeFieldController<T> extends ValueFieldController<Range<T>> {
 
   late final ValueFieldController<T> minValueController;
   late final ValueFieldController<T> maxValueController;
@@ -21,7 +21,7 @@ class RangeFieldController<T> extends ValueFieldController<Range<T?>> {
   );
 
   @override
-  void setFormFieldState(FormFieldState<Range<T?>> formFieldState) {
+  void setFormFieldState(FormFieldState<Range<T>> formFieldState) {
     super.setFormFieldState(formFieldState);
     _invokeSyncers();
   }
