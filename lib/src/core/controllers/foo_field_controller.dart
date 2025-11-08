@@ -29,12 +29,6 @@ abstract class FooFieldController<O,I> extends ChangeNotifier {
     _formFieldState = formFieldState;
     value = initialValue;
     notifyListeners();
-    addListener(_forceErrorResetter);
-  }
-
-  void _forceErrorResetter(){
-    _forcedErrorText = null;
-    notifyListeners();
   }
 
   bool get enabled => _enabled;
@@ -114,12 +108,6 @@ abstract class FooFieldController<O,I> extends ChangeNotifier {
         return formFieldState.isValid;
       },
     );
-  }
-
-  @override
-  void dispose() {
-    removeListener(_forceErrorResetter);
-    super.dispose();
   }
 
   @protected
