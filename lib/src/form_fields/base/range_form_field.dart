@@ -44,11 +44,17 @@ class RangeFormField<T> extends StatelessWidget {
       autovalidateMode: autovalidateMode,
       errorBuilder: errorBuilder,
       restorationId: restorationId,
-      onChanged: onChanged,
+      onChanged: _onChanged,
       layoutBuilder: layoutBuilder,
       validator: _validator,
       fieldBuilder: _fieldBuilder,
     );
+  }
+
+  void _onChanged(Range<T>? value){
+    controller.maxValueController.forcedErrorText =null;
+    controller.minValueController.forcedErrorText =null;
+    onChanged?.call(value);
   }
 
   String? _validator(Range<T?>? value){
