@@ -12,7 +12,6 @@ class IntValueFormField extends StatefulWidget {
     this.formatter,
     this.groupId = EditableText,
     this.focusNode,
-    this.forceErrorText,
     this.decoration,
     this.textInputAction,
     this.style,
@@ -77,7 +76,6 @@ class IntValueFormField extends StatefulWidget {
 
   final Object groupId;
   final FocusNode? focusNode;
-  final String? forceErrorText;
   final InputDecoration? decoration;
   final TextInputAction? textInputAction;
   final TextStyle? style;

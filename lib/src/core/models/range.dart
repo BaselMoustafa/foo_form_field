@@ -25,4 +25,9 @@ class Range<T> {
   Range<T> changeMax(T? max){
     return copyWith(max: max);
   }
+
+  @override
+  String toString() {
+    return "Range(min: $min, max: $max)";
+  }
 }

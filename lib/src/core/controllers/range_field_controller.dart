@@ -1,6 +1,7 @@
+
+
 import 'package:flutter/widgets.dart';
 import 'package:foo_form_field/foo_form_field.dart';
-import 'package:foo_form_field/src/core/models/range.dart';
 
 class ConvertableRangeFieldController<O,I> extends FooFieldController<Range<O>,Range<I>> {
 
@@ -50,8 +51,8 @@ class ConvertableRangeFieldController<O,I> extends FooFieldController<Range<O>,R
 
   @override
   void setFormFieldState(FormFieldState<Range<I>> formFieldState) {
-    super.setFormFieldState(formFieldState);
     _invokeSyncers();
+    super.setFormFieldState(formFieldState);
   }
 
   @override
@@ -98,28 +99,32 @@ class ConvertableRangeFieldController<O,I> extends FooFieldController<Range<O>,R
   }
 
   void _onRangeChanged(){
-    if (
-      value?.min==minValueController.value && 
-      value?.max==maxValueController.value
-    ) {
-      return;
+    if (value?.min!=minValueController.value) {
+      minValueController.value = value?.min;
     }
-    minValueController.value = value?.min;
-    maxValueController.value = value?.max;
+    if (value?.max!=maxValueController.value) {
+      maxValueController.value = value?.max;
+    }
   }
 
   void _onMinValueChanged(){
     if (value?.min==minValueController.value) {
       return;
     }
-    minValueController.value = value?.min;
+    value = Range(
+      min: minValueController.value, 
+      max: value?.max,
+    );
   }
 
   void _onMaxValueChanged(){
     if (value?.max==maxValueController.value) {
       return;
     }
-    maxValueController.value = value?.max;
+    value = Range(
+      min: value?.min, 
+      max: maxValueController.value,
+    );
   }
 
   @override

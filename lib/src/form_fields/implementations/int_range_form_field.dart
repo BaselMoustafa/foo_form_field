@@ -1,7 +1,6 @@
+
 import 'package:flutter/material.dart';
 import 'package:foo_form_field/foo_form_field.dart';
-import 'package:foo_form_field/src/core/models/range.dart';
-import 'package:foo_form_field/src/core/models/range_validator.dart';
 import 'package:foo_form_field/src/form_fields/base/convertable_range_form_field.dart';
 
 class IntRangeFormField extends StatelessWidget {
@@ -22,8 +21,8 @@ class IntRangeFormField extends StatelessWidget {
   });
 
   final ConvertableRangeFieldController<int,String> controller;
-  final Widget Function(BuildContext context,FooFieldController<int,String> minValueController)? minFieldBuilder;
-  final Widget Function(BuildContext context,FooFieldController<int,String> maxValueController)? maxFieldBuilder;
+  final Widget Function(BuildContext context,IntegerTextEditingController minValueController)? minFieldBuilder;
+  final Widget Function(BuildContext context,IntegerTextEditingController maxValueController)? maxFieldBuilder;
   final RangeValidator<int>? rangeValidator;
 
   final Widget Function(BuildContext context,Widget minField,Widget maxField)? fieldBuilder;
@@ -56,16 +55,16 @@ class IntRangeFormField extends StatelessWidget {
     );
   }
 
-  Widget _minFieldBuilder(context, minValueController){
+  Widget _minFieldBuilder(BuildContext context,FooFieldController<int,String> minValueController){
     if (minFieldBuilder!=null) {
-      return minFieldBuilder!(context,minValueController);
+      return minFieldBuilder!(context,minValueController as IntegerTextEditingController);
     }
-    return IntValueFormField(controller: minValueController);
+    return IntValueFormField(controller: minValueController,);
   }
 
   Widget _maxFieldBuilder(BuildContext context,FooFieldController<int,String> maxValueController){
     if (maxFieldBuilder!=null) {
-      return maxFieldBuilder!(context,maxValueController);
+      return maxFieldBuilder!(context,maxValueController as IntegerTextEditingController);
     }
     return IntValueFormField(controller: maxValueController);
   }

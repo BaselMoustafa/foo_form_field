@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 ///[I] is The type which the form field accepts
 ///[O] is The type which the client wants to get or set
@@ -21,9 +22,9 @@ class FooFieldController<O,I> extends ChangeNotifier {
     required bool? enabled,
     required String? forcedErrorText,
     required this.initialValue,
-    required O? Function(I? i) fromFieldValue,
-    required I? Function(O? o) toFieldValue,
-  }): _enabled = enabled?? true, _forcedErrorText = forcedErrorText, this.fromFieldValue = fromFieldValue, this.toFieldValue = toFieldValue;
+    required this.fromFieldValue,
+    required this.toFieldValue,
+  }): _enabled = enabled?? true, _forcedErrorText = forcedErrorText;
 
   void setFormFieldState(FormFieldState<I> formFieldState){
     _formFieldState = formFieldState;
@@ -45,10 +46,10 @@ class FooFieldController<O,I> extends ChangeNotifier {
     return fromFieldValue(_formFieldState!.value);
   }
 
-  set value(O? value){
+  set value(O? newValue){
     return excute<void>(
       toExecute: (FormFieldState<I> formFieldState) {
-        formFieldState.didChange(toFieldValue(value));
+        formFieldState.didChange(toFieldValue(newValue));
       },
     );
   }
@@ -87,11 +88,10 @@ class FooFieldController<O,I> extends ChangeNotifier {
   }
 
   String? get errorText{
-    return excute<String?>(
-      toExecute: (FormFieldState<I> formFieldState) {
-        return formFieldState.errorText;
-      },
-    );
+    if (_formFieldState == null) {
+      return null;
+    }
+    return _formFieldState!.errorText;
   }
 
   bool get hasError{

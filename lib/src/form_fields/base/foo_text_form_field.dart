@@ -158,7 +158,6 @@ class FooTextFormField<O> extends StatefulWidget {
 }
 
 class _FooTextFormFieldState<O> extends State<FooTextFormField<O>> {
-  
   final GlobalKey<FormFieldState<String>> _formFieldKey = GlobalKey<FormFieldState<String>>();
 
   @override
@@ -187,11 +186,11 @@ class _FooTextFormFieldState<O> extends State<FooTextFormField<O>> {
       key: _formFieldKey,
       enabled: widget.controller.enabled,
       initialValue: widget.controller.initialValueAsFieldValue,
+      forceErrorText: widget.controller.forcedErrorText,
 
       //Gives access to the TextFormField's properties
       groupId: widget.groupId,
       focusNode: widget.focusNode,
-      forceErrorText: widget.controller.forcedErrorText,
       decoration: widget.decoration,
       keyboardType: widget.keyboardType,
       textCapitalization: widget.textCapitalization?? TextCapitalization.none,
@@ -261,6 +260,8 @@ class _FooTextFormFieldState<O> extends State<FooTextFormField<O>> {
         }
       },
       onChanged: (String? value) {
+        final newValue = widget.controller.fromFieldValue(value);
+        widget.controller.value = newValue;
         if(_validToNotifyUserBy(value)){
           widget.onChanged?.call(widget.controller.value);
         }

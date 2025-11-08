@@ -9,6 +9,9 @@ class FooTextEditingController<O> extends FooFieldController<O,String> {
     String? Function(O? value)? toFieldValue,
   }):super(
     toFieldValue:toFieldValue?? (O? value) {
+      if (value == null) {
+        return null;
+      }
       return value.toString();
     },
   );

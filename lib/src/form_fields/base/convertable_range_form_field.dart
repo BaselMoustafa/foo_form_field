@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:foo_form_field/foo_form_field.dart';
-import 'package:foo_form_field/src/core/models/range.dart';
-import 'package:foo_form_field/src/core/models/range_validator.dart';
 import 'package:foo_form_field/src/form_fields/base/convertable_value_form_field.dart';
 
 class ConvertableRangeFormField<O,I> extends StatelessWidget {
@@ -52,8 +50,12 @@ class ConvertableRangeFormField<O,I> extends StatelessWidget {
   }
 
   void _onChanged(Range<O>? value){
-    controller.maxValueController.forcedErrorText =null;
-    controller.minValueController.forcedErrorText =null;
+    // if (controller.minValueController.forcedErrorText != null) {
+    //   controller.minValueController.forcedErrorText =null;
+    // }
+    // if (controller.maxValueController.forcedErrorText != null) {
+    //   controller.maxValueController.forcedErrorText =null;
+    // }
     onChanged?.call(value);
   }
 

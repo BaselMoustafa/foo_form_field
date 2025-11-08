@@ -1,4 +1,5 @@
 import 'package:example/int_value_form_field_example.dart';
+import 'package:example/int_range_form_field_example.dart';
 import 'package:flutter/material.dart';
 import 'int_text_form_field_example.dart';
 class HomeScreen extends StatelessWidget {
@@ -13,6 +14,10 @@ class HomeScreen extends StatelessWidget {
       body: Column(
 
         children: [
+          _GoToExampleScreenButton(
+            title: 'Int Range Form Field', 
+            screen: IntRangeValueFormFieldExample()
+          ),
           _GoToExampleScreenButton(
             title: 'Int Value Form Field', 
             screen: IntValueFormFieldExample()

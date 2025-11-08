@@ -12,7 +12,7 @@ class RangeValidator<T> {
   RangeValidator({
     required this.firstIsBiggerThanSecond,
     required this.areEqual,
-    this.allowEqual = true,
+    this.allowEqual = false,
     this.maxSmallerThanMinMessage = "Smaller than min",
     this.minBiggerThanMaxMessage = "Bigger than max",
     this.equalMinAndMaxMessage = "Equal to min and max",
