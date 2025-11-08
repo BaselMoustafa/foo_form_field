@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foo_form_field/src/core/controllers/value_field_controller.dart';
 
-class FooFormField<T> extends StatefulWidget {
+class ValueFormField<T> extends StatefulWidget {
 
-  const FooFormField({
+  const ValueFormField({
     super.key,
     required this.controller,
     required this.builder,
@@ -28,10 +28,10 @@ class FooFormField<T> extends StatefulWidget {
   final void Function(T? value)? onChanged;
 
   @override
-  State<FooFormField<T>> createState() => _FooFormFieldState<T>();
+  State<ValueFormField<T>> createState() => _ValueFormFieldState<T>();
 }
 
-class _FooFormFieldState<T> extends State<FooFormField<T>> {
+class _ValueFormFieldState<T> extends State<ValueFormField<T>> {
 
   late final GlobalKey<FormFieldState<T>> _formFieldKey;
 

@@ -35,7 +35,7 @@ class BooleanFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FooFormField<bool>(
+    return ValueFormField<bool>(
       controller: controller,
       onSaved: onSaved,
       validator: validator,
