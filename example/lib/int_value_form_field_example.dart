@@ -18,6 +18,14 @@ class _IntValueFormFieldExampleState extends State<IntValueFormFieldExample> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() {
+      log("Example Listener ==> ${_controller.value} (${_controller.isValueChanged?"Changed":"Not Changed"})");
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -47,6 +55,12 @@ class _IntValueFormFieldExampleState extends State<IntValueFormFieldExample> {
                 onChanged: (value) {
                   log("onChanged: $value");
                 },
+              ),
+              TextButton(
+                onPressed: () {
+                  log("isValed: ${_controller.isValid}");
+                }, 
+                child: Text('Is Valed')
               ),
               TextButton(
                 onPressed: () {
