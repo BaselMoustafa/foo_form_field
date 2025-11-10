@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:foo_form_field/src/core/mappers/base/field_value_mapper.dart';
 ///[I] is The type which the form field accepts
 ///[O] is The type which the client wants to get or set
-class FooFieldController<O,I> extends ChangeNotifier {
+abstract class FooFieldController<O,I> extends ChangeNotifier {
   
   final O? initialValue;
 
