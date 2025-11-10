@@ -1,9 +1,8 @@
-import 'range.dart';
+import 'package:foo_form_field/src/core/ranges/range.dart';
 
 class RangeValidator<T> {
-  final bool Function(T first , T second) firstIsBiggerThanSecond;
-  final bool Function(T x , T y) areEqual;
 
+  final bool Function(T x, T y) firstIsBiggerThanSecond;
   final bool allowEqual;
   final String maxSmallerThanMinMessage;
   final String minBiggerThanMaxMessage;
@@ -11,7 +10,6 @@ class RangeValidator<T> {
 
   RangeValidator({
     required this.firstIsBiggerThanSecond,
-    required this.areEqual,
     this.allowEqual = false,
     this.maxSmallerThanMinMessage = "Smaller than min",
     this.minBiggerThanMaxMessage = "Bigger than max",
@@ -46,7 +44,7 @@ class RangeValidator<T> {
     if (allowEqual || value.min == null || value.max == null) {
       return null;
     }
-    if (areEqual(value.min!, value.max!)) {
+    if (value.areEqual(value.min!, value.max!)) {
       return equalMinAndMaxMessage;
     }
 

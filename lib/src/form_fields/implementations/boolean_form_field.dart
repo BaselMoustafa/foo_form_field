@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foo_form_field/src/core/controllers/value_field_controller.dart';
+import 'package:foo_form_field/src/core/controllers/base/value_field_controller.dart';
 import 'package:foo_form_field/src/core/widgets/selection_card.dart';
 import 'package:foo_form_field/src/form_fields/base/value_form_field.dart';
 

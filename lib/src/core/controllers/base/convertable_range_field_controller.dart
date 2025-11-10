@@ -1,7 +1,7 @@
-
-
 import 'package:flutter/widgets.dart';
 import 'package:foo_form_field/foo_form_field.dart';
+import 'package:foo_form_field/src/core/mappers/base/field_value_mapper.dart';
+import 'package:foo_form_field/src/core/ranges/range.dart';
 
 class ConvertableRangeFieldController<O,I> extends FooFieldController<Range<O>,Range<I>> {
 
@@ -13,64 +13,24 @@ class ConvertableRangeFieldController<O,I> extends FooFieldController<Range<O>,R
     super.initialValue,
     super.forcedErrorText,
     required bool Function(O x, O y) areEqual,
-    required O? Function(I? i) fromFieldValue,
-    required I? Function(O? o) toFieldValue,
+    required FieldValueMapper<O,I> valueMapper,
   }):
     minValueController = FooFieldController<O,I>(
       initialValue: initialValue?.min,
       enabled: enabled,
-      fromFieldValue: fromFieldValue,
-      toFieldValue: toFieldValue,
+      mapper: valueMapper,
       forcedErrorText: null,
       areEqual: areEqual,
     ), 
     maxValueController = FooFieldController<O,I>(
       initialValue: initialValue?.max,
       enabled: enabled,
-      fromFieldValue: fromFieldValue,
-      toFieldValue: toFieldValue,
+      mapper: valueMapper,
       forcedErrorText: null,
       areEqual: areEqual,
     ),super(
-      areEqual: (Range<O> x, Range<O> y){
-        if (x.min == null && y.min == null) {
-          return true;
-        }
-        if (x.min == null && y.min != null) {
-          return false;
-        }
-        if (x.min != null && y.min == null) {
-          return false;
-        }
-        if (x.max == null && y.max == null) {
-          return true;
-        }
-        if (x.max == null && y.max != null) {
-          return false;
-        }
-        if (x.max != null && y.max == null) {
-          return false;
-        }
-        return areEqual(x.min!, y.min!) && areEqual(x.max!, y.max!);
-      },
-      fromFieldValue: (Range<I>? inputRange){
-        if (inputRange == null) {
-          return null;
-        }
-        return Range<O>(
-          min: fromFieldValue(inputRange.min),
-          max: fromFieldValue(inputRange.max),
-        );
-      },
-      toFieldValue: (Range<O>? outputRange){
-        if (outputRange == null) {
-          return null;
-        }
-        return Range<I>(
-          min: toFieldValue(outputRange.min),
-          max: toFieldValue(outputRange.max),
-        );
-      },
+      mapper: valueMapper.toRangeMapper(areEqualOutputs: areEqual),
+      areEqual: (Range<O> x, Range<O> y)=>x==y,
     );
 
   @override
@@ -135,20 +95,16 @@ class ConvertableRangeFieldController<O,I> extends FooFieldController<Range<O>,R
     if (value?.min==minValueController.value) {
       return;
     }
-    value = Range(
-      min: minValueController.value, 
-      max: value?.max,
-    );
+    final newRange = value?.copyWith(min: minValueController.value);
+    value = newRange;
   }
 
   void _onMaxValueChanged(){
     if (value?.max==maxValueController.value) {
       return;
     }
-    value = Range(
-      min: value?.min, 
-      max: maxValueController.value,
-    );
+    final newRange = value?.copyWith(max: maxValueController.value);
+    value = newRange;
   }
 
   @override
@@ -159,16 +115,4 @@ class ConvertableRangeFieldController<O,I> extends FooFieldController<Range<O>,R
     super.dispose();
   }
   
-}
-
-class RangeFieldController<T> extends ConvertableRangeFieldController<T,T> {
-  RangeFieldController({
-    super.initialValue,
-    super.enabled,
-    super.forcedErrorText,
-    required super.areEqual,
-  }):super(
-    fromFieldValue: (T? i) => i,
-    toFieldValue: (T? o) => o,
-  );
 }

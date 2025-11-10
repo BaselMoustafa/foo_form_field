@@ -1,20 +1,19 @@
 
 import 'package:flutter/material.dart';
+import 'package:foo_form_field/src/core/mappers/base/field_value_mapper.dart';
 ///[I] is The type which the form field accepts
 ///[O] is The type which the client wants to get or set
 class FooFieldController<O,I> extends ChangeNotifier {
   
   final O? initialValue;
 
-  I? get initialValueAsFieldValue => toFieldValue(initialValue);
+  I? get initialValueAsFieldValue => mapper.toFieldType(initialValue);
   
   bool _enabled;
 
   final bool Function(O x, O y) areEqual; 
 
-  final O? Function(I? i) fromFieldValue;
-
-  final I? Function(O? o) toFieldValue;
+  final FieldValueMapper<O,I> mapper;
 
   FormFieldState<I>? _formFieldState;
 
@@ -29,8 +28,7 @@ class FooFieldController<O,I> extends ChangeNotifier {
     required bool? enabled,
     required String? forcedErrorText,
     required this.initialValue,
-    required this.fromFieldValue,
-    required this.toFieldValue,
+    required this.mapper,
   }): _enabled = enabled?? true, _forcedErrorText = forcedErrorText, _isValueChanged = false;
 
   void setFormFieldState(FormFieldState<I> formFieldState){
@@ -71,7 +69,7 @@ class FooFieldController<O,I> extends ChangeNotifier {
     if (_formFieldState == null) {
       return initialValue;
     }
-    return fromFieldValue(_formFieldState!.value);
+    return mapper.toClientType(_formFieldState!.value);
   }
 
   set value(O? newValue){
@@ -79,7 +77,7 @@ class FooFieldController<O,I> extends ChangeNotifier {
       needToNotifyListener: true,
       isValueChanged: _getIsValueChanged(value, newValue),
       toExecute: (FormFieldState<I> formFieldState) {
-        formFieldState.didChange(toFieldValue(newValue));
+        formFieldState.didChange(mapper.toFieldType(newValue));
       },
     );
   }

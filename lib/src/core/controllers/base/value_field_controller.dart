@@ -1,4 +1,5 @@
 import 'package:foo_form_field/foo_form_field.dart';
+import 'package:foo_form_field/src/core/mappers/base/same_value_mapper.dart';
 
 class ValueFieldController<T> extends FooFieldController<T,T> {
 
@@ -8,7 +9,6 @@ class ValueFieldController<T> extends FooFieldController<T,T> {
     super.forcedErrorText,
     required super.areEqual,
   }): super(
-    fromFieldValue: (i) => i,
-    toFieldValue: (o) => o,
+    mapper: SameValueMapper<T>(),
   );
 }
