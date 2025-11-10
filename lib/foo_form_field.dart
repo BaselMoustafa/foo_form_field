@@ -7,8 +7,8 @@ export 'src/core/models/range_validator.dart';
 export 'src/form_fields/implementations/int_range_form_field.dart';
 export 'src/form_fields/implementations/int_text_form_field.dart';
 export 'src/form_fields/implementations/boolean_form_field.dart';
-export 'src/form_fields/implementations/int_value_form_field.dart';
-export 'src/form_fields/base/foo_text_form_field.dart';
+export 'src/form_fields/implementations/int_string_form_field.dart';
+export 'src/form_fields/base/foo_string_form_field.dart';
 
 
 export 'src/core/controllers/base/value_field_controller.dart';

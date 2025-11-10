@@ -6,16 +6,8 @@ class ValueFormField<T> extends ConvertableValueFormField<T,T> {
   const ValueFormField({
     super.key, 
     required ValueFieldController<T> controller, 
-    required super.fieldBuilder, 
-    super.layoutBuilder, 
-    super.onSaved, 
-    super.validator, 
-    super.autovalidateMode, 
-    super.errorBuilder, 
-    super.restorationId, 
-    super.onChanged,
+    required super.builder,
   }):super(
     controller: controller,
   );
-
 }

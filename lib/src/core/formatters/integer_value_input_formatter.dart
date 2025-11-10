@@ -11,7 +11,7 @@ class IntegerValueInputFormatter extends FooTextInputFormatter {
   final String exceedMaxValueMessage;
   final String invalidIntegerMessage;
 
-  IntegerValueInputFormatter({
+  const IntegerValueInputFormatter({
     this.allowNegative = false,
     this.maxValue,
     this.invalidNegativeMessage = "Invalid negative number",

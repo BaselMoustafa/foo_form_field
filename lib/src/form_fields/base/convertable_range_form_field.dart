@@ -1,18 +1,18 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:foo_form_field/foo_form_field.dart';
-import 'package:foo_form_field/src/form_fields/base/convertable_value_form_field.dart';
+import 'package:foo_form_field/src/core/controllers/base/convertable_range_field_controller.dart';
+import 'package:foo_form_field/src/core/ranges/range.dart';
+import 'package:foo_form_field/src/form_fields/base/foo_form_field.dart';
+import '../../core/controllers/base/convertable_range_boundry_field_controller.dart';
 
-class ConvertableRangeFormField<O,I> extends StatelessWidget {
+class ConvertableRangeFormField<O,I,B extends ConvertableRangeBoundryFieldController<O,I>> extends StatelessWidget {
   const ConvertableRangeFormField({
     super.key,
     required this.controller,
+    required this.rangeValidator,
     required this.minFieldBuilder,
     required this.maxFieldBuilder,
-    required this.rangeValidator,
     this.layoutBuilder,
-    this.fieldBuilder,
     this.onSaved,
     this.validator,
     this.autovalidateMode,
@@ -21,13 +21,12 @@ class ConvertableRangeFormField<O,I> extends StatelessWidget {
     this.onChanged,
   });
 
-  final ConvertableRangeFieldController<O,I> controller;
+  final ConvertableRangeFieldController<O,I,B> controller;
   final RangeValidator<O> rangeValidator; 
-  final Widget Function(BuildContext context,FooFieldController<O,I> minValueController) minFieldBuilder;
-  final Widget Function(BuildContext context,FooFieldController<O,I> maxValueController) maxFieldBuilder;
+  final Widget Function(BuildContext context,B minValueController) minFieldBuilder;
+  final Widget Function(BuildContext context,B maxValueController) maxFieldBuilder;
 
-  final Widget Function(BuildContext context,Range<I>? value,Widget minField,Widget maxField)? fieldBuilder;
-  final Widget Function(BuildContext context,Widget fieldWidget,String? errorText)? layoutBuilder;
+  final Widget Function(BuildContext context,Widget minField,Widget maxField)? layoutBuilder;
 
   final void Function(Range<O?>? value)? onSaved;
   final String? Function(Range<O?>? value)? validator;
@@ -38,21 +37,19 @@ class ConvertableRangeFormField<O,I> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConvertableValueFormField<Range<O>,Range<I>>(
+    return FooFormField<Range<O>,Range<I>>(
+      builder: _builder,
       controller: controller, 
       onSaved: onSaved,
       autovalidateMode: autovalidateMode,
       errorBuilder: errorBuilder,
       restorationId: restorationId,
       onChanged: onChanged,
-      layoutBuilder: layoutBuilder,
       validator: _validator,
-      fieldBuilder: _fieldBuilder,
     );
   }
 
   String? _validator(Range<O?>? value){
-    log("Validator Called with value: $value");
     if (value == null) {
       return validator?.call(value);
     }
@@ -74,15 +71,11 @@ class ConvertableRangeFormField<O,I> extends StatelessWidget {
     return validator?.call(value);
   }
 
-  Widget _fieldBuilder(BuildContext context , Range<I>? value){
+  Widget _builder(BuildContext context , Range<I>? value){
     final minField = minFieldBuilder(context,controller.minValueController);
     final maxField = maxFieldBuilder(context,controller.maxValueController);
 
-    if (fieldBuilder!=null) {
-      return fieldBuilder!(context,value,minField,maxField);
-    }
-
-    return Row(
+    return layoutBuilder?.call(context,minField,maxField) ?? Row(
       spacing: 6,
       children: [
         Expanded(child: minField),

@@ -37,7 +37,7 @@ class _IntValueFormFieldExampleState extends State<IntValueFormFieldExample> {
           padding: const EdgeInsets.all(10),
           child: ListView(
             children: [
-              IntValueFormField(
+              IntStringFormField(
                 controller: _controller,
                 formatter: IntegerValueInputFormatter(
                   allowNegative: false,
