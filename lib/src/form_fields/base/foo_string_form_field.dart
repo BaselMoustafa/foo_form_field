@@ -1,5 +1,4 @@
 
-import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -137,10 +136,7 @@ class _FooStringFormFieldState<O> extends State<FooStringFormField<O>> {
       ),
       onChanged: (String? value) {
         widget.controller.value = widget.controller.mapper.toClientType(value);
-        log("Value From Form Field ==> $value");
-        log("Value From Controller ==> ${widget.controller.value}");
         if(_validToNotifyUserBy(value)){
-          log("Valid To Notify User By ==> $value");
           _properties?.onChanged?.call(widget.controller.value);
         }
       },

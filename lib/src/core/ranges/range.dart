@@ -39,23 +39,7 @@ class Range<T> {
     }
     return areEqual(min!, other.min!) && areEqual(max!, other.max!);
   }
-
-  Range<T> changeMin(T? newMin){
-    return Range<T>(
-      min: newMin,
-      max: max,
-      areEqual: areEqual,
-    );
-  }
-
-  Range<T> changeMax(T? newMax){
-    return Range<T>(
-      min: min,
-      max: newMax,
-      areEqual: areEqual,
-    );
-  }
-
+  
   @override
   String toString() {
     return "Range(min: $min, max: $max)";

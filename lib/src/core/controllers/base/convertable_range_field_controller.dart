@@ -97,16 +97,22 @@ class ConvertableRangeFieldController<O,I,B extends ConvertableRangeBoundryField
     if (value?.min==minValueController.value) {
       return;
     }
-    final newRange = value?.changeMin(minValueController.value);
-    value = newRange;
+    value = Range<O>(
+      min: minValueController.value, 
+      max: value?.max, 
+      areEqual: areEqualValues,
+    );
   }
 
   void _onMaxValueChanged(){
     if (value?.max==maxValueController.value) {
       return;
     }
-    final newRange = value?.changeMax(maxValueController.value);
-    value = newRange;
+    value = Range<O>(
+      min: value?.min, 
+      max: maxValueController.value, 
+      areEqual: areEqualValues,
+    );
   }
 
   @override
