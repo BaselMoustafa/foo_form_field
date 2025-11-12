@@ -1,4 +1,4 @@
-import '../base/field_value_mapper.dart';
+part of '../exporter.dart';
 
 class NumStringMapper extends FieldValueMapper<num,String> {
   NumStringMapper():super(

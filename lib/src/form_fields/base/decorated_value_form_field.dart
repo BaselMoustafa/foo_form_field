@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:foo_form_field/src/form_fields/base/value_form_field.dart';
+part of '../exporter.dart';
 
-class DecoratedValueFormField<T> extends ValueFormField<T> {
+class DecoratedValueFormField<T> extends FooFormField<T,T> {
   DecoratedValueFormField({
     super.key,
     required super.controller,

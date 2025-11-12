@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:foo_form_field/foo_form_field.dart';
+part of '../exporter.dart';
 
 class StringFormField extends FooStringFormField<String> {
   

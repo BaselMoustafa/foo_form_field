@@ -1,5 +1,4 @@
-import 'package:foo_form_field/src/core/controllers/base/convertable_value_field_controller.dart';
-import 'package:foo_form_field/src/core/mappers/base/same_value_mapper.dart';
+part of '../exporter.dart';
 
 class ValueFieldController<T> extends ConvertableValueFieldController<T,T> {
 

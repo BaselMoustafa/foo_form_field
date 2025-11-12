@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:foo_form_field/foo_form_field.dart';
-import 'package:foo_form_field/src/form_fields/base/decorated_value_form_field.dart';
+part of '../exporter.dart';
 
 class DateFormField extends StatelessWidget{
 

@@ -1,4 +1,13 @@
-import 'package:foo_form_field/foo_form_field.dart';
+part of 'exporter.dart';
+
+class IntRange extends Range<int> {
+  IntRange({
+    required super.min,
+    required super.max,
+  }):super(
+    areEqual: (int x, int y) => x == y,
+  );
+}
 
 class IntRangeValidator extends RangeValidator<int> {
   IntRangeValidator({

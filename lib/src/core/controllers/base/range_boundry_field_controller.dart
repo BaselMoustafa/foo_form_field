@@ -1,4 +1,5 @@
-import 'package:foo_form_field/foo_form_field.dart';
+part of '../exporter.dart';
+
 class RangeBoundryFieldController<T> extends ConvertableRangeBoundryFieldController<T,T> {
   
   RangeBoundryFieldController({

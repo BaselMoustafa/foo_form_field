@@ -1,6 +1,4 @@
-import 'package:flutter/widgets.dart';
-import 'package:foo_form_field/foo_form_field.dart';
-import 'package:foo_form_field/src/core/mappers/base/field_value_mapper.dart';
+part of '../exporter.dart';
 
 class ConvertableRangeFieldController<O,I,BoundryController extends ConvertableRangeBoundryFieldController<O,I> > extends FooFieldController<Range<O>,Range<I>> {
 

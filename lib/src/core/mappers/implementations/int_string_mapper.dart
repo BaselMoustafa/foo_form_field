@@ -1,4 +1,4 @@
-import 'package:foo_form_field/src/core/mappers/base/field_value_mapper.dart';
+part of '../exporter.dart';
 
 class IntStringMapper extends FieldValueMapper<int,String> {
   IntStringMapper():super(

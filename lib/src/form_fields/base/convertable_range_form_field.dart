@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:foo_form_field/foo_form_field.dart';
-import 'package:foo_form_field/src/core/widgets/field_with_error_text_widget.dart';
+part of '../exporter.dart';
 
 class ConvertableRangeFormField<O,I,B extends ConvertableRangeBoundryFieldController<O,I>> extends StatelessWidget {
   const ConvertableRangeFormField({

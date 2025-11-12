@@ -1,7 +1,4 @@
-import 'package:foo_form_field/src/core/controllers/base/convertable_range_boundry_field_controller.dart';
-import 'package:foo_form_field/src/core/controllers/base/convertable_range_field_controller.dart';
-import 'package:foo_form_field/src/core/controllers/base/convertable_value_field_controller.dart';
-import 'package:foo_form_field/src/core/mappers/implementations/int_string_mapper.dart';
+part of '../exporter.dart';
 
 class IntStringFieldController extends ConvertableValueFieldController<int,String> {
   

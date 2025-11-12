@@ -1,4 +1,4 @@
-import 'package:foo_form_field/src/core/formatters/foo_text_input_formatter.dart';
+import 'package:foo_form_field/src/core/formatters/exporter.dart';
 
 extension FooTextInputFormatterListExtension on List<FooTextInputFormatter> {
 

@@ -30,14 +30,7 @@ class _IntRangeValueFormFieldExampleState extends State<IntRangeValueFormFieldEx
           child: ListView(
             children: [
               IntStringRangeFormField(
-                rangeValidator: RangeValidator(
-                  firstIsBiggerThanSecond: (x, y) {
-                    return x > y;
-                  },
-                  allowEqual: true,
-                  minBiggerThanMaxMessage: "Min value is bigger than max value",
-                  equalMinAndMaxMessage: "Min is equal to max value",
-                ),
+                rangeValidator: IntRangeValidator(),
                 controller: _controller,
                 validator: (value) {
                   if (value == null || value.min == null || value.max == null) {

@@ -1,5 +1,4 @@
-import 'package:foo_form_field/src/core/extentions/string_extension.dart';
-import 'package:foo_form_field/src/core/formatters/foo_text_input_formatter.dart';
+part of 'exporter.dart';
 
 class IntegerValueInputFormatter extends FooTextInputFormatter {
 

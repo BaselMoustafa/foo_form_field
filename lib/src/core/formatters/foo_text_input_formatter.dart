@@ -1,4 +1,6 @@
-import 'package:flutter/services.dart';
+part of 'exporter.dart';
+
+
 
 abstract class FooTextInputFormatter extends TextInputFormatter {
 

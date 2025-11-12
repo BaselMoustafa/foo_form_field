@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:foo_form_field/foo_form_field.dart';
+part of '../exporter.dart';
 
 class FooFormField<O,I> extends StatefulWidget {
 

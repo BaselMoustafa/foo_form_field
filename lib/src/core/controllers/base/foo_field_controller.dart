@@ -1,6 +1,4 @@
-
-import 'package:flutter/material.dart';
-import 'package:foo_form_field/src/core/mappers/base/field_value_mapper.dart';
+part of '../exporter.dart';
 ///[I] is The type which the form field accepts
 ///[O] is The type which the client wants to get or set
 abstract class FooFieldController<O,I> extends ChangeNotifier {
