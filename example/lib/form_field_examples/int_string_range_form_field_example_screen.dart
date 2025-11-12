@@ -23,8 +23,7 @@ class _IntStringRangeFormFieldExampleScreenState extends State<IntStringRangeFor
   Widget build(BuildContext context) {
     return ExampleScreen(
       title: "Int String Range Form Field",
-      children: [
-        IntStringRangeFormField(
+      fieldBuilder: ()=>IntStringRangeFormField(
           controller: _controller,
           onChanged: (value) => log("Range Changed To: $value"),
           onSaved: (value) => log("Range Saved: $value"),
@@ -62,6 +61,7 @@ class _IntStringRangeFormFieldExampleScreenState extends State<IntStringRangeFor
             ),
           ),
         ),
+      children: [
         ControllerTestButtons(
           title: "Range Controller Test Buttons",
           controller: _controller,

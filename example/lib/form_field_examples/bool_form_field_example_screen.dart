@@ -24,18 +24,18 @@ class _BoolFormFieldExampleScreenState extends State<BoolFormFieldExampleScreen>
   Widget build(BuildContext context) {
     return ExampleScreen(
       title: "Bool Form Field",
+      fieldBuilder: () => BooleanFormField(
+        controller: _controller,
+        onChanged: (value) => log("Bool Changed To: $value"),
+        onSaved: (value) => log("Bool Saved: $value"),
+        validator: (value) {
+          if (value == null) {
+            return 'This field is required';
+          }
+          return null;
+        },
+      ),
       children: [
-        BooleanFormField(
-          controller: _controller,
-          onChanged: (value) => log("Bool Changed To: $value"),
-          onSaved: (value) => log("Bool Saved: $value"),
-          validator: (value) {
-            if (value == null) {
-              return 'This field is required';
-            }
-            return null;
-          },
-        ),
         ControllerTestButtons(
           title: "Bool Controller Test Buttons",
           controller: _controller,

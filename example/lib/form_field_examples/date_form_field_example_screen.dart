@@ -22,18 +22,18 @@ class _DateFormFieldExampleScreenState extends State<DateFormFieldExampleScreen>
   Widget build(BuildContext context) {
     return ExampleScreen(
       title: "Date Form Field",
+      fieldBuilder: () => DateFormField(
+        controller: _controller,
+        onChanged: (value) => log("Date Changed To: $value"),
+        onSaved: (value) => log("Date Saved: $value"),
+        validator: (value) {
+          if (value == null) {
+            return 'This field is required';
+          }
+          return null;
+        },
+      ),
       children: [
-        DateFormField(
-          controller: _controller,
-          onChanged: (value) => log("Date Changed To: $value"),
-          onSaved: (value) => log("Date Saved: $value"),
-          validator: (value) {
-            if (value == null) {
-              return 'This field is required';
-            }
-            return null;
-          },
-        ),
         ControllerTestButtons(
           title: "Date Controller Test Buttons",
           controller: _controller,

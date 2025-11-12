@@ -23,40 +23,40 @@ class _DateRangeFormFieldExampleScreenState extends State<DateRangeFormFieldExam
   Widget build(BuildContext context) {
     return ExampleScreen(
       title: "Date Range Form Field",
-      children: [
-        DateRangeFormField(
-          controller: _controller,
-          onChanged: (value) => log("Range Changed To: $value"),
-          onSaved: (value) => log("Range Saved: $value"),
+      fieldBuilder: () => DateRangeFormField(
+        controller: _controller,
+        onChanged: (value) => log("Range Changed To: $value"),
+        onSaved: (value) => log("Range Saved: $value"),
+        validator: (value) {
+          if (value == null || value.min == null || value.max == null) {
+            return 'This field is required';
+          } 
+          return null;
+        },
+        minFieldBuilder: (context, minValueController, initialValue) => DateFormField(
+          controller: minValueController,
+          onChanged: (value) => log("Min Date Changed To: $value"),
+          onSaved: (value) => log("Min Date Saved: $value"),
           validator: (value) {
-            if (value == null || value.min == null || value.max == null) {
-              return 'This field is required';
+            if (value == null) {
+              return 'Min Required';
             }
             return null;
           },
-          minFieldBuilder: (context, minValueController, initialValue) => DateFormField(
-            controller: minValueController,
-            onChanged: (value) => log("Min Date Changed To: $value"),
-            onSaved: (value) => log("Min Date Saved: $value"),
-            validator: (value) {
-              if (value == null) {
-                return 'Min Required';
-              }
-              return null;
-            },
-          ),
-          maxFieldBuilder: (context, maxValueController, initialValue) => DateFormField(
-            controller: maxValueController,
-            onChanged: (value) => log("Max Date Changed To: $value"),
-            onSaved: (value) => log("Max Date Saved: $value"),
-            validator: (value) {
-              if (value == null) {
-                return 'Max Required';
-              }
-              return null;
-            },
-          ),
         ),
+        maxFieldBuilder: (context, maxValueController, initialValue) => DateFormField(
+          controller: maxValueController,
+          onChanged: (value) => log("Max Date Changed To: $value"),
+          onSaved: (value) => log("Max Date Saved: $value"),
+          validator: (value) {
+            if (value == null) {
+              return 'Max Required';
+            }
+            return null;
+          },
+        ),
+      ),
+      children: [
         ControllerTestButtons(
           title: "Range Controller Test Buttons",
           controller: _controller,
