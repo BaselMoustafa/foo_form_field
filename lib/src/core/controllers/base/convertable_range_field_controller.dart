@@ -2,25 +2,25 @@ import 'package:flutter/widgets.dart';
 import 'package:foo_form_field/foo_form_field.dart';
 import 'package:foo_form_field/src/core/mappers/base/field_value_mapper.dart';
 
-class ConvertableRangeFieldController<O,I,B extends ConvertableRangeBoundryFieldController<O,I> > extends FooFieldController<Range<O>,Range<I>> {
+class ConvertableRangeFieldController<O,I,BoundryController extends ConvertableRangeBoundryFieldController<O,I> > extends FooFieldController<Range<O>,Range<I>> {
 
-  B? _minValueController;
-  B? _maxValueController;
+  BoundryController? _minValueController;
+  BoundryController? _maxValueController;
 
-  B get minValueController{
+  BoundryController get minValueController{
     _minValueController ??= minBoundryControllerBuilder(this);
     return _minValueController!;
   }
 
-  B get maxValueController{
+  BoundryController get maxValueController{
     _maxValueController ??= maxBoundryControllerBuilder(this);
     return _maxValueController!;
   }
 
   final bool Function(O x, O y) areEqualValues;
   final FieldValueMapper<O,I> valueMapper;
-  final B Function(ConvertableRangeFieldController<O,I,B> rangeFieldController) minBoundryControllerBuilder;
-  final B Function(ConvertableRangeFieldController<O,I,B> rangeFieldController) maxBoundryControllerBuilder;
+  final BoundryController Function(ConvertableRangeFieldController<O,I,BoundryController> rangeFieldController) minBoundryControllerBuilder;
+  final BoundryController Function(ConvertableRangeFieldController<O,I,BoundryController> rangeFieldController) maxBoundryControllerBuilder;
 
   ConvertableRangeFieldController({
     super.enabled,

@@ -6,7 +6,7 @@ class StringFormField extends FooStringFormField<String> {
   
   const StringFormField({
     super.key,
-    required StringFieldController super.controller,
+    required super.controller,
     super.properties,
     super.fooInputFormatters,
     super.keyboardType

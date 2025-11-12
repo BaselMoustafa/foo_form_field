@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:foo_form_field/src/core/controllers/implementations/date_field_controller.dart';
 import 'package:foo_form_field/src/form_fields/base/decorated_value_form_field.dart';
 
 class DateFormField extends DecoratedValueFormField<DateTime> {
   DateFormField({
     super.key,
-    required DateFieldController super.controller,
+    required super.controller,
     String? Function(DateTime? date)? dateFormatter,
     Widget Function(BuildContext context)? builder,
     void Function(BuildContext context)? onTap,
@@ -51,6 +50,7 @@ class DateFormField extends DecoratedValueFormField<DateTime> {
               controller.clear();
             },
             child: const Icon(
+              
               Icons.clear,
             ),
           ),

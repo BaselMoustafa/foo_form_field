@@ -2,9 +2,8 @@
 import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:foo_form_field/src/core/controllers/base/convertable_value_field_controller.dart';
+import 'package:foo_form_field/foo_form_field.dart';
 import 'package:foo_form_field/src/core/extentions/foo_text_input_formatter_list_extension.dart';
-import 'package:foo_form_field/src/core/models/text_from_field_properties.dart';
 
 import '../../core/formatters/foo_text_input_formatter.dart';
 
@@ -18,7 +17,7 @@ class FooStringFormField<O> extends StatefulWidget {
     this.properties,
   });
 
-  final ConvertableValueFieldController<O,String> controller;
+  final FooFieldController<O,String> controller;
   final List<FooTextInputFormatter>? fooInputFormatters;
   final TextInputType? keyboardType;
   final TextFormFieldProperties<O>? properties;

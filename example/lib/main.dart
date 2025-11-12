@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
         disabledColor: Colors.brown,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.transparent,primary: Colors.blueAccent,secondary:  Colors.black),
         inputDecorationTheme: InputDecorationTheme(
+          contentPadding: EdgeInsets.all(10),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.green),
             borderRadius: BorderRadius.circular(10),

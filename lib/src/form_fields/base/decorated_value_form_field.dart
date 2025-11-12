@@ -23,12 +23,15 @@ class DecoratedValueFormField<T> extends ValueFormField<T> {
         enabled: controller.enabled,
       );
 
-      return GestureDetector(
-        onTap: controller.enabled?() => onTap?.call(context):null,
-        child: InputDecorator(
-          isEmpty: controller.value == null,
-          decoration: effectiveDecoration,
-          child:controller.value != null? builder(context) : null,
+      return AbsorbPointer(
+        absorbing: !controller.enabled,
+        child: GestureDetector(
+          onTap:() => onTap?.call(context),
+          child: InputDecorator(
+            isEmpty: controller.value == null,
+            decoration: effectiveDecoration,
+            child:controller.value != null? builder(context) : null,
+          ),
         ),
       );
     },

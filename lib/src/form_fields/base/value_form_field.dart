@@ -1,10 +1,10 @@
 import 'package:foo_form_field/foo_form_field.dart';
 
-class ValueFormField<T> extends ConvertableValueFormField<T,T> {
+class ValueFormField<T> extends FooFormField<T,T> {
 
   const ValueFormField({
     super.key, 
-    required ValueFieldController<T> controller, 
+    required super.controller,
     required super.builder,
     super.onSaved,
     super.validator,
@@ -12,7 +12,5 @@ class ValueFormField<T> extends ConvertableValueFormField<T,T> {
     super.errorBuilder,
     super.restorationId,
     super.onChanged,
-  }):super(
-    controller: controller,
-  );
+  });
 }

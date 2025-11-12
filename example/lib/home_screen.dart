@@ -1,5 +1,6 @@
 import 'package:example/bool_form_field_example.dart';
 import 'package:example/date_form_field_example.dart';
+import 'package:example/date_range_form_field_example.dart';
 import 'package:example/int_value_form_field_example.dart';
 import 'package:example/int_range_form_field_example.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,10 @@ class HomeScreen extends StatelessWidget {
       body: Column(
 
         children: [
+          _GoToExampleScreenButton(
+            title: 'Date Range Form Field', 
+            screen: DateRangeValueFormFieldExample()
+          ),
           _GoToExampleScreenButton(
             title: 'Date Form Field', 
             screen: DateFormFieldExample()

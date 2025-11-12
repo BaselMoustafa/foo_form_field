@@ -7,6 +7,7 @@ export 'src/form_fields/implementations/int_string_range_form_field.dart';
 export 'src/form_fields/implementations/boolean_form_field.dart';
 export 'src/form_fields/implementations/int_string_form_field.dart';
 export 'src/form_fields/implementations/date_form_field.dart';
+export 'src/form_fields/implementations/date_range_form_field.dart';
 
 export 'src/form_fields/base/foo_string_form_field.dart';
 
@@ -17,12 +18,13 @@ export 'src/core/controllers/base/convertable_range_field_controller.dart';
 export 'src/core/controllers/base/convertable_range_boundry_field_controller.dart';
 export 'src/core/controllers/base/convertable_value_field_controller.dart';
 export 'src/core/controllers/implementations/boolean_field_controller.dart';
-export 'src/core/controllers/implementations/date_field_controller.dart';
+export 'src/core/controllers/implementations/date_range_field_controller.dart';
 export 'src/core/controllers/implementations/int_string_field_controller.dart';
 export 'src/core/controllers/implementations/string_field_controller.dart';
 
 export 'src/core/ranges/range.dart';
 export 'src/core/ranges/int_range.dart';
+export 'src/core/ranges/date_range.dart';
 
 
 export 'src/form_fields/base/foo_form_field.dart';

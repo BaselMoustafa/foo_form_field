@@ -1,7 +1,6 @@
-import 'package:foo_form_field/src/core/controllers/base/convertable_range_field_controller.dart';
-import 'package:foo_form_field/src/core/controllers/base/convertable_value_field_controller.dart';
+import 'package:foo_form_field/foo_form_field.dart';
 
-class ConvertableRangeBoundryFieldController<O,I> extends ConvertableValueFieldController<O,I> {
+class ConvertableRangeBoundryFieldController<O,I> extends FooFieldController<O,I> {
   ConvertableRangeBoundryFieldController({
     required bool isMin,
     required ConvertableRangeFieldController<O,I,ConvertableRangeBoundryFieldController<O,I>> rangeFieldController,
