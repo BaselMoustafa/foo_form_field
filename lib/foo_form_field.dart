@@ -1,7 +1,7 @@
 export 'src/core/formatters/integer_text_input_formatter.dart';
 export 'src/core/formatters/integer_value_input_formatter.dart';
 
-export 'src/core/models/range_validator.dart';
+export 'src/core/ranges/range/range_validator.dart';
 
 export 'src/form_fields/implementations/int_string_range_form_field.dart';
 export 'src/form_fields/implementations/boolean_form_field.dart';
@@ -22,9 +22,9 @@ export 'src/core/controllers/implementations/date_range_field_controller.dart';
 export 'src/core/controllers/implementations/int_string_field_controller.dart';
 export 'src/core/controllers/implementations/string_field_controller.dart';
 
-export 'src/core/ranges/range.dart';
-export 'src/core/ranges/int_range.dart';
-export 'src/core/ranges/date_range.dart';
+export 'src/core/ranges/range/range.dart';
+export 'src/core/ranges/int_range/int_range.dart';
+export 'src/core/ranges/date_range/date_range.dart';
 
 
 export 'src/form_fields/base/foo_form_field.dart';

@@ -36,7 +36,7 @@ class _DateRangeValueFormFieldExampleState extends State<DateRangeValueFormField
                   firstIsBiggerThanSecond: (x, y) {
                     return x.year > y.year || x.month > y.month || x.day > y.day;
                   },
-                  //allowEqual: true,
+                  allowEqual: true,
                   minBiggerThanMaxMessage: "Min Date is bigger than max date",
                   equalMinAndMaxMessage: "Min Date is equal to max date",
 

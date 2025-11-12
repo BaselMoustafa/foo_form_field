@@ -1,4 +1,4 @@
-import 'package:foo_form_field/src/core/ranges/range.dart';
+import 'package:foo_form_field/src/core/ranges/range/range.dart';
 
 class FieldValueMapper<O,I> {
   final O? Function(I? i) toClientType;
