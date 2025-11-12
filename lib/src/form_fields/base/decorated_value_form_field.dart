@@ -11,6 +11,7 @@ class DecoratedValueFormField<T> extends ValueFormField<T> {
     super.errorBuilder,
     super.restorationId,
     super.onChanged,
+    required void Function(BuildContext context)? onTap,
     required InputDecoration? decoration,
     required Widget Function(BuildContext context) builder,
   }):super(
@@ -22,10 +23,13 @@ class DecoratedValueFormField<T> extends ValueFormField<T> {
         enabled: controller.enabled,
       );
 
-      return InputDecorator(
-        isEmpty: controller.value == null,
-        decoration: effectiveDecoration,
-        child:controller.value != null? builder(context) : null,
+      return GestureDetector(
+        onTap: controller.enabled?() => onTap?.call(context):null,
+        child: InputDecorator(
+          isEmpty: controller.value == null,
+          decoration: effectiveDecoration,
+          child:controller.value != null? builder(context) : null,
+        ),
       );
     },
   );

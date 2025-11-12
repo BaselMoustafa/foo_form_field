@@ -8,7 +8,11 @@ class DateFormField extends DecoratedValueFormField<DateTime> {
     required DateFieldController super.controller,
     String? Function(DateTime? date)? dateFormatter,
     Widget Function(BuildContext context)? builder,
-    super.decoration,
+    void Function(BuildContext context)? onTap,
+    DateTime? firstDate,
+    DateTime? lastDate,
+    DateTime? initialDate,
+    InputDecoration? decoration,
     super.onSaved,
     super.validator,
     super.autovalidateMode,
@@ -16,26 +20,39 @@ class DateFormField extends DecoratedValueFormField<DateTime> {
     super.restorationId,
     super.onChanged,
   }):super(
+    decoration: decoration?.prefixIcon==null? decoration?.copyWith(
+      prefixIcon: Icon(Icons.calendar_today),
+    ) : decoration,
+    onTap: onTap?? (context) async{
+      final selectedDate = await showDatePicker(
+        context: context,
+        initialDate: controller.value?? DateTime.now(),
+        firstDate: firstDate?? DateTime(1900),
+        lastDate: lastDate?? DateTime(2100),
+      );
+
+      if (selectedDate != null) {
+        controller.value = selectedDate;
+      }
+    },
     builder: builder?? (BuildContext context) {
       final value = controller.value;
       return Row(
         spacing: 10,
         children: [
-          Text(
-            dateFormatter?.call(value)?? "${value?.year}-${value?.month}-${value?.day}",
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.blue,
-              fontWeight: FontWeight.bold,
+          Expanded(
+            child: Text(
+              dateFormatter?.call(value)?? "${value?.year}-${value?.month}-${value?.day}",
             ),
           ),
-          Spacer(),
          
-          IconButton(
-            onPressed: () {
+          InkWell(
+            onTap: () {
               controller.clear();
             },
-            icon: const Icon(Icons.clear),
+            child: const Icon(
+              Icons.clear,
+            ),
           ),
         ],
       );

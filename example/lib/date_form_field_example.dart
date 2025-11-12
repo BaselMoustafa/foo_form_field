@@ -29,6 +29,9 @@ class _DateFormFieldExampleState extends State<DateFormFieldExample> {
           padding: const EdgeInsets.all(10),
           child: ListView(
             children: [
+              StringFormField(controller: StringFieldController(),properties: TextFormFieldProperties(
+                textInputAction: TextInputAction.next,
+              ),),
               DateFormField(
                 decoration: InputDecoration(
                   hintText: "Select a date",
