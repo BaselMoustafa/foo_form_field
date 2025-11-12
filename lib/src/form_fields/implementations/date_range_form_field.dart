@@ -17,8 +17,18 @@ class DateRangeFormField extends RangeFormField<DateTime,DateRangeBoundryFieldCo
     super.restorationId,
     super.onChanged,
   }):super(
-    minFieldBuilder: minFieldBuilder?? (context,minValueController) => DateFormField(controller: minValueController),
-    maxFieldBuilder: maxFieldBuilder?? (context,maxValueController) => DateFormField(controller: maxValueController),
+    minFieldBuilder: minFieldBuilder?? (context,minValueController) => DateFormField(
+      controller: minValueController,
+      decoration: InputDecoration(
+        hintText: "From",
+      ),
+    ),
+    maxFieldBuilder: maxFieldBuilder?? (context,maxValueController) => DateFormField(
+      controller: maxValueController,
+      decoration: InputDecoration(
+        hintText: "To",
+      ),
+    ),
     rangeValidator: rangeValidator?? RangeValidator<DateTime>(
       firstIsBiggerThanSecond: (DateTime first, DateTime second) => first.year>second.year||first.month>second.month||first.day>second.day,
     ),
