@@ -1,4 +1,4 @@
-import 'package:example/models/text_button_input.dart';
+import 'text_button_input.dart';
 
 class Section {
   final String title;

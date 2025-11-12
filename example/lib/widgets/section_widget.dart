@@ -1,4 +1,4 @@
-import 'package:example/models/section.dart';
+import '../models/section.dart';
 import 'package:flutter/material.dart';
 
 class SectionWidget extends StatelessWidget {

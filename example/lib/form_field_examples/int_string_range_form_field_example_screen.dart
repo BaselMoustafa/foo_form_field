@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:example/widgets/controller_test_buttons.dart';
-import 'package:example/widgets/example_screen.dart';
+import '../widgets/controller_test_buttons.dart';
+import '../widgets/example_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:foo_form_field/foo_form_field.dart';
 

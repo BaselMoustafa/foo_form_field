@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:example/models/section.dart';
-import 'package:example/models/text_button_input.dart';
-import 'package:example/widgets/section_widget.dart';
+import '../models/section.dart';
+import '../models/text_button_input.dart';
+import 'section_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:foo_form_field/foo_form_field.dart';
 
