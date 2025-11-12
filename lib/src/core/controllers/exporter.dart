@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:foo_form_field/src/core/mappers/exporter.dart';
-import 'package:foo_form_field/src/core/ranges/exporter.dart';
+import '../mappers/exporter.dart';
+import '../ranges/exporter.dart';
 part 'base/foo_field_controller.dart';
 part 'base/value_field_controller.dart';
 part 'base/range_field_controller.dart';

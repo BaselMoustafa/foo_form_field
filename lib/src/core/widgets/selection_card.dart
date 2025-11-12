@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foo_form_field/src/core/style/package_colors.dart';
+import '../style/package_colors.dart';
 
 class SelectionCard extends StatelessWidget {
 

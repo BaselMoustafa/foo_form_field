@@ -45,7 +45,7 @@ abstract class FooFieldController<O,I> extends ChangeNotifier {
     else if (x != null && y == null) {
       return true;
     }
-    else if (!areEqual(x!, y!)) {
+    else if (!areEqual(x as O, y as O)) {
       return true;
     }
 

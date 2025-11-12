@@ -2,14 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:foo_form_field/foo_form_field.dart';
-import 'package:foo_form_field/src/core/controllers/exporter.dart';
-import 'package:foo_form_field/src/core/extentions/foo_text_input_formatter_list_extension.dart';
-import 'package:foo_form_field/src/core/formatters/exporter.dart';
-import 'package:foo_form_field/src/core/models/text_from_field_properties.dart';
-import 'package:foo_form_field/src/core/ranges/exporter.dart';
-import 'package:foo_form_field/src/core/widgets/field_with_error_text_widget.dart';
-import 'package:foo_form_field/src/core/widgets/selection_card.dart';
+import '../../foo_form_field.dart';
+import '../core/extentions/foo_text_input_formatter_list_extension.dart';
+import '../core/widgets/field_with_error_text_widget.dart';
+import '../core/widgets/selection_card.dart';
 
 part 'base/convertable_range_form_field.dart';
 part 'base/decorated_value_form_field.dart';

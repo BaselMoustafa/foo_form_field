@@ -39,7 +39,7 @@ class Range<T> {
     if (max != null && other.max == null) {
       return false;
     }
-    return areEqual(min!, other.min!) && areEqual(max!, other.max!);
+    return areEqual(min as T, other.min as T) && areEqual(max as T, other.max as T);
   }
   
   @override
@@ -67,7 +67,7 @@ class RangeValidator<T> {
       return null;
     }
 
-    if (firstIsBiggerThanSecond(value.min!, value.max!)) {
+    if (firstIsBiggerThanSecond(value.min as T, value.max as T)) {
       return minBiggerThanMaxMessage;
     }
 
@@ -78,7 +78,7 @@ class RangeValidator<T> {
     if (allowEqual || value.min == null || value.max == null) {
       return null;
     }
-    if (value.areEqual(value.min!, value.max!)) {
+    if (value.areEqual(value.min as T, value.max as T)) {
       return equalMinAndMaxMessage;
     }
 
