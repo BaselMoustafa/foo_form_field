@@ -22,7 +22,7 @@ class DateFormField extends StatelessWidget{
 
   final FooFieldController<DateTime,DateTime> controller;
   final String? Function(DateTime? date)? dateFormatter;
-  final Widget Function(BuildContext context)? builder;
+  final Widget Function(BuildContext context,DateTime? value)? builder;
   final void Function(BuildContext context)? onTap;
   final DateTime? firstDate;
   final DateTime? lastDate;
@@ -47,7 +47,7 @@ class DateFormField extends StatelessWidget{
       onChanged: onChanged,
       decoration: _effectiveDecoration,
       onTap: _onTap,
-      builder: builder?? (BuildContext context) {
+      builder: builder?? (BuildContext context,DateTime? value) {
         final value = controller.value;
         return FittedBox(
           fit: BoxFit.scaleDown,

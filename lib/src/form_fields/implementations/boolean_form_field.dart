@@ -44,7 +44,7 @@ class BooleanFormField extends StatelessWidget {
     );
   }
 
-  Widget _fieldBuilder(BuildContext context){
+  Widget _fieldBuilder(BuildContext context,bool? value){
     if (builder!=null) {
       return builder!(context);
     }

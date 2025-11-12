@@ -17,8 +17,8 @@ class IntStringRangeFormField extends StatelessWidget {
 
   final RangeValidator<int>? rangeValidator;
   final IntStringRangeFieldController controller;
-  final Widget Function(BuildContext context,IntStringRangeBoundryFieldController minValueController)? minFieldBuilder;
-  final Widget Function(BuildContext context,IntStringRangeBoundryFieldController maxValueController)? maxFieldBuilder;
+  final Widget Function(BuildContext context,IntStringRangeBoundryFieldController minValueController,String? value)? minFieldBuilder;
+  final Widget Function(BuildContext context,IntStringRangeBoundryFieldController maxValueController,String? value)? maxFieldBuilder;
   final Widget Function(BuildContext context,Widget minField,Widget maxField)? layoutBuilder;
   final void Function(Range<int?>? value)? onSaved;
   final String? Function(Range<int?>? value)? validator;
@@ -44,16 +44,16 @@ class IntStringRangeFormField extends StatelessWidget {
     );
   }
 
-  Widget _minFieldBuilder(BuildContext context,IntStringRangeBoundryFieldController minValueController){
+  Widget _minFieldBuilder(BuildContext context,IntStringRangeBoundryFieldController minValueController,String? value){
     if (minFieldBuilder!=null) {
-      return minFieldBuilder!(context,minValueController);
+      return minFieldBuilder!(context,minValueController,value);
     }
     return IntStringFormField(controller: minValueController);
   }
 
-  Widget _maxFieldBuilder(BuildContext context,IntStringRangeBoundryFieldController maxValueController){
+  Widget _maxFieldBuilder(BuildContext context,IntStringRangeBoundryFieldController maxValueController,String? value){
     if (maxFieldBuilder!=null) {
-      return maxFieldBuilder!(context,maxValueController);
+      return maxFieldBuilder!(context,maxValueController,value);
     }
     return IntStringFormField(controller: maxValueController);
   }

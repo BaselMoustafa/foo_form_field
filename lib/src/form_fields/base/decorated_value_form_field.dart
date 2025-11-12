@@ -12,9 +12,9 @@ class DecoratedValueFormField<T> extends FooFormField<T,T> {
     super.onChanged,
     required void Function(BuildContext context)? onTap,
     required InputDecoration? decoration,
-    required Widget Function(BuildContext context) builder,
+    required Widget Function(BuildContext context,T? value) builder,
   }):super(
-    builder: (BuildContext context) {
+    builder: (BuildContext context, T? value) {
       var effectiveDecoration = (decoration?? InputDecoration());
       effectiveDecoration = effectiveDecoration.applyDefaults(Theme.of(context).inputDecorationTheme);
       effectiveDecoration = effectiveDecoration.copyWith(
@@ -29,7 +29,7 @@ class DecoratedValueFormField<T> extends FooFormField<T,T> {
           child: InputDecorator(
             isEmpty: controller.value == null,
             decoration: effectiveDecoration,
-            child:controller.value != null? builder(context) : null,
+            child:controller.value != null? builder(context,value) : null,
           ),
         ),
       );

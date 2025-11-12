@@ -5,8 +5,8 @@ class DateRangeFormField extends RangeFormField<DateTime,DateRangeBoundryFieldCo
   DateRangeFormField({
     super.key,
     required DateRangeFieldController super.controller,
-    Widget Function(BuildContext context,DateRangeBoundryFieldController minValueController)? minFieldBuilder,
-    Widget Function(BuildContext context,DateRangeBoundryFieldController maxValueController)? maxFieldBuilder,
+    Widget Function(BuildContext context,DateRangeBoundryFieldController minValueController,DateTime? value)? minFieldBuilder,
+    Widget Function(BuildContext context,DateRangeBoundryFieldController maxValueController,DateTime? value)? maxFieldBuilder,
     RangeValidator<DateTime>? rangeValidator,
     super.layoutBuilder,
     super.onSaved,
@@ -15,13 +15,13 @@ class DateRangeFormField extends RangeFormField<DateTime,DateRangeBoundryFieldCo
     super.restorationId,
     super.onChanged,
   }):super(
-    minFieldBuilder: minFieldBuilder?? (context,minValueController) => DateFormField(
+    minFieldBuilder: minFieldBuilder?? (context,minValueController,value) => DateFormField(
       controller: minValueController,
       decoration: InputDecoration(
         hintText: "From",
       ),
     ),
-    maxFieldBuilder: maxFieldBuilder?? (context,maxValueController) => DateFormField(
+    maxFieldBuilder: maxFieldBuilder?? (context,maxValueController,value) => DateFormField(
       controller: maxValueController,
       decoration: InputDecoration(
         hintText: "To",
