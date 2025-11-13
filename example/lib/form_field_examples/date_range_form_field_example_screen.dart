@@ -1,9 +1,10 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart' hide DateTimeRange;
+import 'package:foo_form_field/foo_form_field.dart';
+
 import '../widgets/controller_test_buttons.dart';
 import '../widgets/example_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:foo_form_field/foo_form_field.dart';
 
 class DateRangeFormFieldExampleScreen extends StatefulWidget {
   const DateRangeFormFieldExampleScreen({super.key});
@@ -14,8 +15,8 @@ class DateRangeFormFieldExampleScreen extends StatefulWidget {
 
 class _DateRangeFormFieldExampleScreenState extends State<DateRangeFormFieldExampleScreen> {
 
-  final _controller = DateRangeFieldController(
-    initialValue: DateRange(min: DateTime(2025, 3, 11), max: DateTime(2025, 11, 12)),
+  final _controller = DateTimeRangeFieldController(
+    initialValue: DateTimeRange(min: DateTime(2025, 3, 11), max: DateTime(2025, 11, 12)),
     enabled: false,
   );
   
@@ -23,7 +24,7 @@ class _DateRangeFormFieldExampleScreenState extends State<DateRangeFormFieldExam
   Widget build(BuildContext context) {
     return ExampleScreen(
       title: "Date Range Form Field",
-      fieldBuilder: () => DateRangeFormField(
+      fieldBuilder: () => DateTimeRangeFormField(
         controller: _controller,
         onChanged: (value) => log("Range Changed To: $value"),
         onSaved: (value) => log("Range Saved: $value"),
@@ -33,7 +34,7 @@ class _DateRangeFormFieldExampleScreenState extends State<DateRangeFormFieldExam
           } 
           return null;
         },
-        minFieldBuilder: (context, initialValue) => DateFormField(
+        minFieldBuilder: (context, initialValue) => DateTimeFormField(
           controller: _controller.minValueController,
           onChanged: (value) => log("Min Date Changed To: $value"),
           onSaved: (value) => log("Min Date Saved: $value"),
@@ -44,7 +45,7 @@ class _DateRangeFormFieldExampleScreenState extends State<DateRangeFormFieldExam
             return null;
           },
         ),
-        maxFieldBuilder: (context, initialValue) => DateFormField(
+        maxFieldBuilder: (context, initialValue) => DateTimeFormField(
           controller: _controller.maxValueController,
           onChanged: (value) => log("Max Date Changed To: $value"),
           onSaved: (value) => log("Max Date Saved: $value"),
@@ -60,8 +61,8 @@ class _DateRangeFormFieldExampleScreenState extends State<DateRangeFormFieldExam
         ControllerTestButtons(
           title: "Range Controller Test Buttons",
           controller: _controller,
-          firstDummyValue: DateRange(min: DateTime(2025, 3, 11), max: DateTime(2025, 11, 12)),
-          secondDummyValue: DateRange(min: DateTime(2025, 5, 2), max: DateTime(2025, 7, 4)),
+          firstDummyValue: DateTimeRange(min: DateTime(2025, 3, 11), max: DateTime(2025, 11, 12)),
+          secondDummyValue: DateTimeRange(min: DateTime(2025, 5, 2), max: DateTime(2025, 7, 4)),
           valueToString: (value) => "(${value.min?.year}/${value.min?.month}/${value.min?.day} To ${value.max?.year}/${value.max?.month}/${value.max?.day})",
         ),
 

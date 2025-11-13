@@ -1,7 +1,7 @@
 part of 'exporter.dart';
 
-class DateRange extends Range<DateTime> {
-  DateRange({
+class DateTimeRange extends Range<DateTime> {
+  DateTimeRange({
     required super.min,
     required super.max,
     bool Function(DateTime x, DateTime y)? areEqual,
@@ -13,8 +13,8 @@ class DateRange extends Range<DateTime> {
        );
 }
 
-class DateRangeValidator extends RangeValidator<DateTime> {
-  DateRangeValidator({
+class DateTimeRangeValidator extends RangeValidator<DateTime> {
+  DateTimeRangeValidator({
     bool Function(DateTime x, DateTime y)? firstIsBiggerThanSecond,
     super.allowEqual,
     super.minBiggerThanMaxMessage,

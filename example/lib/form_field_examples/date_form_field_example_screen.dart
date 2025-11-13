@@ -13,7 +13,7 @@ class DateFormFieldExampleScreen extends StatefulWidget {
 }
 
 class _DateFormFieldExampleScreenState extends State<DateFormFieldExampleScreen> {
-  final _controller = DateFieldController(
+  final _controller = DateTimeFieldController(
     initialValue: DateTime(2025, 1, 1),
     enabled: false,
   );
@@ -22,7 +22,7 @@ class _DateFormFieldExampleScreenState extends State<DateFormFieldExampleScreen>
   Widget build(BuildContext context) {
     return ExampleScreen(
       title: "Date Form Field",
-      fieldBuilder: () => DateFormField(
+      fieldBuilder: () => DateTimeFormField(
         controller: _controller,
         onChanged: (value) => log("Date Changed To: $value"),
         onSaved: (value) => log("Date Saved: $value"),

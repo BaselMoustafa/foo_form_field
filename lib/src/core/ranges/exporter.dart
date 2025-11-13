@@ -1,6 +1,6 @@
 part 'range.dart';
 
-part 'date_range.dart';
+part 'date_time_range.dart';
 
 part 'int_range.dart';
 

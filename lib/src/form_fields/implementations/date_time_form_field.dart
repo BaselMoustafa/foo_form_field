@@ -1,8 +1,8 @@
 part of '../exporter.dart';
 
 /// Form field for picking a single date with optional custom rendering and formatter.
-class DateFormField extends StatelessWidget {
-  const DateFormField({
+class DateTimeFormField extends StatelessWidget {
+  const DateTimeFormField({
     super.key,
     required this.controller,
     this.onSaved,
@@ -21,7 +21,7 @@ class DateFormField extends StatelessWidget {
   });
 
   /// Controller managing the selected date.
-  final FooFieldController<DateTime, DateTime> controller;
+  final ValueFieldController<DateTime> controller;
 
   /// Formats the current date when using the default builder.
   final String? Function(DateTime? date)? dateFormatter;
