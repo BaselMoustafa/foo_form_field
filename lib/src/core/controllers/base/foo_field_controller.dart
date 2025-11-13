@@ -3,7 +3,7 @@ part of '../exporter.dart';
 /// Generic field controller bridging UI field values (`I`) and client values (`O`).
 ///
 /// `I` represents the raw value handled by `FormFieldState`, while `O` is what consumers expect.
-abstract class FooFieldController<O, I> extends ChangeNotifier {
+class FooFieldController<O, I> extends ChangeNotifier {
   final O? initialValue;
 
   /// Maps the client initial value to the form-field representation.
@@ -34,6 +34,20 @@ abstract class FooFieldController<O, I> extends ChangeNotifier {
   }) : _enabled = enabled ?? true,
        _forcedErrorText = forcedErrorText,
        _isValueChanged = false;
+
+  static FooFieldController<O,I> fromRangeController<O,I>({
+    required bool isMin,
+    required ConvertableRangeFieldController<O,I> rangeController,
+  }) {
+
+    return FooFieldController<O,I>(
+      forcedErrorText: null,
+      areEqual: rangeController.areEqualValues,
+      mapper: rangeController.valueMapper,
+      initialValue: isMin ? rangeController.value?.min : rangeController.value?.max,
+      enabled: rangeController.enabled,
+    );
+  }
 
   void setFormFieldState(FormFieldState<I> formFieldState) {
     _formFieldState = formFieldState;

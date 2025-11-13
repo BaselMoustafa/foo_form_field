@@ -4,39 +4,32 @@ part of '../exporter.dart';
 ///
 /// Uses `BoundryController` builders to create bound controllers on demand
 /// and wires listeners so that changes propagate between the range and its bounds.
-class ConvertableRangeFieldController<
-  O,
-  I,
-  BoundryController extends ConvertableRangeBoundryFieldController<O, I>
->
-    extends FooFieldController<Range<O>, Range<I>> {
-  BoundryController? _minValueController;
-  BoundryController? _maxValueController;
+class ConvertableRangeFieldController<O,I> extends FooFieldController<Range<O>, Range<I>> {
+  @protected
+  FooFieldController<O,I>? minController;
+  @protected
+  FooFieldController<O,I>? maxController;
 
   /// Returns the minimum bound controller, creating it lazily when first accessed.
-  BoundryController get minValueController {
-    _minValueController ??= minBoundryControllerBuilder(this);
-    return _minValueController!;
+  FooFieldController<O,I> get minValueController {
+    minController ??= FooFieldController.fromRangeController<O,I>(
+      isMin: true,
+      rangeController: this,
+    );
+    return minController!;
   }
 
   /// Returns the maximum bound controller, creating it lazily when first accessed.
-  BoundryController get maxValueController {
-    _maxValueController ??= maxBoundryControllerBuilder(this);
-    return _maxValueController!;
+  FooFieldController<O,I> get maxValueController {
+    maxController ??= FooFieldController.fromRangeController<O,I>(
+      isMin: false,
+      rangeController: this,
+    );
+    return maxController!;
   }
 
   final bool Function(O x, O y) areEqualValues;
   final FieldValueMapper<O, I> valueMapper;
-  final BoundryController Function(
-    ConvertableRangeFieldController<O, I, BoundryController>
-    rangeFieldController,
-  )
-  minBoundryControllerBuilder;
-  final BoundryController Function(
-    ConvertableRangeFieldController<O, I, BoundryController>
-    rangeFieldController,
-  )
-  maxBoundryControllerBuilder;
 
   /// Creates the controller with the bound controller builders, mapper, and equality logic.
   ConvertableRangeFieldController({
@@ -45,12 +38,10 @@ class ConvertableRangeFieldController<
     super.forcedErrorText,
     required this.valueMapper,
     required this.areEqualValues,
-    required this.minBoundryControllerBuilder,
-    required this.maxBoundryControllerBuilder,
   }) : super(
-         mapper: valueMapper.toRangeMapper(areEqualOutputs: areEqualValues),
-         areEqual: (Range<O> x, Range<O> y) => x == y,
-       );
+    mapper: valueMapper.toRangeMapper(areEqualOutputs: areEqualValues),
+    areEqual: (Range<O> x, Range<O> y) => x == y,
+  );
 
   @override
   /// Attaches the form field state and ensures sync listeners are wired.

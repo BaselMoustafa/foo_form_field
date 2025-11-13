@@ -34,8 +34,8 @@ class _IntStringRangeFormFieldExampleScreenState extends State<IntStringRangeFor
             }
             return null;
           },
-          minFieldBuilder: (context, minValueController, initialValue) => IntStringFormField(
-            controller: minValueController,
+          minFieldBuilder: (context,initialValue) => IntStringFormField(
+            controller: _controller.minValueController,
             properties: TextFormFieldProperties(
               validator: (value) {
                 if (value == null) {
@@ -47,8 +47,8 @@ class _IntStringRangeFormFieldExampleScreenState extends State<IntStringRangeFor
               onChanged: (value) => log("Min Changed: $value"),
             ),
           ),
-          maxFieldBuilder: (context, maxValueController, initialValue) => IntStringFormField(
-            controller: maxValueController,
+          maxFieldBuilder: (context, initialValue) => IntStringFormField(
+            controller: _controller.maxValueController,
             properties: TextFormFieldProperties(
               validator: (value) {
                 if (value == null) {

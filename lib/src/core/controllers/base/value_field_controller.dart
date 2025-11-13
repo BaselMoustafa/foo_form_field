@@ -9,4 +9,16 @@ class ValueFieldController<T> extends FooFieldController<T, T> {
     super.forcedErrorText,
     required super.areEqual,
   }) : super(mapper: SameValueMapper<T>());
+
+  static ValueFieldController<T> fromRangeController<T>({
+    required bool isMin,
+    required RangeFieldController<T> rangeController,
+  }) {
+    return ValueFieldController<T>(
+      forcedErrorText: null,
+      areEqual: rangeController.areEqualValues,
+      initialValue: isMin ? rangeController.value?.min : rangeController.value?.max ,
+      enabled: rangeController.enabled,
+    );
+  }
 }

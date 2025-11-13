@@ -1,12 +1,7 @@
 part of '../exporter.dart';
 
 /// Generic range form field that renders min/max inputs backed by a convertible controller.
-class ConvertableRangeFormField<
-  O,
-  I,
-  B extends ConvertableRangeBoundryFieldController<O, I>
->
-    extends StatelessWidget {
+class ConvertableRangeFormField<O,I> extends StatelessWidget {
   const ConvertableRangeFormField({
     super.key,
     required this.controller,
@@ -22,17 +17,16 @@ class ConvertableRangeFormField<
   });
 
   /// Shared controller keeping the min/max widgets in sync.
-  final ConvertableRangeFieldController<O, I, B> controller;
+  final ConvertableRangeFieldController<O, I> controller;
 
   /// Validates the relationship between the min and max values.
   final RangeValidator<O> rangeValidator;
 
   /// Builder for the minimum value widget, given its controller and field value.
-  final Widget Function(BuildContext context, B minValueController, I? value)
-  minFieldBuilder;
+  final Widget Function(BuildContext context,I? value)minFieldBuilder;
 
   /// Builder for the maximum value widget, given its controller and field value.
-  final Widget Function(BuildContext context, B maxValueController, I? value)
+  final Widget Function(BuildContext context, I? value)
   maxFieldBuilder;
 
   /// Optional layout wrapper around the min/max widgets.
@@ -86,12 +80,10 @@ class ConvertableRangeFormField<
   Widget _builder(BuildContext context, Range<I>? value) {
     final minField = minFieldBuilder(
       context,
-      controller.minValueController,
       value?.min,
     );
     final maxField = maxFieldBuilder(
       context,
-      controller.maxValueController,
       value?.max,
     );
 

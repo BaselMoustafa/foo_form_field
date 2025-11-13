@@ -33,8 +33,8 @@ class _DateRangeFormFieldExampleScreenState extends State<DateRangeFormFieldExam
           } 
           return null;
         },
-        minFieldBuilder: (context, minValueController, initialValue) => DateFormField(
-          controller: minValueController,
+        minFieldBuilder: (context, initialValue) => DateFormField(
+          controller: _controller.minValueController,
           onChanged: (value) => log("Min Date Changed To: $value"),
           onSaved: (value) => log("Min Date Saved: $value"),
           validator: (value) {
@@ -44,8 +44,8 @@ class _DateRangeFormFieldExampleScreenState extends State<DateRangeFormFieldExam
             return null;
           },
         ),
-        maxFieldBuilder: (context, maxValueController, initialValue) => DateFormField(
-          controller: maxValueController,
+        maxFieldBuilder: (context, initialValue) => DateFormField(
+          controller: _controller.maxValueController,
           onChanged: (value) => log("Max Date Changed To: $value"),
           onSaved: (value) => log("Max Date Saved: $value"),
           validator: (value) {

@@ -1,23 +1,18 @@
 part of '../exporter.dart';
 
 /// Preconfigured form field for selecting a date range using `DateFormField` builders.
-class DateRangeFormField
-    extends RangeFormField<DateTime, DateRangeBoundryFieldController> {
+class DateRangeFormField extends RangeFormField<DateTime> {
   DateRangeFormField({
     super.key,
     required DateRangeFieldController super.controller,
     Widget Function(
       BuildContext context,
-      DateRangeBoundryFieldController minValueController,
       DateTime? value,
-    )?
-    minFieldBuilder,
+    )? minFieldBuilder,
     Widget Function(
       BuildContext context,
-      DateRangeBoundryFieldController maxValueController,
       DateTime? value,
-    )?
-    maxFieldBuilder,
+    )? maxFieldBuilder,
     RangeValidator<DateTime>? rangeValidator,
     super.layoutBuilder,
     super.onSaved,
@@ -28,14 +23,14 @@ class DateRangeFormField
   }) : super(
          minFieldBuilder:
              minFieldBuilder ??
-             (context, minValueController, value) => DateFormField(
-               controller: minValueController,
+             (context, value) => DateFormField(
+               controller: controller.minValueController,
                decoration: InputDecoration(hintText: "From"),
              ),
          maxFieldBuilder:
              maxFieldBuilder ??
-             (context, maxValueController, value) => DateFormField(
-               controller: maxValueController,
+             (context, value) => DateFormField(
+               controller: controller.maxValueController,
                decoration: InputDecoration(hintText: "To"),
              ),
          rangeValidator:
