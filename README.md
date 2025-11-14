@@ -276,3 +276,40 @@ RangeFieldController({
   super.forcedErrorText,
 }) : super(valueMapper: SameValueMapper<T>());
 ```
+
+# Base Form Fields
+
+Any widget (form field) provided by this package is internally a [FormField](https://api.flutter.dev/flutter/widgets/FormField-class.html) widget.  
+Therefore, it’s important to understand how [FormField](https://api.flutter.dev/flutter/widgets/FormField-class.html) works in Flutter to be able to use these widgets effectively and professionally.
+
+In this section, we will discuss the **base form fields** used in this package.  
+All standby form fields internally rely on one of these foundation fields.  
+
+Understanding them will help you:
+
+- See how things work under the hood.
+- Extend or create custom form fields as needed.
+
+## FooFormField < O , I >
+
+This widget is a **foundation form field** for the package.  
+
+It **requires a `FooFieldController<O, I> controller`** as a mandatory attribute.  
+It exposes **all standard `FormField` attributes**, including:  
+  - `Widget Function(BuildContext context, I? value) builder`
+  - `void Function(O? value)? onSaved`
+  - `String? Function(O? value)? validator`
+  - `AutovalidateMode? autovalidateMode`
+  - `FormFieldErrorBuilder? errorBuilder`
+  - `String? restorationId`
+
+Additionally, it provides a ` void Function(O? value)?onChanged` callback that fires whenever the field value changes, giving you real-time access to user input.
+
+> ### **📘 Note**
+> The `onSaved` and `validator` callbacks of this widget will be *automatically triggered* when you use a **`Form` key** to save or validate the form, because internally it is a `FormField` widget.
+
+> 👀 **Observation**
+>
+> The `builder` callback provides the field value as type `I` — the type that the field actually uses internally to build itself.  
+> It does **not** provide type `O`, which is the type you prefer to work with in your business logic.
+
