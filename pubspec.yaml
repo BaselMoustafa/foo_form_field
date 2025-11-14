@@ -9,8 +9,8 @@ topics:
   - form
   - fields
   - validation
-  - form fields
-  - form input
+  - form_fields
+  - form_input
 
 
 environment:
