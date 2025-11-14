@@ -229,7 +229,7 @@ ValueFieldController({
 Implements `==` operator to compare two `Range<T>` instances based on `min`and `max` values
 
 > ### **🔥 Tip** 
-    > In most cases, you won’t need to create a range manually, because the package provides ready-made ranges for the types it natively supports.
+> In most cases, you won’t need to create a range manually, because the package provides ready-made ranges for the types it natively supports.
 
 ### Features
 - **Inheritance & Internal Controllers**
