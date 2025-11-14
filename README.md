@@ -313,3 +313,12 @@ Additionally, it provides a ` void Function(O? value)?onChanged` callback that f
 > The `builder` callback provides the field value as type `I` — the type that the field actually uses internally to build itself.  
 > It does **not** provide type `O`, which is the type you prefer to work with in your business logic.
 
+> 🚨 **Important**
+>
+> If you use this widget to create a custom form field, you are responsible for handling its **visual and interactive behavior**, including cases such as:  
+> - No value (empty state)  
+> - Error state  
+> - Enabled / disabled state  
+>
+> All of these states can be accessed through the **`FooFieldController`** provided to the widget.
+
