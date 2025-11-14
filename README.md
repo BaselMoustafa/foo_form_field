@@ -261,7 +261,7 @@ ConvertableRangeFieldController({
 ```
 
 ## RangeFieldController < T >
-`RangeFieldController<T>` is a subclass of `ConvertableRangeFieldController<T>` where the **client type (`O`) and the field type (`I`) are identical** (`T`).  
+`RangeFieldController<T>` is a subclass of `ConvertableRangeFieldController<T,T>` where the **client type (`O`) and the field type (`I`) are identical** (`T`).  
 Unlike `ConvertableRangeFieldController`, this controller **does not require a `mapper`**, because it automatically uses `SameValueMapper<T>()`, which simply returns the same value without any conversion.
 
 ### Constructor
