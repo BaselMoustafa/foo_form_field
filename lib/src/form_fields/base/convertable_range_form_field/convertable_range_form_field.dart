@@ -1,7 +1,13 @@
-part of '../../exporter.dart';
+
+import 'package:flutter/material.dart';
+import '../../../core/models/range.dart';
+import '../../../core/widgets/field_with_error_text_widget.dart';
+import '../foo_form_field/foo_field_controller.dart';
+import '../foo_form_field/foo_form_field.dart';
+import 'convertable_range_field_controller.dart';
 
 /// Generic range form field that renders min/max inputs backed by a convertible controller.
-class ConvertableRangeFormField<O, I> extends StatelessWidget {
+class ConvertableRangeFormField<O, I, BoundryController extends FooFieldController<O, I>> extends StatelessWidget {
   const ConvertableRangeFormField({
     super.key,
     required this.controller,
@@ -17,7 +23,7 @@ class ConvertableRangeFormField<O, I> extends StatelessWidget {
   });
 
   /// Shared controller keeping the min/max widgets in sync.
-  final ConvertableRangeFieldController<O, I> controller;
+  final ConvertableRangeFieldController<O, I, BoundryController> controller;
 
   /// Validates the relationship between the min and max values.
   final RangeValidator<O> rangeValidator;

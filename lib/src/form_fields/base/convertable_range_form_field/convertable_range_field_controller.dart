@@ -1,4 +1,8 @@
-part of '../../../core/controllers/exporter.dart';
+
+import 'package:flutter/material.dart';
+
+import '../../../core/models/range.dart';
+import '../foo_form_field/foo_field_controller.dart';
 
 class ConvertableRangeFieldController<
   Value, 

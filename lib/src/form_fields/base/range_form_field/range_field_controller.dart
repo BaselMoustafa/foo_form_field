@@ -1,4 +1,8 @@
-part of '../../../core/controllers/exporter.dart';
+
+import '../../../core/models/mapper.dart';
+import '../../../core/models/range.dart';
+import '../convertable_range_form_field/convertable_range_field_controller.dart';
+import '../value_form_field/value_field_controller.dart';
 
 class RangeFieldController<
   Value,
@@ -12,6 +16,6 @@ class RangeFieldController<
     super.enabled,
     super.forcedErrorText,
   }) : super(
-    mapper: SameValueMapper<Range<Value>>(),
+    mapper: Mapper.sameValueMapper<Range<Value>>(),
   );
 }

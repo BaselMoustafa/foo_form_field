@@ -1,6 +1,8 @@
-part of '../../exporter.dart';
 
-/// Base widget that binds a `FooFieldController` to a `FormField`.
+import 'package:flutter/material.dart';
+
+import 'foo_field_controller.dart';
+
 class FooFormField<O, I> extends StatefulWidget {
   const FooFormField({
     super.key,
@@ -14,22 +16,17 @@ class FooFormField<O, I> extends StatefulWidget {
     this.onChanged,
   });
 
-  /// Backing controller that keeps the UI and form state synchronized.
   final FooFieldController<O, I> controller;
 
-  /// Builds the field UI using the controller-managed value.
   final Widget Function(BuildContext context, I? value) builder;
 
-  /// Invoked when the form saves, receiving the controller's client value.
   final void Function(O? value)? onSaved;
 
-  /// Optional validator operating on the client-facing value.
   final String? Function(O? value)? validator;
   final AutovalidateMode? autovalidateMode;
   final FormFieldErrorBuilder? errorBuilder;
   final String? restorationId;
 
-  /// Called whenever the controller reports that its value changed.
   final void Function(O? value)? onChanged;
 
   @override
@@ -37,7 +34,7 @@ class FooFormField<O, I> extends StatefulWidget {
 }
 
 class _FooFormFieldState<O, I> extends State<FooFormField<O, I>> {
-  /// Key used to retrieve the internal `FormFieldState`.
+
   late final GlobalKey<FormFieldState<I>> _formFieldKey;
 
   @override
@@ -56,7 +53,7 @@ class _FooFormFieldState<O, I> extends State<FooFormField<O, I>> {
     super.dispose();
   }
 
-  /// Handles controller notifications by triggering rebuilds and change callbacks.
+
   void _onEvent() {
     setState(() {});
     if (widget.controller.isValueChanged) {

@@ -1,4 +1,6 @@
-part of '../../../core/controllers/exporter.dart';
+
+import '../../../core/models/mapper.dart';
+import '../foo_form_field/foo_field_controller.dart';
 
 class ValueFieldController<T> extends FooFieldController<T, T> {
 
@@ -7,6 +9,6 @@ class ValueFieldController<T> extends FooFieldController<T, T> {
     super.enabled,
     super.forcedErrorText,
     required super.areEqual,
-  }) : super(mapper: SameValueMapper<T>());
+  }) : super(mapper: Mapper.sameValueMapper<T>());
   
 }

@@ -1,4 +1,7 @@
-part of '../../../core/controllers/exporter.dart';
+
+import 'package:flutter/material.dart';
+
+import '../../../core/models/mapper.dart';
 
 class FooFieldController<Value, FieldValue> extends ChangeNotifier {
   final Value? initialValue;

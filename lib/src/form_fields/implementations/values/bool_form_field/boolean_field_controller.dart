@@ -1,6 +1,5 @@
-part of '../../../core/controllers/exporter.dart';
+import '../../../base/value_form_field/value_field_controller.dart';
 
-/// Controller for boolean fields with direct equality comparison.
 class BoolFieldController extends ValueFieldController<bool> {
   BoolFieldController({
     super.initialValue,
