@@ -1,4 +1,4 @@
-import '../../../base/value_form_field/value_field_controller.dart';
+import '../../base/value_form_field/value_field_controller.dart';
 
 class BoolFieldController extends ValueFieldController<bool> {
   BoolFieldController({

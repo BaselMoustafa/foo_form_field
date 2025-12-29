@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../../core/widgets/field_with_error_text_widget.dart';
-import '../../../../core/widgets/selection_card.dart';
-import '../../../base/value_form_field/value_field_controller.dart';
-import '../../../base/value_form_field/value_form_field.dart';
+import '../../../core/widgets/field_with_error_text_widget.dart';
+import '../../../core/widgets/selection_card.dart';
+import '../../base/value_form_field/value_field_controller.dart';
+import '../../base/value_form_field/value_form_field.dart';
 
 class BooleanFormField extends StatelessWidget {
   const BooleanFormField({
