@@ -56,3 +56,43 @@ class NumRangeValidator extends RangeValidator<num> {
     firstIsBiggerThanSecond: (num x, num y) => x > y,
   );
 }
+
+class DateTimeRangeValidator extends RangeValidator<DateTime> {
+  DateTimeRangeValidator({
+    super.allowEqual,
+    super.minBiggerThanMaxMessage,
+    super.equalMinAndMaxMessage,
+    bool Function(DateTime first, DateTime second)? firstIsBiggerThanSecond,
+  }):super(
+    firstIsBiggerThanSecond:firstIsBiggerThanSecond ?? (DateTime first, DateTime second){
+      if(first.year > second.year) {
+        return true;
+      }
+      if(first.year < second.year) {
+        return false;
+      }
+      if(first.month > second.month) {
+        return true;
+      }
+      if(first.month < second.month) {
+        return false;
+      }
+      if(first.day > second.day) {
+        return true;
+      }
+      if(first.day < second.day) {
+        return false;
+      }
+      if(first.hour > second.hour) {
+        return true;
+      }
+      if(first.hour < second.hour) {
+        return false;
+      }
+      if(first.minute > second.minute) {
+        return true;
+      }
+      return false;
+    },
+  );
+}

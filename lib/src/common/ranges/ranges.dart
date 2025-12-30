@@ -43,4 +43,14 @@ class Range<T> {
   }
 }
 
+class DateTimeRange extends Range<DateTime> {
+  DateTimeRange({
+    required super.min, 
+    required super.max, 
+    bool Function(DateTime x, DateTime y)? areEqual,
+  }):super(
+    areEqual: areEqual ?? (DateTime x, DateTime y) => x.year == y.year && x.month == y.month && x.day == y.day && x.hour == y.hour && x.minute == y.minute,
+  );
+}
+
 

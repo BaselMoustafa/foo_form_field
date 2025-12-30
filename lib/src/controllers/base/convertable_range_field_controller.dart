@@ -26,9 +26,9 @@ class ConvertableRangeFieldController<
   }) : super(
       areEqual: (Range<Value> x, Range<Value> y) => x == y,
       initialValue: Range<Value>(
-      min: minController.value,
-      max: maxController.value,
-      areEqual: areEqualValues,
+        min: minController.value,
+        max: maxController.value,
+        areEqual: areEqualValues,
       )
     );
 
