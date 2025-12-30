@@ -1,6 +1,4 @@
 
-
-
 import 'package:flutter/services.dart';
 abstract class FooTextFormatterErrorMessages {
   final String invalidValueMessage;
@@ -23,7 +21,10 @@ abstract class FooTextFormatter<Messages extends FooTextFormatterErrorMessages> 
 
   String? validate(String value);
 
-  String? canWrite(String value){
+  String? _canWrite(String value){
+    if(value.isEmpty){
+      return null;
+    }
     if (notValidButCanBeWrittenValues.contains(value)) {
       return null;
     }
@@ -35,15 +36,12 @@ abstract class FooTextFormatter<Messages extends FooTextFormatterErrorMessages> 
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    if (newValue.text.isEmpty) {
+
+    if (_canWrite(newValue.text) == null) {
       return newValue;
     }
 
-    if (canWrite(newValue.text) == null) {
-      return newValue;
-    }
-
-    if (canWrite(oldValue.text) != null) {
+    if (_canWrite(oldValue.text) != null) {
       return newValue;
     }
 
