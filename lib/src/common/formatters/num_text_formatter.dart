@@ -18,6 +18,7 @@ class NumTextFormatter extends FooTextFormatter<NumTextFormatterErrorMessages>{
   List<String> get notValidButCanBeWrittenValues => [
     ".",
     if (allowNegative) "-.",
+    if(allowNegative) "-",
   ];
 
   @override
