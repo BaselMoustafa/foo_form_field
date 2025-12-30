@@ -38,10 +38,21 @@ class RangeValidator<T> {
 }
 
 class IntRangeValidator extends RangeValidator<int> {
-  IntRangeValidator():super(
+  IntRangeValidator({
+    super.allowEqual,
+    super.minBiggerThanMaxMessage,
+    super.equalMinAndMaxMessage,
+  }):super(
     firstIsBiggerThanSecond: (int x, int y) => x > y,
-    allowEqual: false,
-    minBiggerThanMaxMessage: "Min value is bigger than max value",
-    equalMinAndMaxMessage: "Min is equal to max value",
+  );
+}
+
+class NumRangeValidator extends RangeValidator<num> {
+  NumRangeValidator({
+    super.allowEqual,
+    super.minBiggerThanMaxMessage,
+    super.equalMinAndMaxMessage,
+  }):super(
+    firstIsBiggerThanSecond: (num x, num y) => x > y,
   );
 }

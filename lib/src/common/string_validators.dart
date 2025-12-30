@@ -9,6 +9,13 @@ abstract class StringValidators {
     regExp: RegExp(r'^-?\d+$'),
   );
 
+  static bool isNumber({
+    required String value,
+  })=>_validate(
+    value: value, 
+    regExp: RegExp(r'^-?(\d+\.?\d*|\.\d+)$'),
+  );
+
   static bool _validate({
     required String value,
     required RegExp regExp,

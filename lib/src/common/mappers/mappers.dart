@@ -26,3 +26,12 @@ class IntToStringMapper extends Mapper<int, String> {
   
 }
 
+class NumToStringMapper extends Mapper<num, String> {
+  
+  NumToStringMapper():super(
+    toValue: (String? fieldValue) => num.tryParse(fieldValue ?? ''),
+    toFieldValue: (num? value) => value?.toString(),
+  );
+  
+}
+
