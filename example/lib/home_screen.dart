@@ -1,3 +1,4 @@
+import 'form_field_examples/bool_form_field_example.dart';
 import 'form_field_examples/int_range_text_form_field_example.dart';
 import 'form_field_examples/int_text_form_field_example.dart';
 import 'form_field_examples/num_range_text_form_field_example.dart';
@@ -44,10 +45,10 @@ class HomeScreen extends StatelessWidget {
             //   title: 'Date Form Field', 
             //   screen: DateFormFieldExampleScreen()
             // ),
-            // _GoToExampleScreenButton(
-            //   title: 'Bool Form Field', 
-            //   screen: BoolFormFieldExampleScreen()
-            // ),
+            _GoToExampleScreenButton(
+              title: 'Bool Form Field', 
+              screen: BoolFormFieldExample()
+            ),
             _GoToExampleScreenButton(
               title: 'Int String Form Field', 
               screen: IntTextFormFormFieldExample()

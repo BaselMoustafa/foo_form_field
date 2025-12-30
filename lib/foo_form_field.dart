@@ -31,6 +31,8 @@ export 'src/controllers/foo_text_editing_controllers/foo_text_editing_controller
 export 'src/controllers/foo_text_editing_controllers/int_text_editing_controller.dart';
 export 'src/controllers/foo_text_editing_controllers/num_text_editing_controller.dart';
 
+export 'src/controllers/bool_field_controller.dart';
+
 
 
 
@@ -48,6 +50,6 @@ export 'src/form_fields/foo_text_form_fields/num_text_form_field.dart';
 export 'src/form_fields/foo_text_form_fields/num_range_text_form_field.dart';
 
 
-export 'src/form_fields/implementations/bool_form_field.dart';
-export 'src/form_fields/implementations/date_time_form_field.dart';
-export 'src/form_fields/implementations/date_time_range_form_field.dart';
+export 'src/form_fields/bool_form_field.dart';
+export 'src/form_fields/date_time_form_field.dart';
+export 'src/form_fields/date_time_range_form_field.dart';
