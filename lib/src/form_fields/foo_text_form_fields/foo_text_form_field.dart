@@ -134,7 +134,7 @@ class _FooTextFormFieldState<Value> extends State<FooTextFormField<Value>> {
       smartQuotesType: _properties?.smartQuotesType,
       enableSuggestions: _properties?.enableSuggestions ?? true,
       maxLengthEnforcement: _properties?.maxLengthEnforcement,
-      maxLines: _properties?.maxLines,
+      maxLines: _properties?.maxLines??1,
       minLines: _properties?.minLines,
       expands: _properties?.expands ?? false,
       maxLength: _properties?.maxLength,
