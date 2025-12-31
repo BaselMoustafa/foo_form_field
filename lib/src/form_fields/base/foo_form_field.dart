@@ -1,44 +1,34 @@
-part of '../exporter.dart';
 
-/// Base widget that binds a `FooFieldController` to a `FormField`.
-class FooFormField<O, I> extends StatefulWidget {
+import 'package:flutter/material.dart';
+
+import '../../common/models/foo_form_field_properties.dart';
+import '../../controllers/base/foo_field_controller.dart';
+
+class FooFormField<Value, FieldValue> extends StatefulWidget {
   const FooFormField({
     super.key,
     required this.controller,
     required this.builder,
-    this.onSaved,
-    this.validator,
-    this.autovalidateMode,
-    this.errorBuilder,
-    this.restorationId,
-    this.onChanged,
+    this.properties,
   });
 
-  /// Backing controller that keeps the UI and form state synchronized.
-  final FooFieldController<O, I> controller;
+  final FooFieldController<Value, FieldValue> controller;
 
-  /// Builds the field UI using the controller-managed value.
-  final Widget Function(BuildContext context, I? value) builder;
+  final Widget Function(BuildContext context, FieldValue? value) builder;
 
-  /// Invoked when the form saves, receiving the controller's client value.
-  final void Function(O? value)? onSaved;
 
-  /// Optional validator operating on the client-facing value.
-  final String? Function(O? value)? validator;
-  final AutovalidateMode? autovalidateMode;
-  final FormFieldErrorBuilder? errorBuilder;
-  final String? restorationId;
-
-  /// Called whenever the controller reports that its value changed.
-  final void Function(O? value)? onChanged;
+  final FooFormFieldProperties<Value>? properties;
+  
 
   @override
-  State<FooFormField<O, I>> createState() => _FooFormFieldState<O, I>();
+  State<FooFormField<Value, FieldValue>> createState() => _FooFormFieldState<Value, FieldValue>();
 }
 
 class _FooFormFieldState<O, I> extends State<FooFormField<O, I>> {
-  /// Key used to retrieve the internal `FormFieldState`.
+
   late final GlobalKey<FormFieldState<I>> _formFieldKey;
+
+  O? _latestValue;
 
   @override
   void initState() {
@@ -56,29 +46,46 @@ class _FooFormFieldState<O, I> extends State<FooFormField<O, I>> {
     super.dispose();
   }
 
-  /// Handles controller notifications by triggering rebuilds and change callbacks.
   void _onEvent() {
     setState(() {});
-    if (widget.controller.isValueChanged) {
-      widget.onChanged?.call(widget.controller.value);
+    if (_shouldNotifyUser) {
+      widget.properties?.onChanged?.call(widget.controller.value);
+      _latestValue = widget.controller.value;
     }
+  }
+
+  bool get _shouldNotifyUser {
+    final value = widget.controller.value;
+    if(value == null && _latestValue == null){
+      return false;
+    }
+    if(value == null && _latestValue != null){
+      return true;
+    }
+    if(value != null && _latestValue == null){
+      return true;
+    }
+    return ! widget.controller.areEqual(
+      value as O, 
+      _latestValue as O,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return FormField<I>(
       key: _formFieldKey,
-      onSaved: (I? inputValue) => widget.onSaved?.call(
-        widget.controller.mapper.toClientType(inputValue),
+      onSaved: (I? inputValue) => widget.properties?.onSaved?.call(
+        widget.controller.mapper.toValue(inputValue),
       ),
-      validator: (I? inputValue) => widget.validator?.call(
-        widget.controller.mapper.toClientType(inputValue),
+      validator: (I? inputValue) => widget.properties?.validator?.call(
+        widget.controller.mapper.toValue(inputValue),
       ),
-      errorBuilder: widget.errorBuilder,
+      errorBuilder: widget.properties?.errorBuilder,
       initialValue: widget.controller.initialValueAsFieldValue,
       enabled: widget.controller.enabled,
-      autovalidateMode: widget.autovalidateMode,
-      restorationId: widget.restorationId,
+      autovalidateMode: widget.properties?.autovalidateMode,
+      restorationId: widget.properties?.restorationId,
       forceErrorText: widget.controller.forcedErrorText,
       builder: (FormFieldState<I> fieldState) {
         return widget.builder(context, fieldState.value);

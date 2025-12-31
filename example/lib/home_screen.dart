@@ -1,9 +1,10 @@
-import 'form_field_examples/bool_form_field_example_screen.dart';
-import 'form_field_examples/date_form_field_example_screen.dart';
-import 'form_field_examples/date_range_form_field_example_screen.dart';
-import 'form_field_examples/int_only_string_form_field_example_screen.dart';
-import 'form_field_examples/int_string_range_form_field_example_screen.dart';
-import 'form_field_examples/int_string_form_field_example_screen.dart';
+import 'form_field_examples/bool_form_field_example.dart';
+import 'form_field_examples/date_form_field_example.dart';
+import 'form_field_examples/date_range_form_field_example.dart';
+import 'form_field_examples/int_range_text_form_field_example.dart';
+import 'form_field_examples/int_text_form_field_example.dart';
+import 'form_field_examples/num_range_text_form_field_example.dart';
+import 'form_field_examples/num_text_form_field_example.dart';
 import 'package:flutter/material.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -27,11 +28,15 @@ class HomeScreen extends StatelessWidget {
             ),
             _GoToExampleScreenButton(
               title: 'Date Range Form Field', 
-              screen: DateRangeFormFieldExampleScreen()
+              screen: DateRangeFormFieldExample()
             ),
             _GoToExampleScreenButton(
               title: 'Int Range Form Field', 
-              screen: IntStringRangeFormFieldExampleScreen()
+              screen: IntRangeTextFormFieldExampleScreen()
+            ),
+            _GoToExampleScreenButton(
+              title: 'Num Range Form Field', 
+              screen: NumRangeTextFormFieldExampleScreen()
             ),
             SizedBox(height: 20),
             Text(
@@ -40,20 +45,24 @@ class HomeScreen extends StatelessWidget {
             ),
             _GoToExampleScreenButton(
               title: 'Date Form Field', 
-              screen: DateFormFieldExampleScreen()
+              screen: DateFormFieldExample()
             ),
             _GoToExampleScreenButton(
               title: 'Bool Form Field', 
-              screen: BoolFormFieldExampleScreen()
+              screen: BoolFormFieldExample()
             ),
             _GoToExampleScreenButton(
               title: 'Int String Form Field', 
-              screen: IntStringFormFieldExampleScreen()
+              screen: IntTextFormFormFieldExample()
             ),
             _GoToExampleScreenButton(
-              title: 'String Form Field (Integer Only)', 
-              screen: IntOnlyStringFormFieldExampleScreen()
+              title: 'Num String Form Field', 
+              screen: NumTextFormFormFieldExample()
             ),
+            // _GoToExampleScreenButton(
+            //   title: 'String Form Field (Integer Only)', 
+            //   screen: IntOnlyStringFormFieldExampleScreen()
+            // ),
           ],
         ),
       ),

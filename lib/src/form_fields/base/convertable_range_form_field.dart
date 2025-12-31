@@ -1,7 +1,15 @@
-part of '../exporter.dart';
+
+import 'package:flutter/material.dart';
+import '../../common/models/foo_form_field_properties.dart';
+import '../../common/ranges/range_validators.dart';
+import '../../common/ranges/ranges.dart';
+import '../../common/widgets/field_with_error_text_widget.dart';
+import '../../controllers/base/foo_field_controller.dart';
+import 'foo_form_field.dart';
+import '../../controllers/base/convertable_range_field_controller.dart';
 
 /// Generic range form field that renders min/max inputs backed by a convertible controller.
-class ConvertableRangeFormField<O, I> extends StatelessWidget {
+class ConvertableRangeFormField<O, I, BoundryController extends FooFieldController<O, I>> extends StatelessWidget {
   const ConvertableRangeFormField({
     super.key,
     required this.controller,
@@ -9,60 +17,44 @@ class ConvertableRangeFormField<O, I> extends StatelessWidget {
     required this.minFieldBuilder,
     required this.maxFieldBuilder,
     this.layoutBuilder,
-    this.onSaved,
-    this.validator,
-    this.autovalidateMode,
-    this.restorationId,
-    this.onChanged,
+    this.properties
   });
 
-  /// Shared controller keeping the min/max widgets in sync.
-  final ConvertableRangeFieldController<O, I> controller;
+  final ConvertableRangeFieldController<O, I, BoundryController> controller;
 
-  /// Validates the relationship between the min and max values.
   final RangeValidator<O> rangeValidator;
 
-  /// Builder for the minimum value widget, given its controller and field value.
   final Widget Function(BuildContext context, I? value) minFieldBuilder;
-
-  /// Builder for the maximum value widget, given its controller and field value.
+  
   final Widget Function(BuildContext context, I? value) maxFieldBuilder;
 
-  /// Optional layout wrapper around the min/max widgets.
-  final Widget Function(BuildContext context, Widget minField, Widget maxField)?
-  layoutBuilder;
+  final Widget Function(BuildContext context, Widget minField, Widget maxField)? layoutBuilder;
 
-  /// Called when the form saves with the composed range value.
-  final void Function(Range<O?>? value)? onSaved;
+  final FooFormFieldProperties<Range<O>>? properties;
 
-  /// Additional validation applied after range-specific checks.
-  final String? Function(Range<O?>? value)? validator;
-  final AutovalidateMode? autovalidateMode;
-  final String? restorationId;
-
-  /// Notifies listeners when the composed range changes.
-  final void Function(Range<O?>? value)? onChanged;
+  FooFormFieldProperties<Range<O>> get _properties{
+    return properties ?? FooFormFieldProperties<Range<O>>();
+  }
 
   @override
   Widget build(BuildContext context) {
     return FooFormField<Range<O>, Range<I>>(
       builder: _builder,
       controller: controller,
-      onSaved: onSaved,
-      autovalidateMode: autovalidateMode,
-      restorationId: restorationId,
-      onChanged: onChanged,
-      validator: _validator,
+      properties: _properties.copyWith(
+        validator: _validator
+      ),
     );
   }
 
   /// Runs equality and min validations before delegating to the optional validator.
   String? _validator(Range<O>? value) {
     if (value == null) {
-      return validator?.call(value);
+      return properties?.validator?.call(value);
     }
 
     String? equalityError = rangeValidator.validateEquality(value);
+
     if (equalityError != null) {
       return equalityError;
     }
@@ -72,7 +64,7 @@ class ConvertableRangeFormField<O, I> extends StatelessWidget {
       return minError;
     }
 
-    return validator?.call(value);
+    return properties?.validator?.call(value);
   }
 
   /// Builds the inner field layout, wrapping it with error presentation.
