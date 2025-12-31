@@ -12,6 +12,18 @@ class DateOnly implements Comparable<DateOnly> {
     assert(month >0 && month <= 12, "Month must be between 1 and 12"),
     assert(day >0 && day <= 31, "Day must be between 1 and 31");
 
+  factory DateOnly.fromDateTime(DateTime dateTime) {
+    return DateOnly(
+      year: dateTime.year,
+      month: dateTime.month,
+      day: dateTime.day,
+    );
+  }
+
+  DateTime toDateTime() {
+    return DateTime(year, month, day);
+  }
+
   @override
   int compareTo(DateOnly other) {
     if (year != other.year) {

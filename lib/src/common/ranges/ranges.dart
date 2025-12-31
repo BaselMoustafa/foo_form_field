@@ -1,4 +1,6 @@
 
+import '../../../foo_form_field.dart';
+
 class Range<T> {
   final T? min;
   final T? max;
@@ -43,6 +45,24 @@ class Range<T> {
   }
 }
 
+class IntRange extends Range<int> {
+  IntRange({
+    required super.min, 
+    required super.max, 
+  }):super(
+    areEqual: (int x, int y) => x == y,
+  );
+}
+
+class NumRange extends Range<num> {
+  NumRange({
+    required super.min, 
+    required super.max, 
+  }):super(
+    areEqual: (num x, num y) => x == y,
+  );
+}
+
 class DateTimeRange extends Range<DateTime> {
   DateTimeRange({
     required super.min, 
@@ -53,4 +73,13 @@ class DateTimeRange extends Range<DateTime> {
   );
 }
 
+class DateOnlyRange extends Range<DateOnly> {
+  DateOnlyRange({
+    required super.min, 
+    required super.max, 
+    bool Function(DateOnly x, DateOnly y)? areEqual,
+  }):super(
+    areEqual: areEqual ?? (DateOnly x, DateOnly y) => x == y,
+  );
+}
 

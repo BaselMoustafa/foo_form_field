@@ -96,3 +96,15 @@ class DateTimeRangeValidator extends RangeValidator<DateTime> {
     },
   );
 }
+
+class DateOnlyRangeValidator extends RangeValidator<DateOnly> {
+  DateOnlyRangeValidator({
+    super.allowEqual,
+    super.minBiggerThanMaxMessage,
+    super.equalMinAndMaxMessage,
+  }):super(
+    firstIsBiggerThanSecond: (DateOnly first, DateOnly second){
+      return first > second;
+    },
+  );
+}
