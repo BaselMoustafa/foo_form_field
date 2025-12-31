@@ -33,6 +33,15 @@ class _DateRangeFormFieldExampleState extends State<DateRangeFormFieldExample> {
         controller: _controller,
         minDate: DateTime(2025, 12, 5),
         maxDate: DateTime(2025, 12, 25),
+        layoutBuilder: (context, minField, maxField) {
+          return Column(
+            spacing: 10,
+            children: [
+              minField,
+              maxField,
+            ],
+          );
+        },
         properties: FooFormFieldProperties(
           onChanged: (value) => log("Range Changed To: $value"),
           onSaved: (value) => log("Range Saved: $value"),
