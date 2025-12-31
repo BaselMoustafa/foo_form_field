@@ -34,6 +34,7 @@ export 'src/controllers/foo_text_editing_controllers/string_text_editing_control
 export 'src/controllers/bool_field_controller.dart';
 export 'src/controllers/date_time_field_controller.dart';
 export 'src/controllers/date_only_field_controller.dart';
+export 'src/controllers/time_of_day_field_controller.dart';
 
 
 
@@ -58,3 +59,5 @@ export 'src/form_fields/date_time_form_field.dart';
 export 'src/form_fields/date_time_range_form_field.dart';
 export 'src/form_fields/date_only_form_field.dart';
 export 'src/form_fields/date_only_range_form_field.dart';
+export 'src/form_fields/time_of_day_form_field.dart';
+export 'src/form_fields/time_of_day_range_form_field.dart';
