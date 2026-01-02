@@ -1,64 +1,31 @@
-import '../common/get_items_state.dart';
 import 'selection_field_controller.dart';
 
-abstract class BaseSingleSelectionFieldController<Value> extends SelectionFieldController<Value> {
+abstract class BaseSingleSelectionFieldController<Value> extends SelectionFieldController<Value,Value> {
   
   BaseSingleSelectionFieldController({
+    required super.items,
     super.initialValue,
     super.enabled,
     super.forcedErrorText,
     required super.areEqual,
   });
-
-  List<Value> get items;
+  
 }
 
 class SingleSelectionFieldController<Value> extends BaseSingleSelectionFieldController<Value> {
   
-  final List<Value> _items;
-  
   SingleSelectionFieldController({
-    required List<Value> items,
+    required super.items,
     required super.areEqual,
     super.initialValue,
     super.enabled,
     super.forcedErrorText,
-  }): _items = items;
-
-  @override
-  List<Value> get items => _items;
-}
-
-abstract class RequestedSingleSelectionFieldController<Value> extends BaseSingleSelectionFieldController<Value> {
-
-  GetItemsState getItemsState = GetItemsStateInitial();
-
-  RequestedSingleSelectionFieldController({
-    super.initialValue,
-    super.enabled,
-    super.forcedErrorText,
-    required super.areEqual,
   });
 
-  void markAsLoading(){
-    getItemsState = GetItemsStateLoading();
-    notifyListeners();
-  }
-
-  void markAsFailed({
-    required String message,
-  }){
-    getItemsState = GetItemsStateFailed(
-      message: message,
-    );
-    notifyListeners();
-  }
-
 }
 
-class GetOnceSingleSelectionFieldController<Value> extends RequestedSingleSelectionFieldController<Value> {
-
-  List<Value> _items = [];
+class GetOnceSingleSelectionFieldController<Value> 
+  extends _StateManagementSingleSelectionFieldController<Value> with GetOnceStateManagementMixin<Value,Value> {
 
   GetOnceSingleSelectionFieldController({
     super.initialValue,
@@ -67,57 +34,26 @@ class GetOnceSingleSelectionFieldController<Value> extends RequestedSingleSelect
     required super.areEqual,
   });
 
-  void setItems({
-    required List<Value> newItems,
-  }) {
-    _items = newItems;
-    getItemsState = GetItemsStateSuccess(
-      items: _items,
-      hasMore: false,
-    );
-    notifyListeners();
-  }
-
-  @override
-  List<Value> get items => _items;
 }
 
-class PaginatedSingleSelectionFieldController<Value> extends RequestedSingleSelectionFieldController<Value> {
-  
-  List<Value> _items = [];
+class PaginatedSingleSelectionFieldController<Value> 
+  extends _StateManagementSingleSelectionFieldController<Value> with PaginationStateManagementMixin<Value,Value> {
 
   PaginatedSingleSelectionFieldController({
+    required super.areEqual,
     super.initialValue,
     super.enabled,
     super.forcedErrorText,
-    required super.areEqual,
   });
-  
-  void setItems({
-    required List<Value> newItems,
-    required bool hasMore,
-  }) {
-    _items = newItems;
-    getItemsState = GetItemsStateSuccess(
-      items: newItems,
-      hasMore: hasMore,
-    );
-    notifyListeners();
-  }
-
-  void addItems({
-    required List<Value> newItems,
-    required bool hasMore,
-  }) {
-    _items.addAll(newItems);
-    getItemsState = GetItemsStateSuccess(
-      items: _items,
-      hasMore: hasMore,
-    );
-    notifyListeners();
-  }
-  
-  @override
-  List<Value> get items => _items;
 }
 
+abstract class _StateManagementSingleSelectionFieldController<Value> 
+  extends BaseSingleSelectionFieldController<Value> with GetStateManagementMixin<Value,Value> {
+  
+  _StateManagementSingleSelectionFieldController({
+    required super.areEqual,
+    super.initialValue,
+    super.enabled,
+    super.forcedErrorText,
+  }) : super(items: []);
+}
