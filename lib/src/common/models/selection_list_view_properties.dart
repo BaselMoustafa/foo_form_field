@@ -18,7 +18,11 @@ class SelectionListViewProperties {
   final ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior;
   final String? restorationId;
   final Clip clipBehavior ;
-  final HitTestBehavior hitTestBehavior ;
+  final HitTestBehavior hitTestBehavior;
+
+  factory SelectionListViewProperties.defaultProperties() {
+    return SelectionListViewProperties();
+  }
 
   SelectionListViewProperties({
     this.controller,
