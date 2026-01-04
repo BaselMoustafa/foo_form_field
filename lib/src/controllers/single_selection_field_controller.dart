@@ -37,7 +37,7 @@ abstract class BaseSingleSelectionFieldController<Value> extends SelectionFieldC
     excute<void>(
       needToNotifyListener: true,
       toExecute: (FormFieldState<Value> formFieldState) {
-        selectedValue = initialValue;
+        selectedValue = value;
       },
     );
   }
