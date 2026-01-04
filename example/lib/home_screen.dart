@@ -13,6 +13,9 @@ import 'package:flutter/material.dart';
 import 'form_field_examples/single_selection_form_field_example.dart';
 import 'form_field_examples/get_once_single_selection_form_field_example.dart';
 import 'form_field_examples/get_paginated_single_selection_form_field_example.dart';
+import 'form_field_examples/multi_selection_form_field_example.dart';
+import 'form_field_examples/get_once_multi_selection_form_field_example.dart';
+import 'form_field_examples/get_paginated_multi_selection_form_field_example.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -89,6 +92,18 @@ class HomeScreen extends StatelessWidget {
             _GoToExampleScreenButton(
               title: 'Get Paginated Single Selection Form Field', 
               screen: GetPaginatedSingleSelectionFormFieldExample()
+            ),
+            _GoToExampleScreenButton(
+              title: 'Multi Selection Form Field', 
+              screen: MultiSelectionFormFieldExample()
+            ),
+            _GoToExampleScreenButton(
+              title: 'Get Once Multi Selection Form Field', 
+              screen: GetOnceMultiSelectionFormFieldExample()
+            ),
+            _GoToExampleScreenButton(
+              title: 'Get Paginated Multi Selection Form Field', 
+              screen: GetPaginatedMultiSelectionFormFieldExample()
             ),
           ],
         ),

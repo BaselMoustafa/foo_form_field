@@ -78,6 +78,16 @@ abstract class BaseMultiSelectionFieldController<Entity> extends SelectionFieldC
       },
     );
   }
+
+  @override
+  void initForSelection() {
+    excute<void>(
+      needToNotifyListener: true,
+      toExecute: (FormFieldState<List<Entity>> formFieldState) {
+        selectedValue = List.from(value ?? []);
+      },
+    );
+  }
 }
 
 class MultiSelectionFieldController<Value> extends BaseMultiSelectionFieldController<Value> {

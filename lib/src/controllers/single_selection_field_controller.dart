@@ -31,6 +31,16 @@ abstract class BaseSingleSelectionFieldController<Value> extends SelectionFieldC
       },
     );
   }
+
+  @override
+  void initForSelection() {
+    excute<void>(
+      needToNotifyListener: true,
+      toExecute: (FormFieldState<Value> formFieldState) {
+        selectedValue = initialValue;
+      },
+    );
+  }
 }
 
 class SingleSelectionFieldController<Value> extends BaseSingleSelectionFieldController<Value> {
