@@ -6,6 +6,7 @@ import 'package:foo_form_field/foo_form_field.dart';
 
 import '../cubits/get_suppliers_cubit.dart';
 import '../models/supplier.dart';
+import '../widgets/controller_test_buttons.dart';
 import '../widgets/example_screen.dart';
 
 class GetOnceSingleSelectionFormFieldExample extends StatefulWidget {
@@ -54,20 +55,17 @@ class _GetOnceSingleSelectionFormFieldExampleState
         child: ExampleScreen(
           title: "Get Once Single Selection Form Field",
           fieldBuilder: () => SingleSelectionFormField<Supplier>(
-            itemBuilder: (item) => Text('${item.name} (${item.email})'),
+            itemBuilder: (context, item) => Text('${item.name} (${item.email})'),
             controller: _controller,
             onTap: (context) {
-              showModalBottomSheet(
+              showSingleSelectionBottomSheet(
                 context: context,
-                builder: (context) => SelectionBottomSheet.singleSelection(
+                selectionListView: SingleSelectionListView.getOnce(
                   controller: _controller,
-                  selectionListView: SingleSelectionListView.getOnce(
-                    controller: _controller,
-                    itemBuilder: (context, index) => Text(
-                      '${_controller.items[index].name} (${_controller.items[index].email})',
-                    ),
-                    get: (context) => _cubit.getSuppliers(),
+                  itemBuilder: (context, index) => Text(
+                    '${_controller.items[index].name} (${_controller.items[index].email})',
                   ),
+                  get: (context) => _cubit.getSuppliers(),
                 ),
               );
             },
@@ -77,7 +75,15 @@ class _GetOnceSingleSelectionFormFieldExampleState
               onSaved: (value) => log("Value Saved: $value"),
             ),
           ),
-          children: [],
+          children: [
+            ControllerTestButtons(
+              title: "Get Once Single Selection Controller Test Buttons",
+              controller: _controller,
+              firstDummyValue: Supplier(id: 1, name: "Supplier 1", email: "supplier1@example.com"),
+              secondDummyValue: Supplier(id: 2, name: "Supplier 2", email: "supplier2@example.com"),
+              valueToString: (value) => value.name,
+            ),
+          ],
         ),
       ),
     );

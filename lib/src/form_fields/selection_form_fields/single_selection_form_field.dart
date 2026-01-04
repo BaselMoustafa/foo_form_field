@@ -1,11 +1,10 @@
 
 import 'package:flutter/material.dart';
 import '../../../foo_form_field.dart';
-
-class SingleSelectionFormField<Entity> extends StatelessWidget {
+class SingleSelectionFormField<Entity extends Object> extends StatelessWidget {
   
   final BaseSingleSelectionFieldController<Entity> controller;
-  final Widget Function(Entity item) itemBuilder;
+  final Widget Function(BuildContext context, Entity item) itemBuilder;
   final FooFormFieldProperties<Entity>? properties;
   final InputDecoration? decoration;
   final void Function(BuildContext context) onTap;
@@ -42,7 +41,7 @@ class SingleSelectionFormField<Entity> extends StatelessWidget {
       remainingWidgetBuilder: (remainingItemsCount) {
         return Text("+ $remainingItemsCount");
       },
-      selectedItems:controller.value==null?[]:[itemBuilder(controller.value!)],
+      selectedItems:controller.value==null?[]:[itemBuilder(context, controller.value as Entity)],
     );
   }
 

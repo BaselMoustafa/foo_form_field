@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'selection_field_controller.dart';
 
 abstract class BaseSingleSelectionFieldController<Value> extends SelectionFieldController<Value,Value> {
@@ -14,6 +16,20 @@ abstract class BaseSingleSelectionFieldController<Value> extends SelectionFieldC
   bool isSelected(Value value) {
     if (selectedValue == null) return false;
     return areEqual(value, selectedValue as Value);
+  }
+
+  @override
+  void toggleSelectionFor(Value e) {
+    excute<void>(
+      needToNotifyListener: true,
+      toExecute: (FormFieldState<Value> formFieldState) {
+        if (isSelected(e)) {
+          selectedValue = null;
+        } else {
+          selectedValue = e;
+        }
+      },
+    );
   }
 }
 

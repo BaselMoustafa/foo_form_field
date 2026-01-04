@@ -32,7 +32,7 @@ class GetSuppliersCubit extends Cubit<GetSuppliersState> {
     await Future.delayed(const Duration(seconds: 2));
 
     // Simulate random failure (10% chance)
-    if (DateTime.now().millisecond % 10 == 0) {
+    if (DateTime.now().second % 10 == 0 || DateTime.now().second % 5 == 0 || DateTime.now().second % 2 == 0) {
       emit(GetSuppliersFailed('Failed to load suppliers. Please try again.'));
       return;
     }

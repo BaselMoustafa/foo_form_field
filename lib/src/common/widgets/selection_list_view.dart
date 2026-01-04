@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import '../../controllers/selection_field_controller.dart';
@@ -202,7 +201,6 @@ class _SelectionListViewState extends State<SelectionListView> {
 
   Widget _separatorBuilder(BuildContext context, int index) {
     if (index == _items.length-1) {
-      log("pagination indicator separator builder");
       return const SizedBox(height: 10);
     }
 

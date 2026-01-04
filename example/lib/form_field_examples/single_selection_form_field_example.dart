@@ -44,17 +44,17 @@ class _SingleSelectionFormFieldExampleState extends State<SingleSelectionFormFie
     return ExampleScreen(
       title: "Single Selection Form Field",
       fieldBuilder: () => SingleSelectionFormField<SellingOrderStatus>(
-        itemBuilder: (item) => Text(item.name),
+        itemBuilder: (context,item) => Text(item.name),
         controller: _controller,
+        decoration: InputDecoration(
+          label: Text("Selling Order Status"),
+        ),
         onTap: (context) {
-          showModalBottomSheet(
+          showSingleSelectionBottomSheet(
             context: context,
-            builder: (context) => SelectionBottomSheet.singleSelection(
+            selectionListView: SingleSelectionListView(
               controller: _controller,
-              selectionListView: SingleSelectionListView(
-                itemBuilder: (context,index) => Text(_controller.items[index].name),
-                controller: _controller,
-              ),
+              itemBuilder: (context,index) => Text(_controller.items[index].name),
             ),
           );
         },

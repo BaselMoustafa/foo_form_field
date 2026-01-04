@@ -141,13 +141,9 @@ class SingleSelectionListView<Value> extends StatelessWidget {
     }
 
     return InkWell(
-      onTap: (){
-        if(controller.isSelected(controller.items[index])){
-          controller.selectedValue = null;
-        }else{
-          controller.selectedValue = controller.items[index];
-        }
-      },
+      onTap: ()=>controller.toggleSelectionFor(
+        controller.items[index],
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Row(
@@ -171,9 +167,9 @@ class SingleSelectionListView<Value> extends StatelessWidget {
     
     return CustomRadioButton(
       isSelected: isSelected,
-      onTap: (bool isSelected){     
-        controller.selectedValue = isSelected ? controller.items[index] : null;
-      },
+      onTap: (_)=>controller.toggleSelectionFor(
+        controller.items[index],
+      ),
     );
   }
 

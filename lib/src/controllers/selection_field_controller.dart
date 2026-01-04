@@ -25,6 +25,8 @@ abstract class SelectionFieldController<SelectedValue,Entity> extends ValueField
 
   SelectedValue? get selectedValue => _selectedValue;
 
+  void toggleSelectionFor(Entity e);
+
   set selectedValue(SelectedValue? newSelectedValue) {
     _selectedValue = newSelectedValue;
     notifyListeners();

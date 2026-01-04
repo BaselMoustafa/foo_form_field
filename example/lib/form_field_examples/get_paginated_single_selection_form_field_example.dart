@@ -6,6 +6,7 @@ import 'package:foo_form_field/foo_form_field.dart';
 
 import '../cubits/get_products_cubit.dart';
 import '../models/product.dart';
+import '../widgets/controller_test_buttons.dart';
 import '../widgets/example_screen.dart';
 
 class GetPaginatedSingleSelectionFormFieldExample extends StatefulWidget {
@@ -68,21 +69,18 @@ class _GetPaginatedSingleSelectionFormFieldExampleState
         child: ExampleScreen(
           title: "Get Paginated Single Selection Form Field",
           fieldBuilder: () => SingleSelectionFormField<Product>(
-            itemBuilder: (item) => Text('${item.name} - \$${item.price.toStringAsFixed(2)}'),
+            itemBuilder: (context,item) => Text('${item.name} - \$${item.price.toStringAsFixed(2)}'),
             controller: _controller,
             onTap: (context) {
-              showModalBottomSheet(
+              showSingleSelectionBottomSheet(
                 context: context,
-                builder: (context) => SelectionBottomSheet.singleSelection(
+                selectionListView: SingleSelectionListView.paginated(
                   controller: _controller,
-                  selectionListView: SingleSelectionListView.paginated(
-                    controller: _controller,
-                    itemBuilder: (context, index) => Text(
-                      '${_controller.items[index].name} - \$${_controller.items[index].price.toStringAsFixed(2)}',
-                    ),
-                    get: (context) => _cubit.getProducts(),
-                    getMore: (context) => _cubit.getMoreProducts(),
+                  itemBuilder: (context, index) => Text(
+                    '${_controller.items[index].name} - \$${_controller.items[index].price.toStringAsFixed(2)}',
                   ),
+                  get: (context) => _cubit.getProducts(),
+                  getMore: (context) => _cubit.getMoreProducts(),
                 ),
               );
             },
@@ -92,7 +90,15 @@ class _GetPaginatedSingleSelectionFormFieldExampleState
               onSaved: (value) => log("Value Saved: $value"),
             ),
           ),
-          children: [],
+          children: [
+            ControllerTestButtons(
+              title: "Get Paginated Single Selection Controller Test Buttons",
+              controller: _controller,
+              firstDummyValue: Product(id: 1, name: "Product 1", price: 100, description: "Description 1"),
+              secondDummyValue: Product(id: 2, name: "Product 2", price: 200, description: "Description 2"),
+              valueToString: (value) => value.name,
+            ),
+          ],
         ),
       ),
     );

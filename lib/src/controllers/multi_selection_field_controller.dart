@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'selection_field_controller.dart';
 
 abstract class BaseMultiSelectionFieldController<Entity> extends SelectionFieldController<List<Entity>,Entity> {
@@ -56,7 +58,26 @@ abstract class BaseMultiSelectionFieldController<Entity> extends SelectionFieldC
     }
     return true;
   }
-  
+
+  @override
+  void toggleSelectionFor(Entity e) {
+    excute<void>(
+      needToNotifyListener: true,
+      toExecute: (FormFieldState<List<Entity>> formFieldState) {
+        if (isSelected(e)) {
+          selectedValue!.removeWhere(
+            (item) => areEqualValues(item, e),
+          );
+        } else {
+          if (selectedValue == null) {
+            selectedValue = [e];
+          } else {
+            selectedValue!.add(e);
+          }
+        }
+      },
+    );
+  }
 }
 
 class MultiSelectionFieldController<Value> extends BaseMultiSelectionFieldController<Value> {
