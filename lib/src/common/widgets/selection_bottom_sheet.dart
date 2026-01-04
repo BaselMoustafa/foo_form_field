@@ -20,21 +20,25 @@ class SelectionBottomSheet<Entity> extends StatelessWidget {
 
   final SelectionFieldController controller;
   final Widget selectionListView;
+  final Widget? confirmButton;
   final Widget Function(BuildContext context, Widget selectionListView)? builder;
 
   const SelectionBottomSheet._({
     required this.builder,
     required this.selectionListView, 
     required this.controller,
+    required this.confirmButton,
   });
 
   static SelectionBottomSheet<Entity> singleSelection<Entity>({
     required SingleSelectionListView<Entity> selectionListView,
     Widget Function(BuildContext context, Widget selectionListView)? builder,
+    Widget? confirmButton,
   }) => SelectionBottomSheet._(
     controller: selectionListView.controller,
     selectionListView: selectionListView,
     builder: builder,
+    confirmButton: confirmButton,
   );
 
   @override
@@ -62,9 +66,11 @@ class SelectionBottomSheet<Entity> extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
+
             Expanded(
               child: selectionListView,
             ),
+
             Padding(
               padding: EdgeInsets.only(
                 left: 20,
@@ -72,7 +78,7 @@ class SelectionBottomSheet<Entity> extends StatelessWidget {
                 top: 10,
                 bottom: MediaQuery.of(context).padding.bottom,
               ),
-              child: CustomButton(
+              child: confirmButton ?? CustomButton(
                 onTap: () {
                   controller.commit();
                   Navigator.pop(context);
