@@ -5,7 +5,7 @@ import '../models/selection_list_view_properties.dart';
 import 'custom_checkbox.dart';
 import 'selection_list_view.dart';
 
-abstract class BaseMultiSelectionListView<Value> extends StatelessWidget {
+class BaseMultiSelectionListView<Value> extends StatelessWidget {
   final BaseMultiSelectionFieldController<Value> controller;
   final Widget Function(BuildContext context, int index) itemBuilder;
   final Widget Function(BuildContext context, int index)? selectionButtonBuilder;

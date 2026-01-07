@@ -5,7 +5,7 @@ import '../models/selection_list_view_properties.dart';
 import 'custom_radio_button.dart';
 import 'selection_list_view.dart';
 
-abstract class BaseSingleSelectionListView<Value> extends StatelessWidget {
+class BaseSingleSelectionListView<Value> extends StatelessWidget {
   final BaseSingleSelectionFieldController<Value> controller;
   final Widget Function(BuildContext context, int index) itemBuilder;
   final Widget Function(BuildContext context, int index)? selectionButtonBuilder;
