@@ -80,9 +80,9 @@ class _GetPaginatedMultiSelectionFormFieldExampleState
             itemBuilder: (context,index,item) => Text('${item.name} - \$${item.price.toStringAsFixed(2)}'),
             controller: _controller,
             onTap: (context) {
-              showMultiSelectionBottomSheet(
+              showPaginatedMultiSelectionBottomSheet(
                 context: context,
-                selectionListView: MultiSelectionListView.paginated(
+                selectionListView: PaginatedMultiSelectionListView(
                   controller: _controller,
                   itemBuilder: (context, index) => Text(
                     '${_controller.items[index].name} - \$${_controller.items[index].price.toStringAsFixed(2)}',

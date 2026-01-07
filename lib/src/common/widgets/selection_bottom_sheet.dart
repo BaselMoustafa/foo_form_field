@@ -50,6 +50,30 @@ void showMultiSelectionBottomSheet<Entity>({
       selectionListView: selectionListView,
     ),
   );
+}
+
+void showGetOnceMultiSelectionBottomSheet<Entity>({
+  required BuildContext context,
+  required GetOnceMultiSelectionListView<Entity> selectionListView,
+}) {
+  showModalBottomSheet(
+    context: context,
+    builder: (context) => SelectionBottomSheet.getOnceMultiSelection(
+      selectionListView: selectionListView,
+    ),
+  );
+}
+
+void showPaginatedMultiSelectionBottomSheet<Entity>({
+  required BuildContext context,
+  required PaginatedMultiSelectionListView<Entity> selectionListView,
+}) {
+  showModalBottomSheet(
+    context: context,
+    builder: (context) => SelectionBottomSheet.paginatedMultiSelection(
+      selectionListView: selectionListView,
+    ),
+  );
 } 
 
 class SelectionBottomSheet<Entity> extends StatelessWidget {
@@ -101,6 +125,28 @@ class SelectionBottomSheet<Entity> extends StatelessWidget {
 
   static SelectionBottomSheet<Entity> multiSelection<Entity>({
     required MultiSelectionListView<Entity> selectionListView,
+    Widget Function(BuildContext context, Widget selectionListView)? builder,
+    Widget? confirmButton,
+  }) => SelectionBottomSheet._(
+    controller: selectionListView.controller,
+    selectionListView: selectionListView,
+    builder: builder,
+    confirmButton: confirmButton,
+  );
+
+  static SelectionBottomSheet<Entity> getOnceMultiSelection<Entity>({
+    required GetOnceMultiSelectionListView<Entity> selectionListView,
+    Widget Function(BuildContext context, Widget selectionListView)? builder,
+    Widget? confirmButton,
+  }) => SelectionBottomSheet._(
+    controller: selectionListView.controller,
+    selectionListView: selectionListView,
+    builder: builder,
+    confirmButton: confirmButton,
+  );
+
+  static SelectionBottomSheet<Entity> paginatedMultiSelection<Entity>({
+    required PaginatedMultiSelectionListView<Entity> selectionListView,
     Widget Function(BuildContext context, Widget selectionListView)? builder,
     Widget? confirmButton,
   }) => SelectionBottomSheet._(

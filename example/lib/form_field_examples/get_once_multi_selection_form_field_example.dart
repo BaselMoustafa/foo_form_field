@@ -58,9 +58,9 @@ class _GetOnceMultiSelectionFormFieldExampleState
             itemBuilder: (context,index,item) => Text('${item.name} (${item.email})'),
             controller: _controller,
             onTap: (context) {
-              showMultiSelectionBottomSheet(
+              showGetOnceMultiSelectionBottomSheet(
                 context: context,
-                selectionListView: MultiSelectionListView.getOnce(
+                selectionListView: GetOnceMultiSelectionListView(
                   controller: _controller,
                   itemBuilder: (context, index) => Text(
                     '${_controller.items[index].name} (${_controller.items[index].email})',

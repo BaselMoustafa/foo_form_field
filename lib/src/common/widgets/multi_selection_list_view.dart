@@ -5,14 +5,9 @@ import '../models/selection_list_view_properties.dart';
 import 'custom_checkbox.dart';
 import 'selection_list_view.dart';
 
-class MultiSelectionListView<Value> extends StatelessWidget {
-
+abstract class BaseMultiSelectionListView<Value> extends StatelessWidget {
   final BaseMultiSelectionFieldController<Value> controller;
   final Widget Function(BuildContext context, int index) itemBuilder;
-
-  final FutureOr<void> Function(BuildContext context)? get;
-  final FutureOr<void> Function(BuildContext context)? getMore;
-
   final Widget Function(BuildContext context, int index)? selectionButtonBuilder;
   final Widget Function(BuildContext context, int index, Widget selectionButton, Widget itemWidget)? itemLayoutBuilder;
   final Widget Function(BuildContext context, int index)? separatorBuilder;
@@ -21,101 +16,24 @@ class MultiSelectionListView<Value> extends StatelessWidget {
   final Widget? paginationIndicatorWidget;
   final Widget Function(BuildContext context, String errorMessage)? errorWidgetBuilder;
   final SelectionListViewProperties? properties;
+  final FutureOr<void> Function(BuildContext context)? get;
+  final FutureOr<void> Function(BuildContext context)? getMore;
 
-  const MultiSelectionListView._({
+  const BaseMultiSelectionListView({
     super.key,
     required this.controller,
     required this.itemBuilder,
-    required this.selectionButtonBuilder,
-    required this.itemLayoutBuilder,
-    required this.separatorBuilder,
-    required this.emptyListWidget,
-    required this.loadingWidgetBuilder,
-    required this.paginationIndicatorWidget,
-    required this.errorWidgetBuilder,
-    required this.properties,
-    required this.get,
-    required this.getMore,
+    this.selectionButtonBuilder,
+    this.itemLayoutBuilder,
+    this.separatorBuilder,
+    this.emptyListWidget,
+    this.loadingWidgetBuilder,
+    this.paginationIndicatorWidget,
+    this.errorWidgetBuilder,
+    this.properties,
+    this.get,
+    this.getMore,
   });
-
-  factory MultiSelectionListView({
-    required MultiSelectionFieldController<Value> controller,
-    required Widget Function(BuildContext context, int index) itemBuilder,
-    Widget Function(BuildContext context, int index)? selectionButtonBuilder,
-    Widget Function(BuildContext context, int index, Widget selectionButton, Widget itemWidget)? itemLayoutBuilder,
-    Widget Function(BuildContext context, int index)? separatorBuilder,
-    Widget? emptyListWidget,
-    Widget? loadingWidgetBuilder,
-    Widget Function(BuildContext context, String errorMessage)? errorWidgetBuilder,
-    SelectionListViewProperties? properties,
-  }) => MultiSelectionListView._(
-    controller: controller,
-    itemBuilder: itemBuilder,
-    selectionButtonBuilder: selectionButtonBuilder,
-    itemLayoutBuilder: itemLayoutBuilder,
-    separatorBuilder: separatorBuilder,
-    emptyListWidget: emptyListWidget,
-    loadingWidgetBuilder: loadingWidgetBuilder,
-    errorWidgetBuilder: errorWidgetBuilder,
-    properties: properties,
-    paginationIndicatorWidget: null,
-    get: null,
-    getMore: null,
-  );
-
-  factory MultiSelectionListView.getOnce({
-    required GetOnceMultiSelectionFieldController<Value> controller,
-    required Widget Function(BuildContext context, int index) itemBuilder,
-    required FutureOr<void> Function(BuildContext context) get,
-    Widget Function(BuildContext context, int index)? selectionButtonBuilder,
-    Widget Function(BuildContext context, int index, Widget selectionButton, Widget itemWidget)? itemLayoutBuilder,
-    Widget Function(BuildContext context, int index)? separatorBuilder,
-    Widget? emptyListWidget,
-    Widget? loadingWidgetBuilder,
-    Widget Function(BuildContext context, String errorMessage)? errorWidgetBuilder,
-    SelectionListViewProperties? properties,
-  }) => MultiSelectionListView._(
-    controller: controller,
-    itemBuilder: itemBuilder,
-    selectionButtonBuilder: selectionButtonBuilder,
-    itemLayoutBuilder: itemLayoutBuilder,
-    separatorBuilder: separatorBuilder,
-    emptyListWidget: emptyListWidget,
-    loadingWidgetBuilder: loadingWidgetBuilder,
-    errorWidgetBuilder: errorWidgetBuilder,
-    properties: properties,
-    paginationIndicatorWidget: null,
-    get: get,
-    getMore: null,
-  );
-
-  factory MultiSelectionListView.paginated({
-    required PaginatedMultiSelectionFieldController<Value> controller,
-    required FutureOr<void> Function(BuildContext context) get,
-    required FutureOr<void> Function(BuildContext context) getMore,
-    required Widget Function(BuildContext context, int index) itemBuilder,
-    Widget Function(BuildContext context, int index)? selectionButtonBuilder,
-    Widget Function(BuildContext context, int index, Widget selectionButton, Widget itemWidget)? itemLayoutBuilder,
-    Widget Function(BuildContext context, int index)? separatorBuilder,
-    Widget? emptyListWidget,
-    Widget? loadingWidgetBuilder,
-    Widget? paginationIndicatorWidget,
-    Widget Function(BuildContext context, String errorMessage)? errorWidgetBuilder,
-    SelectionListViewProperties? properties,
-  }) => MultiSelectionListView._(
-    controller: controller,
-    itemBuilder: itemBuilder,
-    selectionButtonBuilder: selectionButtonBuilder,
-    itemLayoutBuilder: itemLayoutBuilder,
-    separatorBuilder: separatorBuilder,
-    emptyListWidget: emptyListWidget,
-    loadingWidgetBuilder: loadingWidgetBuilder,
-    paginationIndicatorWidget: paginationIndicatorWidget,
-    errorWidgetBuilder: errorWidgetBuilder,
-    properties: properties,
-    get: get,
-    getMore: getMore,
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +76,6 @@ class MultiSelectionListView<Value> extends StatelessWidget {
   }
 
   Widget _selectionButtonBuilder(BuildContext context, int index){
-
     if(selectionButtonBuilder!=null){
       return selectionButtonBuilder!(context, index);
     }
@@ -172,6 +89,67 @@ class MultiSelectionListView<Value> extends StatelessWidget {
       ),
     );
   }
-
 }
 
+class MultiSelectionListView<Value> extends BaseMultiSelectionListView<Value> {
+  const MultiSelectionListView({
+    super.key,
+    required MultiSelectionFieldController<Value> controller,
+    required super.itemBuilder,
+    super.selectionButtonBuilder,
+    super.itemLayoutBuilder,
+    super.separatorBuilder,
+    super.emptyListWidget,
+    super.loadingWidgetBuilder,
+    super.errorWidgetBuilder,
+    super.properties,
+  }) : super(
+    controller: controller,
+    get: null,
+    getMore: null,
+    paginationIndicatorWidget: null,
+  );
+}
+
+class GetOnceMultiSelectionListView<Value> extends BaseMultiSelectionListView<Value> {
+  const GetOnceMultiSelectionListView({
+    super.key,
+    required GetOnceMultiSelectionFieldController<Value> controller,
+    required super.itemBuilder,
+    required FutureOr<void> Function(BuildContext context) get,
+    super.selectionButtonBuilder,
+    super.itemLayoutBuilder,
+    super.separatorBuilder,
+    super.emptyListWidget,
+    super.loadingWidgetBuilder,
+    super.errorWidgetBuilder,
+    super.properties,
+  }) : super(
+    controller: controller,
+    get: get,
+    getMore: null,
+    paginationIndicatorWidget: null,
+  );
+}
+
+class PaginatedMultiSelectionListView<Value> extends BaseMultiSelectionListView<Value> {
+  const PaginatedMultiSelectionListView({
+    super.key,
+    required PaginatedMultiSelectionFieldController<Value> controller,
+    required super.itemBuilder,
+    required FutureOr<void> Function(BuildContext context) get,
+    required FutureOr<void> Function(BuildContext context) getMore,
+    super.selectionButtonBuilder,
+    super.itemLayoutBuilder,
+    super.separatorBuilder,
+    super.emptyListWidget,
+    super.loadingWidgetBuilder,
+    super.paginationIndicatorWidget,
+    super.errorWidgetBuilder,
+    super.properties,
+  }) : super(
+    controller: controller,
+    get: get,
+    getMore: getMore,
+  );
+}
