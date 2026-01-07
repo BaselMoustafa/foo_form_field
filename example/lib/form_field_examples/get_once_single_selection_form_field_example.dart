@@ -58,9 +58,9 @@ class _GetOnceSingleSelectionFormFieldExampleState
             itemBuilder: (context, item) => Text('${item.name} (${item.email})'),
             controller: _controller,
             onTap: (context) {
-              showSingleSelectionBottomSheet(
+              showGetOnceSingleSelectionBottomSheet(
                 context: context,
-                selectionListView: SingleSelectionListView.getOnce(
+                selectionListView: GetOnceSingleSelectionListView(
                   controller: _controller,
                   itemBuilder: (context, index) => Text(
                     '${_controller.items[index].name} (${_controller.items[index].email})',
