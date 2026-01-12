@@ -43,6 +43,7 @@ class _FooFormFieldState<O, I> extends State<FooFormField<O, I>> {
   @override
   void dispose() {
     widget.controller.removeListener(_onEvent);
+    widget.controller.removeFormFieldState();
     super.dispose();
   }
 

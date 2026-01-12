@@ -30,8 +30,11 @@ class FooFieldController<Value, FieldValue> extends ChangeNotifier {
 
   void setFormFieldState(FormFieldState<FieldValue> formFieldState) {
     _formFieldState = formFieldState;
-    value = initialValue;
     notifyListeners();
+  }
+
+  void removeFormFieldState() {
+    _formFieldState = null;
   }
 
   bool get enabled => _enabled;

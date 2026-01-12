@@ -52,6 +52,7 @@ class _FooTextFormFieldState<Value> extends State<FooTextFormField<Value>> {
     widget.controller.removeListener(
       _notifyChangeInValue,
     );
+    widget.controller.removeFormFieldState();
     super.dispose();
   }
 
