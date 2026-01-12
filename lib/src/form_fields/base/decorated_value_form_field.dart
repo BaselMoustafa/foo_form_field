@@ -18,7 +18,7 @@ class DecoratedValueFormField<T> extends FooFormField<T, T> {
         Theme.of(context).inputDecorationTheme,
       );
       effectiveDecoration = effectiveDecoration.copyWith(
-        errorText: controller.errorText,
+        //errorText: controller.errorText,
         enabled: controller.enabled,
       );
 
