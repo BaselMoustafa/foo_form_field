@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foo_form_field.dart';
-import '../common/models/controlled_field_state.dart';
+import '../common/models/foo_form_field_state.dart';
 
 class TimeOfDayFormField extends StatelessWidget {
   const TimeOfDayFormField({
@@ -21,7 +21,7 @@ class TimeOfDayFormField extends StatelessWidget {
   final String? Function(TimeOfDay? time)? timeFormatter;
 
   /// Custom widget builder overriding the decorated default.
-  final Widget Function(BuildContext context, ControlledFieldState<TimeOfDay, TimeOfDay> controlledFieldState)? builder;
+  final Widget Function(BuildContext context, FooFormFieldState<TimeOfDay> fieldState)? builder;
 
   /// Optional tap handler; when omitted a time picker is presented.
   final void Function(BuildContext context)? onTap;
@@ -39,13 +39,13 @@ class TimeOfDayFormField extends StatelessWidget {
     );
   }
 
-  Widget _builder(BuildContext context, ControlledFieldState<TimeOfDay, TimeOfDay> controlledFieldState) {
+  Widget _builder(BuildContext context, FooFormFieldState<TimeOfDay> fieldState) {
     
     if(builder != null) {
-      return builder!(context, controlledFieldState);
+      return builder!(context, fieldState);
     }
 
-    final value = controlledFieldState.value;
+    final value = fieldState.value;
 
     return FittedBox(
       alignment: AlignmentDirectional.centerStart,

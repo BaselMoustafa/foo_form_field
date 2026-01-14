@@ -17,7 +17,6 @@ class IntOnlyStringFormFieldExample extends StatefulWidget {
 class _IntOnlyStringFormFieldExampleState extends State<IntOnlyStringFormFieldExample> {
   final _controller = StringTextEditingController(
     initialValue: "83489283",
-    enabled: false,
   );
 
   @override

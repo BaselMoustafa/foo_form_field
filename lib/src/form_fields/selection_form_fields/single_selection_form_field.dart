@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
 import '../../../foo_form_field.dart';
-import '../../common/models/controlled_field_state.dart';
+
 class SingleSelectionFormField<Entity extends Object> extends StatelessWidget {
   
   final BaseSingleSelectionFieldController<Entity> controller;
@@ -9,7 +8,7 @@ class SingleSelectionFormField<Entity extends Object> extends StatelessWidget {
   final FooFormFieldProperties<Entity>? properties;
   final InputDecoration? decoration;
   final void Function(BuildContext context) onTap;
-  final Widget Function(BuildContext context, ControlledFieldState<Entity, Entity> controlledFieldState)? builder;
+  final Widget Function(BuildContext context, FooFormFieldState<Entity> fieldState)? builder;
 
   const SingleSelectionFormField({
     super.key,
@@ -32,9 +31,9 @@ class SingleSelectionFormField<Entity extends Object> extends StatelessWidget {
     );
   }
 
-  Widget _builder(BuildContext context, ControlledFieldState<Entity, Entity> controlledFieldState){
+  Widget _builder(BuildContext context, FooFormFieldState<Entity> fieldState){
     if (builder!=null) {
-      return builder!.call(context,controlledFieldState);
+      return builder!.call(context, fieldState);
     }
 
     return SelectionButton(

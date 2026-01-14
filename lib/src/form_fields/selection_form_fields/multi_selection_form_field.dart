@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../foo_form_field.dart';
-import '../../common/models/controlled_field_state.dart';
 
 class MultiSelectionFormField<Entity extends Object> extends StatelessWidget {
   
@@ -10,7 +9,7 @@ class MultiSelectionFormField<Entity extends Object> extends StatelessWidget {
   final FooFormFieldProperties<List<Entity>>? properties;
   final InputDecoration? decoration;
   final void Function(BuildContext context) onTap;
-  final Widget Function(BuildContext context, ControlledFieldState<List<Entity>, List<Entity>> controlledFieldState)? builder;
+  final Widget Function(BuildContext context, FooFormFieldState<List<Entity>> fieldState)? builder;
 
   const MultiSelectionFormField({
     super.key,
@@ -34,9 +33,9 @@ class MultiSelectionFormField<Entity extends Object> extends StatelessWidget {
     );
   }
 
-  Widget _builder(BuildContext context, ControlledFieldState<List<Entity>, List<Entity>> controlledFieldState){
+  Widget _builder(BuildContext context, FooFormFieldState<List<Entity>> fieldState){
     if (builder!=null) {
-      return builder!.call(context,controlledFieldState);
+      return builder!.call(context, fieldState);
     }
 
     final selectedItems = controller.value??[];

@@ -35,18 +35,6 @@ class ControllerTestButtons<O,I> extends StatelessWidget {
             },
           ),
           TextButtonInput(
-            title: "Enable",
-            onPressed: () {
-              controller.enabled = true;
-            },
-          ),
-          TextButtonInput(
-            title: "Disable",
-            onPressed: () {
-              controller.enabled = false;
-            },
-          ),
-          TextButtonInput(
             title: "Clear",
             onPressed: () {
               controller.clear();

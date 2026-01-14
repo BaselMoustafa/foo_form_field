@@ -86,7 +86,6 @@ class _FooTextFormFieldState<Value> extends State<FooTextFormField<Value>> {
     return TextFormField(
       key: _formFieldKey,
       keyboardType: widget.keyboardType,
-      enabled: widget.controller.enabled,
       // initialValue: widget.controller.initialValueAsFieldValue,
       // forceErrorText: widget.controller.forcedErrorText,
 

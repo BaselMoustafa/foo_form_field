@@ -17,7 +17,7 @@ class _TestScreenState extends State<TestScreen> {
   final _secondDateTimeController = DateTimeFieldController();
 
   bool _duplicateFirstDate = true;
-  ControlledFieldState<DateTime, DateTime>? _controlledFieldState;
+  FooFormFieldState<DateTime>? _controlledFieldState;
 
   @override
   Widget build(BuildContext context) {

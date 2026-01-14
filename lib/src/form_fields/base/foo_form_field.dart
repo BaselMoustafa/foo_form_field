@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import '../../../foo_form_field.dart';
-import '../../common/models/controlled_field_state.dart';
+import '../../common/models/foo_form_field_state.dart';
 import '../../common/models/foo_form_field_properties.dart';
 import '../../controllers/base/foo_field_controller.dart';
 
@@ -15,7 +15,7 @@ class FooFormField<Value, FieldValue> extends StatefulWidget {
 
   final FooFieldController<Value, FieldValue> controller;
 
-  final Widget Function(BuildContext context, ControlledFieldState<Value,FieldValue> controlledFieldState) builder;
+  final Widget Function(BuildContext context, FooFormFieldState<FieldValue> fieldState) builder;
 
 
   final FooFormFieldProperties<Value>? properties;
@@ -27,9 +27,7 @@ class FooFormField<Value, FieldValue> extends StatefulWidget {
 
 class _FooFormFieldState<Value, FieldValue> extends State<FooFormField<Value, FieldValue>> {
   
-  bool _firstBuild = true;
-
-  late final ControlledFieldState<Value,FieldValue> _controlledFieldState;
+  late FormFieldState<FieldValue> _fieldState;
 
   @override
   void initState() {
@@ -37,21 +35,31 @@ class _FooFormFieldState<Value, FieldValue> extends State<FooFormField<Value, Fi
     if (widget.controller is ConvertableRangeFieldController) {
       (widget.controller as ConvertableRangeFieldController).invokeSyncers();
     }
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      _afterFirstBuild,
+    );
   }
 
-  @override
-  void dispose() {
-    _controlledFieldState.dispose();
-    super.dispose();
+  void _afterFirstBuild(Duration timeStamp) {
+    _onControllerValueChanged();
+    _addListenerToCurrentController();
   }
 
   @override
   void didUpdateWidget(covariant FooFormField<Value, FieldValue> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (_controlledFieldState.controller != widget.controller) {
-      _controlledFieldState.changeController(widget.controller);  
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller.removeListener(_onControllerValueChanged);
+      _addListenerToCurrentController();
     }
   }
+  @override
+  void dispose() {
+    widget.controller.removeListener(_onControllerValueChanged);
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,21 +71,32 @@ class _FooFormFieldState<Value, FieldValue> extends State<FooFormField<Value, Fi
         widget.controller.mapper.toValue(fieldValue),
       ),
       errorBuilder: widget.properties?.errorBuilder,
-      enabled: widget.controller.enabled,
       autovalidateMode: widget.properties?.autovalidateMode,
       restorationId: widget.properties?.restorationId,
       forceErrorText: widget.properties?.forceErrorText,
       builder: (formFieldState) {
-        if (_firstBuild) {
-          _firstBuild = false;
-          _controlledFieldState = ControlledFieldState<Value,FieldValue>(
-            controller: widget.controller,
-            onChanged: widget.properties?.onChanged,
-          );
-          _controlledFieldState.setFieldState(formFieldState);
-        }
-        return widget.builder(context, _controlledFieldState);
+        _fieldState = formFieldState;
+        return widget.builder(
+          context, 
+          FooFormFieldState(
+            fieldState: _fieldState,
+          ),
+        );
       },
     );
   }
+
+  void _onControllerValueChanged() {
+    _fieldState.didChange(
+      widget.controller.fieldValue,
+    );
+  }
+
+  void _addListenerToCurrentController() {
+    _fieldState.didChange(widget.controller.fieldValue);
+    widget.controller.addListener(
+      _onControllerValueChanged,
+    );
+  }
+  
 }

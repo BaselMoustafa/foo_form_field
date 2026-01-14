@@ -7,7 +7,6 @@ abstract class BaseMultiSelectionFieldController<Entity> extends SelectionFieldC
   BaseMultiSelectionFieldController({
     required super.items,
     super.initialValue,
-    super.enabled,
     required this.areEqualValues,
   }):super(
     areEqual: ( List<Entity> x, List<Entity> y) {
@@ -86,7 +85,6 @@ class MultiSelectionFieldController<Value> extends BaseMultiSelectionFieldContro
     required super.items,
     required super.areEqualValues,
     super.initialValue,
-    super.enabled,
   });
 
 }
@@ -96,7 +94,6 @@ class GetOnceMultiSelectionFieldController<Value>
 
   GetOnceMultiSelectionFieldController({
     super.initialValue,
-    super.enabled,
     required super.areEqualValues,
   });
 
@@ -108,7 +105,6 @@ class PaginatedMultiSelectionFieldController<Value>
   PaginatedMultiSelectionFieldController({
     required super.areEqualValues,
     super.initialValue,
-    super.enabled,
   });
 }
 
@@ -118,6 +114,5 @@ abstract class _StateManagementMultiSelectionFieldController<Value>
   _StateManagementMultiSelectionFieldController({
     required super.areEqualValues,
     super.initialValue,
-    super.enabled,
   }) : super(items: []);
 }

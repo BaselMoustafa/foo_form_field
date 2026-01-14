@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../common/formatters/numeric_text_formatter.dart';
-import '../../common/models/controlled_field_state.dart';
+import '../../common/models/foo_form_field_state.dart';
 import '../../common/ranges/range_validators.dart';
 import '../../controllers/foo_text_editing_controllers/num_text_editing_controller.dart';
 import '../../common/models/foo_form_field_properties.dart';
@@ -32,7 +32,7 @@ class NumRangeTextFormField extends StatelessWidget {
   final NumTextFormatter? maxFieldFormatter;
   final FooFormFieldProperties<Range<num>>? properties;
   final RangeValidator? rangeValidator;
-  final Widget Function(BuildContext context, ControlledFieldState<Range<num>, Range<String>> controlledFieldState, Widget minField, Widget maxField)? builder;
+  final Widget Function(BuildContext context, Widget minField, Widget maxField, FooFormFieldState<Range<String>> fieldState)? builder;
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../common/models/controlled_field_state.dart';
+import '../../common/models/foo_form_field_state.dart';
 import 'foo_form_field.dart';
 
 class DecoratedValueFormField<T> extends FooFormField<T, T> {
@@ -11,20 +11,20 @@ class DecoratedValueFormField<T> extends FooFormField<T, T> {
     super.properties,
     required void Function(BuildContext context)? onTap,
     required InputDecoration? decoration,
-    required Widget Function(BuildContext context, ControlledFieldState<T,T> controlledFieldState) builder,
+    required Widget Function(BuildContext context, FooFormFieldState<T> fieldState) builder,
   }) : super(
-    builder: (BuildContext context, ControlledFieldState<T,T> controlledFieldState) {
+    builder: (BuildContext context, FooFormFieldState<T> fieldState) {
       var effectiveDecoration = decoration ?? InputDecoration();
       effectiveDecoration = effectiveDecoration.applyDefaults(
         Theme.of(context).inputDecorationTheme,
       );
       effectiveDecoration = effectiveDecoration.copyWith(
-        errorText: controlledFieldState.errorText,
-        enabled: controller.enabled,
+        errorText: fieldState.errorText,
+        enabled: fieldState.enabled,
       );
 
       return AbsorbPointer(
-        absorbing: !controller.enabled,
+        absorbing: !fieldState.enabled,
         child: GestureDetector(
           onTap: () => onTap?.call(context),
           child: InputDecorator(
@@ -32,7 +32,7 @@ class DecoratedValueFormField<T> extends FooFormField<T, T> {
             isEmpty: controller.value == null,
             decoration: effectiveDecoration,
             child: controller.value != null
-                ? builder(context, controlledFieldState)
+                ? builder(context, fieldState)
                 : null,
           ),
         ),

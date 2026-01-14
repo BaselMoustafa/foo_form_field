@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import '../../common/models/controlled_field_state.dart';
+import '../../common/models/foo_form_field_state.dart';
 import '../../common/models/foo_form_field_properties.dart';
 import '../../common/ranges/range_validators.dart';
 import '../../common/ranges/ranges.dart';
@@ -13,8 +13,7 @@ import '../../controllers/base/convertable_range_field_controller.dart';
 class ConvertableRangeFormField<
   Value extends Comparable, 
   FieldValue extends Comparable, 
-  BoundryController extends FooFieldController<Value, FieldValue>,
-  RangeController extends ConvertableRangeFieldController<Value, FieldValue, BoundryController>
+  BoundryController extends FooFieldController<Value, FieldValue>
 > extends StatelessWidget {
   const ConvertableRangeFormField({
     super.key,
@@ -26,7 +25,7 @@ class ConvertableRangeFormField<
     this.properties
   }):rangeValidator = rangeValidator ?? const RangeValidator();
 
-  final RangeController controller;
+  final ConvertableRangeFieldController<Value, FieldValue, BoundryController> controller;
 
   final RangeValidator rangeValidator;
 
@@ -34,7 +33,7 @@ class ConvertableRangeFormField<
   
   final Widget Function(BuildContext context, FieldValue? value) maxFieldBuilder;
 
-  final Widget Function(BuildContext context, ControlledFieldState<Range<Value>, Range<FieldValue>> controlledFieldState, Widget minField, Widget maxField)? builder;
+  final Widget Function(BuildContext context, Widget minField, Widget maxField, FooFormFieldState<Range<FieldValue>> fieldState)? builder;
 
   final FooFormFieldProperties<Range<Value>>? properties;
 
@@ -45,8 +44,8 @@ class ConvertableRangeFormField<
   @override
   Widget build(BuildContext context) {
     return FooFormField<Range<Value>, Range<FieldValue>>(
-      builder: (BuildContext context, ControlledFieldState<Range<Value>, Range<FieldValue>> controlledFieldState) {
-        return _builder(context, controlledFieldState);
+      builder: (BuildContext context, FooFormFieldState<Range<FieldValue>> fieldState) {
+        return _builder(context, fieldState);
       },
       controller: controller,
       properties: _properties.copyWith(
@@ -76,14 +75,14 @@ class ConvertableRangeFormField<
   }
 
   /// Builds the inner field layout, wrapping it with error presentation.
-  Widget _builder(BuildContext context, ControlledFieldState<Range<Value>, Range<FieldValue>> controlledFieldState) {
+  Widget _builder(BuildContext context, FooFormFieldState<Range<FieldValue>> fieldState) {
     final minField = minFieldBuilder(context, controller.minController.fieldValue);
     final maxField = maxFieldBuilder(context, controller.maxController.fieldValue);
 
     return FieldWithErrorTextWidget(
-      errorText: controlledFieldState.errorText,
+      errorText: fieldState.errorText,
       fieldWidget:
-          builder?.call(context, controlledFieldState, minField, maxField) ??
+          builder?.call(context, minField, maxField, fieldState) ??
           Row(
             spacing: 10,
             children: [

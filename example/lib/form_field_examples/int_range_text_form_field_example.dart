@@ -17,7 +17,6 @@ class _IntRangeTextFormFieldExampleScreenState extends State<IntRangeTextFormFie
   final _controller = IntRangeTextEditingController(
     minController: IntTextEditingController(
       initialValue: 50,
-      enabled: false,
     ),
     maxController: IntTextEditingController(
       initialValue: 100,

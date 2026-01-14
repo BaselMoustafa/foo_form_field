@@ -9,7 +9,6 @@ class RangeFieldController<
   RangeFieldController({
     required super.minController,
     required super.maxController,
-    super.enabled,
   }) : super(
     mapper: Mapper.sameValueMapper<Range<Value>>(),
   );

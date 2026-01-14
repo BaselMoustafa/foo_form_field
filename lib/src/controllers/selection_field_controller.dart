@@ -15,7 +15,6 @@ abstract class SelectionFieldController<SelectedValue,Entity> extends ValueField
   SelectionFieldController({
     required this.items,
     super.initialValue,
-    super.enabled,
     required super.areEqual,
   });
 

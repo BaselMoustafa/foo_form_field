@@ -17,7 +17,6 @@ class _NumRangeTextFormFieldExampleScreenState extends State<NumRangeTextFormFie
   final _controller = NumRangeTextEditingController(
     minController: NumTextEditingController(
       initialValue: 50.5,
-      enabled: false,
     ),
     maxController: NumTextEditingController(
       initialValue: 100.75,

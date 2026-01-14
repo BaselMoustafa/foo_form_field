@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foo_form_field.dart';
-import '../common/models/controlled_field_state.dart';
+import '../common/models/foo_form_field_state.dart';
 
 class DateTimeRangeFormField extends StatelessWidget {
   const DateTimeRangeFormField({
@@ -37,7 +37,7 @@ class DateTimeRangeFormField extends StatelessWidget {
 
   final Widget Function(BuildContext context, DateTime? value)? minFieldBuilder;
   final Widget Function(BuildContext context, DateTime? value)? maxFieldBuilder;
-  final Widget Function(BuildContext context, ControlledFieldState<Range<DateTime>, Range<DateTime>> controlledFieldState, Widget minField, Widget maxField)? builder;
+  final Widget Function(BuildContext context, Widget minField, Widget maxField, FooFormFieldState<Range<DateTime>> fieldState)? builder;
 
 
   @override

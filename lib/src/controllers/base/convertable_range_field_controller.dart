@@ -8,6 +8,8 @@ class ConvertableRangeFieldController<
   BoundryController extends FooFieldController<Value, FieldValue>
 > extends FooFieldController<Range<Value>, Range<FieldValue>> {
   
+  bool _isSyncersInvoked = false;
+
   final BoundryController minController;
   
   final BoundryController maxController;
@@ -16,7 +18,6 @@ class ConvertableRangeFieldController<
     required super.mapper,
     required this.minController,
     required this.maxController,
-    super.enabled,
   }) : super(
       areEqual: (Range<Value> x, Range<Value> y) => x == y,
       initialValue: Range<Value>(
@@ -25,16 +26,13 @@ class ConvertableRangeFieldController<
       )
     );
 
-  @override
-  /// Enables or disables both bound controllers along with the base controller.
-  set enabled(bool value) {
-    minController.enabled = value;
-    maxController.enabled = value;
-    super.enabled = value;
-  }
   
   /// Hooks listeners that keep the range and bounds in sync.
   void invokeSyncers() {
+    if (_isSyncersInvoked) {
+      return;
+    }
+    _isSyncersInvoked = true;
     addListener(_onRangeChanged);
     minController.addListener(_onMinValueChanged);
     maxController.addListener(_onMaxValueChanged);

@@ -15,7 +15,6 @@ class DateFormFieldExample extends StatefulWidget {
 class _DateFormFieldExampleState extends State<DateFormFieldExample> {
   final _controller = DateTimeFieldController(
     initialValue: DateTime(2025, 1, 1),
-    enabled: false,
   );
 
   @override

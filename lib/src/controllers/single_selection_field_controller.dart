@@ -5,7 +5,6 @@ abstract class BaseSingleSelectionFieldController<Value> extends SelectionFieldC
   BaseSingleSelectionFieldController({
     required super.items,
     super.initialValue,
-    super.enabled,
     required super.areEqual,
   });
 
@@ -38,7 +37,6 @@ class SingleSelectionFieldController<Value> extends BaseSingleSelectionFieldCont
     required super.items,
     required super.areEqual,
     super.initialValue,
-    super.enabled,
   });
 
 }
@@ -48,7 +46,6 @@ class GetOnceSingleSelectionFieldController<Value>
 
   GetOnceSingleSelectionFieldController({
     super.initialValue,
-    super.enabled,
     required super.areEqual,
   });
 
@@ -60,7 +57,6 @@ class PaginatedSingleSelectionFieldController<Value>
   PaginatedSingleSelectionFieldController({
     required super.areEqual,
     super.initialValue,
-    super.enabled,
   });
 }
 
@@ -70,6 +66,5 @@ abstract class _StateManagementSingleSelectionFieldController<Value>
   _StateManagementSingleSelectionFieldController({
     required super.areEqual,
     super.initialValue,
-    super.enabled,
   }) : super(items: []);
 }

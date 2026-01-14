@@ -7,7 +7,6 @@ class FooTextEditingController<Value> extends FooFieldController<Value, String> 
   final TextEditingController textEditingController;
   FooTextEditingController({
     required super.initialValue,
-    required super.enabled,
     required super.mapper,
   }) : textEditingController = TextEditingController(
     text: mapper.toFieldValue(initialValue),
@@ -36,6 +35,5 @@ class FooRangeTextEditingController<
     required super.minController,
     required super.maxController,
     required super.mapper,
-    super.enabled,
   });
 }
