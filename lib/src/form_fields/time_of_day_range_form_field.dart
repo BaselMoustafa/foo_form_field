@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foo_form_field.dart';
+import '../common/models/controlled_field_state.dart';
 
 class TimeOfDayRangeFormField extends StatelessWidget {
   const TimeOfDayRangeFormField({
@@ -15,7 +16,7 @@ class TimeOfDayRangeFormField extends StatelessWidget {
     this.onTapMaxField,
     this.minFieldBuilder,
     this.maxFieldBuilder,
-    this.layoutBuilder,
+    this.builder,
   });
 
   final TimeOfDayRangeFieldController controller;
@@ -31,7 +32,7 @@ class TimeOfDayRangeFormField extends StatelessWidget {
 
   final Widget Function(BuildContext context, TimeOfDay? value)? minFieldBuilder;
   final Widget Function(BuildContext context, TimeOfDay? value)? maxFieldBuilder;
-  final Widget Function(BuildContext context, Widget minField, Widget maxField)? layoutBuilder;
+  final Widget Function(BuildContext context, ControlledFieldState<Range<TimeOfDay>, Range<TimeOfDay>> controlledFieldState, Widget minField, Widget maxField)? builder;
 
 
   @override
@@ -42,7 +43,7 @@ class TimeOfDayRangeFormField extends StatelessWidget {
       maxFieldBuilder: _maxFieldBuilder, 
       rangeValidator: rangeValidator,
       properties: properties,
-      layoutBuilder: layoutBuilder,
+      builder: builder,
     );
   }
 

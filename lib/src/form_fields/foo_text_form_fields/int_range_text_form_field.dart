@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../common/formatters/numeric_text_formatter.dart';
+import '../../common/models/controlled_field_state.dart';
 import '../../common/ranges/range_validators.dart';
 import '../../controllers/foo_text_editing_controllers/int_text_editing_controller.dart';
 import '../../common/models/foo_form_field_properties.dart';
@@ -21,7 +22,7 @@ class IntRangeTextFormField extends StatelessWidget {
     this.maxFieldProperties,
     this.minFieldFormatter,
     this.maxFieldFormatter,
-    this.layoutBuilder,
+    this.builder,
   });
 
   final IntRangeTextEditingController controller;
@@ -31,13 +32,13 @@ class IntRangeTextFormField extends StatelessWidget {
   final IntTextFormatter? maxFieldFormatter;
   final FooFormFieldProperties<Range<int>>? properties;
   final RangeValidator? rangeValidator;
-  final Widget Function(BuildContext context, Widget minField, Widget maxField)? layoutBuilder;
+  final Widget Function(BuildContext context, ControlledFieldState<Range<int>, Range<String>> controlledFieldState, Widget minField, Widget maxField)? builder;
 
   @override
   Widget build(BuildContext context) {
     return ConvertableRangeFormField(
       controller: controller,
-      layoutBuilder: layoutBuilder,
+      builder: builder,
       properties: properties,
       rangeValidator: rangeValidator,
       minFieldBuilder: _minFieldBuilder,

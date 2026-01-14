@@ -39,12 +39,12 @@ class _FooTextFormFieldState<Value> extends State<FooTextFormField<Value>> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.controller.setFormFieldState(_formFieldKey.currentState!);
-      widget.controller.addListener(
-        _notifyChangeInValue,
-      );
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   widget.controller.setFormFieldState(_formFieldKey.currentState!);
+    //   widget.controller.addListener(
+    //     _notifyChangeInValue,
+    //   );
+    // });
   }
 
   @override
@@ -52,7 +52,7 @@ class _FooTextFormFieldState<Value> extends State<FooTextFormField<Value>> {
     widget.controller.removeListener(
       _notifyChangeInValue,
     );
-    widget.controller.removeFormFieldState();
+    //widget.controller.removeFormFieldState();
     super.dispose();
   }
 
@@ -87,9 +87,10 @@ class _FooTextFormFieldState<Value> extends State<FooTextFormField<Value>> {
       key: _formFieldKey,
       keyboardType: widget.keyboardType,
       enabled: widget.controller.enabled,
-      initialValue: widget.controller.initialValueAsFieldValue,
-      forceErrorText: widget.controller.forcedErrorText,
+      // initialValue: widget.controller.initialValueAsFieldValue,
+      // forceErrorText: widget.controller.forcedErrorText,
 
+  
       //Gives access to the TextFormField's properties
       onChanged: (_){
         if(_shouldNotifyUser){

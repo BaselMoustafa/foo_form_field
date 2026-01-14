@@ -1,15 +1,13 @@
-import 'package:flutter/material.dart';
-
 import 'selection_field_controller.dart';
 
 abstract class BaseMultiSelectionFieldController<Entity> extends SelectionFieldController<List<Entity>,Entity> {
   
   final bool Function(Entity x, Entity y) areEqualValues;
+
   BaseMultiSelectionFieldController({
     required super.items,
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
     required this.areEqualValues,
   }):super(
     areEqual: ( List<Entity> x, List<Entity> y) {
@@ -61,32 +59,24 @@ abstract class BaseMultiSelectionFieldController<Entity> extends SelectionFieldC
 
   @override
   void toggleSelectionFor(Entity e) {
-    excute<void>(
-      needToNotifyListener: true,
-      toExecute: (FormFieldState<List<Entity>> formFieldState) {
-        if (isSelected(e)) {
-          selectedValue!.removeWhere(
-            (item) => areEqualValues(item, e),
-          );
-        } else {
-          if (selectedValue == null) {
-            selectedValue = [e];
-          } else {
-            selectedValue!.add(e);
-          }
-        }
-      },
-    );
+    if (isSelected(e)) {
+      selectedValue!.removeWhere(
+        (item) => areEqualValues(item, e),
+      );
+    } else {
+      if (selectedValue == null) {
+        selectedValue = [e];
+      } else {
+        selectedValue!.add(e);
+      }
+    }
+    notifyListeners();
   }
 
   @override
   void initForSelection() {
-    excute<void>(
-      needToNotifyListener: true,
-      toExecute: (FormFieldState<List<Entity>> formFieldState) {
-        selectedValue = List.from(value ?? []);
-      },
-    );
+    selectedValue = List.from(value ?? []);
+    notifyListeners();
   }
 }
 
@@ -97,7 +87,6 @@ class MultiSelectionFieldController<Value> extends BaseMultiSelectionFieldContro
     required super.areEqualValues,
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
   });
 
 }
@@ -108,7 +97,6 @@ class GetOnceMultiSelectionFieldController<Value>
   GetOnceMultiSelectionFieldController({
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
     required super.areEqualValues,
   });
 
@@ -121,7 +109,6 @@ class PaginatedMultiSelectionFieldController<Value>
     required super.areEqualValues,
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
   });
 }
 
@@ -132,6 +119,5 @@ abstract class _StateManagementMultiSelectionFieldController<Value>
     required super.areEqualValues,
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
   }) : super(items: []);
 }

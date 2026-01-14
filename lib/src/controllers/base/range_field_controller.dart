@@ -10,7 +10,6 @@ class RangeFieldController<
     required super.minController,
     required super.maxController,
     super.enabled,
-    super.forcedErrorText,
   }) : super(
     mapper: Mapper.sameValueMapper<Range<Value>>(),
   );

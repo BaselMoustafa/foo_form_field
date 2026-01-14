@@ -6,7 +6,6 @@ class DateOnlyFieldController extends ValueFieldController<DateOnly> {
   DateOnlyFieldController({
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
   }):super(
     areEqual: (DateOnly x, DateOnly y) => x.isEqualTo(y),
   );
@@ -17,7 +16,6 @@ class DateOnlyRangeFieldController extends RangeFieldController<DateOnly,DateOnl
     required super.minController,
     required super.maxController,
     super.enabled,
-    super.forcedErrorText,
   });
 }
 

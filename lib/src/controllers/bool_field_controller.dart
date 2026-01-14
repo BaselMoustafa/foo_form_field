@@ -4,6 +4,5 @@ class BoolFieldController extends ValueFieldController<bool> {
   BoolFieldController({
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
   }) : super(areEqual: (bool x, bool y) => x == y);
 }

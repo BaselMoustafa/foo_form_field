@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
-
+import '../../../foo_form_field.dart';
+import '../../common/models/controlled_field_state.dart';
 import '../../common/models/foo_form_field_properties.dart';
 import '../../controllers/base/foo_field_controller.dart';
 
@@ -14,7 +15,7 @@ class FooFormField<Value, FieldValue> extends StatefulWidget {
 
   final FooFieldController<Value, FieldValue> controller;
 
-  final Widget Function(BuildContext context, FieldValue? value) builder;
+  final Widget Function(BuildContext context, ControlledFieldState<Value,FieldValue> controlledFieldState) builder;
 
 
   final FooFormFieldProperties<Value>? properties;
@@ -24,72 +25,58 @@ class FooFormField<Value, FieldValue> extends StatefulWidget {
   State<FooFormField<Value, FieldValue>> createState() => _FooFormFieldState<Value, FieldValue>();
 }
 
-class _FooFormFieldState<O, I> extends State<FooFormField<O, I>> {
+class _FooFormFieldState<Value, FieldValue> extends State<FooFormField<Value, FieldValue>> {
+  
+  bool _firstBuild = true;
 
-  late final GlobalKey<FormFieldState<I>> _formFieldKey;
-
-  O? _latestValue;
+  late final ControlledFieldState<Value,FieldValue> _controlledFieldState;
 
   @override
   void initState() {
     super.initState();
-    _formFieldKey = GlobalKey<FormFieldState<I>>();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.controller.setFormFieldState(_formFieldKey.currentState!);
-      widget.controller.addListener(_onEvent);
-    });
+    if (widget.controller is ConvertableRangeFieldController) {
+      (widget.controller as ConvertableRangeFieldController).invokeSyncers();
+    }
   }
 
   @override
   void dispose() {
-    widget.controller.removeListener(_onEvent);
-    widget.controller.removeFormFieldState();
+    _controlledFieldState.dispose();
     super.dispose();
   }
 
-  void _onEvent() {
-    setState(() {});
-    if (_shouldNotifyUser) {
-      widget.properties?.onChanged?.call(widget.controller.value);
-      _latestValue = widget.controller.value;
+  @override
+  void didUpdateWidget(covariant FooFormField<Value, FieldValue> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_controlledFieldState.controller != widget.controller) {
+      _controlledFieldState.changeController(widget.controller);  
     }
-  }
-
-  bool get _shouldNotifyUser {
-    final value = widget.controller.value;
-    if(value == null && _latestValue == null){
-      return false;
-    }
-    if(value == null && _latestValue != null){
-      return true;
-    }
-    if(value != null && _latestValue == null){
-      return true;
-    }
-    return ! widget.controller.areEqual(
-      value as O, 
-      _latestValue as O,
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return FormField<I>(
-      key: _formFieldKey,
-      onSaved: (I? inputValue) => widget.properties?.onSaved?.call(
-        widget.controller.mapper.toValue(inputValue),
+    return FormField<FieldValue>(
+      onSaved: (FieldValue? fieldValue) => widget.properties?.onSaved?.call(
+        widget.controller.mapper.toValue(fieldValue),
       ),
-      validator: (I? inputValue) => widget.properties?.validator?.call(
-        widget.controller.mapper.toValue(inputValue),
+      validator: (FieldValue? fieldValue) => widget.properties?.validator?.call(
+        widget.controller.mapper.toValue(fieldValue),
       ),
       errorBuilder: widget.properties?.errorBuilder,
-      initialValue: widget.controller.initialValueAsFieldValue,
       enabled: widget.controller.enabled,
       autovalidateMode: widget.properties?.autovalidateMode,
       restorationId: widget.properties?.restorationId,
-      forceErrorText: widget.controller.forcedErrorText,
-      builder: (FormFieldState<I> fieldState) {
-        return widget.builder(context, fieldState.value);
+      forceErrorText: widget.properties?.forceErrorText,
+      builder: (formFieldState) {
+        if (_firstBuild) {
+          _firstBuild = false;
+          _controlledFieldState = ControlledFieldState<Value,FieldValue>(
+            controller: widget.controller,
+            onChanged: widget.properties?.onChanged,
+          );
+          _controlledFieldState.setFieldState(formFieldState);
+        }
+        return widget.builder(context, _controlledFieldState);
       },
     );
   }

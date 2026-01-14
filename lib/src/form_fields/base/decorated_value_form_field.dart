@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../common/models/controlled_field_state.dart';
 import 'foo_form_field.dart';
 
 class DecoratedValueFormField<T> extends FooFormField<T, T> {
@@ -10,15 +11,15 @@ class DecoratedValueFormField<T> extends FooFormField<T, T> {
     super.properties,
     required void Function(BuildContext context)? onTap,
     required InputDecoration? decoration,
-    required Widget Function(BuildContext context, T? value) builder,
+    required Widget Function(BuildContext context, ControlledFieldState<T,T> controlledFieldState) builder,
   }) : super(
-    builder: (BuildContext context, T? value) {
-      var effectiveDecoration = (decoration ?? InputDecoration());
+    builder: (BuildContext context, ControlledFieldState<T,T> controlledFieldState) {
+      var effectiveDecoration = decoration ?? InputDecoration();
       effectiveDecoration = effectiveDecoration.applyDefaults(
         Theme.of(context).inputDecorationTheme,
       );
       effectiveDecoration = effectiveDecoration.copyWith(
-        errorText: controller.errorText,
+        errorText: controlledFieldState.errorText,
         enabled: controller.enabled,
       );
 
@@ -31,7 +32,7 @@ class DecoratedValueFormField<T> extends FooFormField<T, T> {
             isEmpty: controller.value == null,
             decoration: effectiveDecoration,
             child: controller.value != null
-                ? builder(context, value)
+                ? builder(context, controlledFieldState)
                 : null,
           ),
         ),

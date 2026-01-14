@@ -52,36 +52,36 @@ class ControllerTestButtons<O,I> extends StatelessWidget {
               controller.clear();
             },
           ),
-          TextButtonInput(
-            title: "Validate",
-            onPressed: () {
-              controller.validate();
-            },
-          ),
-          TextButtonInput(
-            title: "Get Is Valid",
-            onPressed: () {
-              log("Get isValid = ${controller.isValid}");
-            },
-          ),
-          TextButtonInput(
-            title: "Set Forced Error Text",
-            onPressed: () {
-              controller.forcedErrorText = 'forced error';
-            },
-          ),
-          TextButtonInput(
-            title: "Clear Forced Error Text",
-            onPressed: () {
-              controller.forcedErrorText = null;
-            },
-          ),
-          TextButtonInput(
-            title: "Save",
-            onPressed: () {
-              controller.save();
-            },
-          ),    
+          // TextButtonInput(
+          //   title: "Validate",
+          //   onPressed: () {
+          //     controller.validate();
+          //   },
+          // ),
+          // TextButtonInput(
+          //   title: "Get Is Valid",
+          //   onPressed: () {
+          //     log("Get isValid = ${controller.isValid}");
+          //   },
+          // ),
+          // TextButtonInput(
+          //   title: "Set Forced Error Text",
+          //   onPressed: () {
+          //     controller.forcedErrorText = 'forced error';
+          //   },
+          // ),
+          // TextButtonInput(
+          //   title: "Clear Forced Error Text",
+          //   onPressed: () {
+          //     controller.forcedErrorText = null;
+          //   },
+          // ),
+          // TextButtonInput(
+          //   title: "Save",
+          //   onPressed: () {
+          //     controller.save();
+          //   },
+          // ),    
           TextButtonInput(
             title: "Set ${valueToString(firstDummyValue)}",
             onPressed: () {

@@ -5,137 +5,42 @@ import '../../../foo_form_field.dart';
 
 
 class FooFieldController<Value, FieldValue> extends ChangeNotifier {
-  final Value? initialValue;
-
-  FieldValue? get initialValueAsFieldValue => mapper.toFieldValue(initialValue);
 
   bool _enabled;
 
-  final bool Function(Value x, Value y) areEqual;
+  Value? _value;
 
   final Mapper<Value, FieldValue> mapper;
 
-  FormFieldState<FieldValue>? _formFieldState;
-
-  String? _forcedErrorText;
+  final Value? initialValue;
+  
+  final bool Function(Value x, Value y) areEqual;
 
   FooFieldController({
-    required this.areEqual,
+    this.initialValue,
     required bool? enabled,
-    required String? forcedErrorText,
-    required this.initialValue,
     required this.mapper,
+    required this.areEqual,
   }) : _enabled = enabled ?? true,
-       _forcedErrorText = forcedErrorText;
+       _value = initialValue;
 
-  void setFormFieldState(FormFieldState<FieldValue> formFieldState) {
-    _formFieldState = formFieldState;
-    notifyListeners();
-  }
-
-  void removeFormFieldState() {
-    _formFieldState = null;
-  }
+  FieldValue? get fieldValue => mapper.toFieldValue(_value);
 
   bool get enabled => _enabled;
 
   set enabled(bool value) {
-    excute<void>(
-      needToNotifyListener: true,
-      toExecute: (FormFieldState<FieldValue> formFieldState) {
-        _enabled = value;
-      },
-    );
+    _enabled = value;
+    notifyListeners();
   }
 
-  Value? get value {
-    if (_formFieldState == null) {
-      return initialValue;
-    }
-    return mapper.toValue(_formFieldState!.value);
-  }
+  Value? get value => _value;
 
   set value(Value? newValue) {
-    return excute<void>(
-      needToNotifyListener: true,
-      toExecute: (FormFieldState<FieldValue> formFieldState) {
-        formFieldState.didChange(mapper.toFieldValue(newValue));
-      },
-    );
-  }
-
-  bool validate() {
-    return excute<bool>(
-      toExecute: (FormFieldState<FieldValue> formFieldState) {
-        return formFieldState.validate();
-      },
-    );
+    _value = newValue;
+    notifyListeners();
   }
 
   void clear() => value = null;
 
-  void save() {
-    return excute<void>(
-      toExecute: (FormFieldState<FieldValue> formFieldState) {
-        formFieldState.save();
-      },
-    );
-  }
-
-  String? get forcedErrorText {
-    return _forcedErrorText;
-  }
-
-  set forcedErrorText(String? value) {
-    excute<void>(
-      needToNotifyListener: true,
-      toExecute: (FormFieldState<FieldValue> formFieldState) {
-        _forcedErrorText = value;
-      },
-    );
-  }
-
-  String? get errorText {
-    if (_formFieldState == null) {
-      return null;
-    }
-    return _formFieldState!.errorText;
-  }
-
-  bool get hasError {
-    return excute<bool>(
-      toExecute: (FormFieldState<FieldValue> formFieldState) {
-        return formFieldState.hasError;
-      },
-    );
-  }
-
-  bool get isValid {
-    return excute<bool>(
-      toExecute: (FormFieldState<FieldValue> formFieldState) {
-        return formFieldState.isValid;
-      },
-    );
-  }
-
-  @protected
-  R excute<R>({
-    bool needToNotifyListener = false,
-    required R Function(FormFieldState<FieldValue> formFieldState) toExecute,
-  }) {
-    _ensureStateExistence();
-    R result = toExecute(_formFieldState!);
-    if (needToNotifyListener) {
-      notifyListeners();
-    }
-    return result;
-  }
-
-  void _ensureStateExistence() {
-    if (_formFieldState == null) {
-      throw Exception(
-        "This Controller is not attached to a any Foo Form Field",
-      );
-    }
-  }
+  void reset() => value = initialValue;
 }

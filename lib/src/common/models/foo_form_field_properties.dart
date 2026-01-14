@@ -8,7 +8,7 @@ class FooFormFieldProperties<Value> {
   final void Function(Value? value)? onChanged;
   final String? Function(Value? value)? validator;
   final void Function(Value? value)? onSaved;
-
+  final String? forceErrorText;
 
   const FooFormFieldProperties({
     this.autovalidateMode,
@@ -17,6 +17,7 @@ class FooFormFieldProperties<Value> {
     this.onChanged,
     this.validator,
     this.onSaved,
+    this.forceErrorText,
   });
 
   FooFormFieldProperties<Value> copyWith({
@@ -26,6 +27,7 @@ class FooFormFieldProperties<Value> {
     void Function(Value? value)? onChanged,
     String? Function(Value? value)? validator,
     void Function(Value? value)? onSaved,
+    String? forceErrorText,
   }) {
     return FooFormFieldProperties(
       autovalidateMode: autovalidateMode ?? this.autovalidateMode,
@@ -34,6 +36,7 @@ class FooFormFieldProperties<Value> {
       onChanged: onChanged ?? this.onChanged,
       validator: validator ?? this.validator,
       onSaved: onSaved ?? this.onSaved,
+      forceErrorText: forceErrorText ?? this.forceErrorText,
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foo_form_field.dart';
+import '../common/models/controlled_field_state.dart';
 
 class DateOnlyFormField extends StatelessWidget {
   const DateOnlyFormField({
@@ -22,7 +23,7 @@ class DateOnlyFormField extends StatelessWidget {
   final String? Function(DateOnly? date)? dateFormatter;
 
   /// Custom widget builder overriding the decorated default.
-  final Widget Function(BuildContext context, DateOnly? value)? builder;
+  final Widget Function(BuildContext context, ControlledFieldState<DateOnly, DateOnly> controlledFieldState)? builder;
 
   /// Optional tap handler; when omitted a date picker is presented.
   final void Function(BuildContext context)? onTap;
@@ -42,11 +43,12 @@ class DateOnlyFormField extends StatelessWidget {
     );
   }
 
-  Widget _builder(BuildContext context, DateOnly? value) {
+  Widget _builder(BuildContext context, ControlledFieldState<DateOnly, DateOnly> controlledFieldState) {
     
     if(builder != null) {
-      return builder!(context, value);
+      return builder!(context, controlledFieldState);
     }
+    final value = controlledFieldState.value;
 
     return FittedBox(
       alignment: AlignmentDirectional.centerStart,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../foo_form_field.dart';
 import '../common/extentions/date_time_extension.dart';
+import '../common/models/controlled_field_state.dart';
 enum X{
   a,b,c;
 }
@@ -24,7 +25,7 @@ class DateTimeFormField extends StatelessWidget {
   final String? Function(DateTime? date)? dateFormatter;
 
   /// Custom widget builder overriding the decorated default.
-  final Widget Function(BuildContext context, DateTime? value)? builder;
+  final Widget Function(BuildContext context, ControlledFieldState<DateTime, DateTime> controlledFieldState)? builder;
 
   /// Optional tap handler; when omitted a date picker is presented.
   final void Function(BuildContext context)? onTap;
@@ -44,12 +45,14 @@ class DateTimeFormField extends StatelessWidget {
     );
   }
 
-  Widget _builder(BuildContext context, DateTime? value) {
+  Widget _builder(BuildContext context, ControlledFieldState<DateTime, DateTime> controlledFieldState) {
     
     if(builder != null) {
-      return builder!(context, value);
+      return builder!(context, controlledFieldState);
     }
 
+    final value = controlledFieldState.value;
+    
     return FittedBox(
       alignment: AlignmentDirectional.centerStart,
       fit: BoxFit.scaleDown,

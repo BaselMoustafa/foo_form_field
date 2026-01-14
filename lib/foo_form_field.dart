@@ -13,6 +13,7 @@ export 'src/common/models/foo_form_field_properties.dart';
 export 'src/common/models/text_from_field_properties.dart';
 export 'src/common/models/date_only.dart';
 export 'src/common/models/selection_list_view_properties.dart';
+export 'src/common/models/controlled_field_state.dart';
 
 //Formatters exports
 export 'src/common/formatters/foo_text_formatter.dart';

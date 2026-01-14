@@ -1,18 +1,30 @@
+import 'package:flutter/widgets.dart';
+
 import '../../../foo_form_field.dart';
 
 class FooTextEditingController<Value> extends FooFieldController<Value, String> {
+
+  final TextEditingController textEditingController;
   FooTextEditingController({
     required super.initialValue,
     required super.enabled,
-    required super.forcedErrorText,
     required super.mapper,
-  }) : super(
-    areEqual: (Value x, Value y){
-      String? xString = mapper.toFieldValue(x);
-      String? yString = mapper.toFieldValue(y);
-      return xString == yString;
-    },
-  );
+  }) : textEditingController = TextEditingController(
+    text: mapper.toFieldValue(initialValue),
+  ),
+    super(
+      areEqual: (Value x, Value y){
+        String? xString = mapper.toFieldValue(x);
+        String? yString = mapper.toFieldValue(y);
+        return xString == yString;
+      },
+    );
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
 }
 
 class FooRangeTextEditingController<
@@ -25,6 +37,5 @@ class FooRangeTextEditingController<
     required super.maxController,
     required super.mapper,
     super.enabled,
-    super.forcedErrorText,
   });
 }

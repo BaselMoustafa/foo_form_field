@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'selection_field_controller.dart';
 
 abstract class BaseSingleSelectionFieldController<Value> extends SelectionFieldController<Value,Value> {
@@ -8,7 +6,6 @@ abstract class BaseSingleSelectionFieldController<Value> extends SelectionFieldC
     required super.items,
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
     required super.areEqual,
   });
 
@@ -20,26 +17,18 @@ abstract class BaseSingleSelectionFieldController<Value> extends SelectionFieldC
 
   @override
   void toggleSelectionFor(Value e) {
-    excute<void>(
-      needToNotifyListener: true,
-      toExecute: (FormFieldState<Value> formFieldState) {
-        if (isSelected(e)) {
-          selectedValue = null;
-        } else {
-          selectedValue = e;
-        }
-      },
-    );
+    if (isSelected(e)) {
+      selectedValue = null;
+    } else {
+      selectedValue = e;
+    }
+    notifyListeners();
   }
 
   @override
   void initForSelection() {
-    excute<void>(
-      needToNotifyListener: true,
-      toExecute: (FormFieldState<Value> formFieldState) {
-        selectedValue = value;
-      },
-    );
+    selectedValue = value;
+    notifyListeners();
   }
 }
 
@@ -50,7 +39,6 @@ class SingleSelectionFieldController<Value> extends BaseSingleSelectionFieldCont
     required super.areEqual,
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
   });
 
 }
@@ -61,7 +49,6 @@ class GetOnceSingleSelectionFieldController<Value>
   GetOnceSingleSelectionFieldController({
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
     required super.areEqual,
   });
 
@@ -74,7 +61,6 @@ class PaginatedSingleSelectionFieldController<Value>
     required super.areEqual,
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
   });
 }
 
@@ -85,6 +71,5 @@ abstract class _StateManagementSingleSelectionFieldController<Value>
     required super.areEqual,
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
   }) : super(items: []);
 }

@@ -13,9 +13,12 @@ class TestScreen extends StatefulWidget {
 class _TestScreenState extends State<TestScreen> {
 
   bool _showField = true;
-  final _dateTimeController = DateTimeFieldController();
-  final _intTextEditingController = IntTextEditingController();
-  final _textEditingController = TextEditingController();
+  final _firstDateTimeController = DateTimeFieldController();
+  final _secondDateTimeController = DateTimeFieldController();
+
+  bool _duplicateFirstDate = true;
+  ControlledFieldState<DateTime, DateTime>? _controlledFieldState;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,21 +41,58 @@ class _TestScreenState extends State<TestScreen> {
           spacing: 16,
           children:!_showField ? []:[
             DateTimeFormField(
-              controller: _dateTimeController,
+              controller: _firstDateTimeController,
               decoration: InputDecoration(
-                label: Text('Date'),
+                label: Text('First Date '),
               ),
             ),
-            IntTextFormField(
-              controller: _intTextEditingController,
+
+            DateTimeFormField(
+              controller:_duplicateFirstDate ? _firstDateTimeController : _secondDateTimeController,
+              decoration: InputDecoration(
+                label: Text('Duplicated ${_duplicateFirstDate ? 'First' : 'Second'} Date'),
+              ),
+              properties: FooFormFieldProperties(
+                validator: (value) {
+                  if (value == null) {
+                    return 'This field is required';
+                  }
+                  return null;
+                },
+              ),
+              builder: (context, controlledFieldState) {
+                _controlledFieldState = controlledFieldState;
+                return Text(controlledFieldState.value.toString());
+              },
             ),
-            TextFormField(
-              controller: _textEditingController,
-            ),
+
+            DateTimeFormField(
+              controller: _secondDateTimeController,
+              decoration: InputDecoration(
+                label: Text('Second Date'),
+              ),
+            ),  
+
             ElevatedButton(
               onPressed: () {
-                log(_dateTimeController.value.toString());
-                log(_intTextEditingController.value.toString());
+                _controlledFieldState?.validate();
+              },
+              child: Text('Validate Duplicated Date'),
+            ),
+
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  _duplicateFirstDate = !_duplicateFirstDate;
+                });
+              },
+              child: Text('Toggle'),
+            ),         
+            
+            ElevatedButton(
+              onPressed: () {
+                log(_firstDateTimeController.value.toString());
+                log(_secondDateTimeController.value.toString());
               },
               child: Text('Show Values'),
             ),

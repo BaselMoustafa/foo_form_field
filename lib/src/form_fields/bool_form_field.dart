@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foo_form_field.dart';
+import '../common/models/controlled_field_state.dart';
 import '../common/widgets/field_with_error_text_widget.dart';
 import '../common/widgets/selection_card.dart';
 
@@ -25,7 +26,7 @@ class BooleanFormField extends StatelessWidget {
 
   final TextStyle? textStyle;
 
-  final Widget Function(BuildContext context, bool? value)? builder;
+  final Widget Function(BuildContext context, ControlledFieldState<bool, bool> controlledFieldState)? builder;
 
   final FooFormFieldProperties<bool>? properties;
 
@@ -40,13 +41,13 @@ class BooleanFormField extends StatelessWidget {
   }
 
   /// Builds the default toggle presentation using the controller value.
-  Widget _fieldBuilder(BuildContext context, bool? value) {
+  Widget _fieldBuilder(BuildContext context, ControlledFieldState<bool, bool> controlledFieldState) {
     if (builder != null) {
-      return builder!(context, value);
+      return builder!(context, controlledFieldState);
     }
 
     return FieldWithErrorTextWidget(
-      errorText: controller.errorText,
+      errorText: controlledFieldState.errorText,
       fieldWidget: Row(
         spacing: 6,
         children: [

@@ -6,8 +6,9 @@ class ValueFieldController<T> extends FooFieldController<T, T> {
   ValueFieldController({
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
     required super.areEqual,
-  }) : super(mapper: Mapper.sameValueMapper<T>());
+  }) : super(
+    mapper: Mapper.sameValueMapper<T>(),
+  );
   
 }

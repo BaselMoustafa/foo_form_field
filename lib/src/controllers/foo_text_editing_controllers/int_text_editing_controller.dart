@@ -5,7 +5,6 @@ class IntTextEditingController extends FooTextEditingController<int> {
   IntTextEditingController({
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
   }):super(
     mapper: IntToStringMapper()
   );
@@ -18,7 +17,6 @@ class IntRangeTextEditingController extends FooRangeTextEditingController<int, I
     required super.minController,
     required super.maxController,
     super.enabled,
-    super.forcedErrorText,
   }):super(
     mapper: IntRangeToStringRangeMapper(),
   );

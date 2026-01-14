@@ -33,7 +33,7 @@ class _DateRangeFormFieldExampleState extends State<DateRangeFormFieldExample> {
         controller: _controller,
         minDate: DateTime(2025, 12, 5),
         maxDate: DateTime(2025, 12, 25),
-        layoutBuilder: (context, minField, maxField) {
+        builder: (context, controlledFieldState, minField, maxField) {
           return Column(
             spacing: 10,
             children: [

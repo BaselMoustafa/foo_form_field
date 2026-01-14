@@ -1,6 +1,4 @@
 
-import 'package:flutter/material.dart';
-
 import '../../common/ranges/ranges.dart';
 import 'foo_field_controller.dart';
 
@@ -19,7 +17,6 @@ class ConvertableRangeFieldController<
     required this.minController,
     required this.maxController,
     super.enabled,
-    super.forcedErrorText,
   }) : super(
       areEqual: (Range<Value> x, Range<Value> y) => x == y,
       initialValue: Range<Value>(
@@ -29,59 +26,18 @@ class ConvertableRangeFieldController<
     );
 
   @override
-  /// Attaches the form field state and ensures sync listeners are wired.
-  void setFormFieldState(FormFieldState<Range<FieldValue>> formFieldState) {
-    super.setFormFieldState(formFieldState);
-    _invokeSyncers();
-  }
-
-  @override
   /// Enables or disables both bound controllers along with the base controller.
   set enabled(bool value) {
     minController.enabled = value;
     maxController.enabled = value;
     super.enabled = value;
   }
-
-  @override
-  /// Saves the bounds first, then persists the overall range value.
-  void save() {
-    return excute(
-      toExecute: (FormFieldState<Range<FieldValue>> formFieldState) {
-        minController.save();
-        maxController.save();
-        super.save();
-      },
-    );
-  }
-
-  @override
-  /// Validates the bound controllers before validating the range itself.
-  bool validate() {
-    return excute<bool>(
-      toExecute: (FormFieldState<Range<FieldValue>> formFieldState) {
-        bool isValidMin = minController.validate();
-        bool isValidMax = maxController.validate();
-        if (isValidMin && isValidMax) {
-          return super.validate();
-        }
-        return false;
-      },
-    );
-  }
-
+  
   /// Hooks listeners that keep the range and bounds in sync.
-  void _invokeSyncers() {
+  void invokeSyncers() {
     addListener(_onRangeChanged);
     minController.addListener(_onMinValueChanged);
     maxController.addListener(_onMaxValueChanged);
-  }
-
-  /// Removes the synchronization listeners.
-  void _removeSyncers() {
-    removeListener(_onRangeChanged);
-    minController.removeListener(_onMinValueChanged);
-    maxController.removeListener(_onMaxValueChanged);
   }
 
   /// Updates the bound controllers when the range value changes.
@@ -114,6 +70,13 @@ class ConvertableRangeFieldController<
       min: value?.min,
       max: maxController.value,
     );
+  }
+
+  /// Removes the synchronization listeners.
+  void _removeSyncers() {
+    removeListener(_onRangeChanged);
+    minController.removeListener(_onMinValueChanged);
+    maxController.removeListener(_onMaxValueChanged);
   }
 
   @override

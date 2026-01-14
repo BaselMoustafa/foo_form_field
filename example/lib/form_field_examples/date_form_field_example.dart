@@ -54,6 +54,13 @@ class _DateFormFieldExampleState extends State<DateFormFieldExample> {
           secondDummyValue: DateTime(2025, 1, 25),
           valueToString: (value) => "${value.year}/${value.month}/${value.day}",
         ),
+        DateTimeFormField(
+          controller: _controller,
+          decoration: InputDecoration(
+            label: Text("Copeird Date Form Field"),
+          ),
+          builder: (context, controlledFieldState) => Text(controlledFieldState.value.toString()),
+        ),
       ],
     );
   }

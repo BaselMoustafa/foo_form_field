@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 import '../../foo_form_field.dart';
 import '../common/get_items_state.dart';
@@ -17,7 +16,6 @@ abstract class SelectionFieldController<SelectedValue,Entity> extends ValueField
     required this.items,
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
     required super.areEqual,
   });
 
@@ -35,13 +33,9 @@ abstract class SelectionFieldController<SelectedValue,Entity> extends ValueField
   /// Commits the current selected value to the field value,
   /// then resets the selected value to null.
   void commit() {
-    excute<void>(
-      needToNotifyListener: true,
-      toExecute: (FormFieldState<SelectedValue> formFieldState) {
-        value = _selectedValue;
-        _selectedValue = null;
-      },
-    );
+    value = _selectedValue;
+    _selectedValue = null;
+    notifyListeners();
   }
 
   /// Initializes the selection by resetting the selected value to null.

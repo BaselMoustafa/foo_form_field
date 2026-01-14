@@ -6,7 +6,6 @@ class DateTimeFieldController extends ValueFieldController<DateTime> {
   DateTimeFieldController({
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
   }):super(
     areEqual: (DateTime x, DateTime y) =>x.isEqualTo(y),
   );
@@ -17,6 +16,5 @@ class DateTimeRangeFieldController extends RangeFieldController<DateTime,DateTim
     required super.minController,
     required super.maxController,
     super.enabled,
-    super.forcedErrorText,
   });
 }

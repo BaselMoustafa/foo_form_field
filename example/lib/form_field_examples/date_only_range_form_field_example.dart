@@ -33,7 +33,7 @@ class _DateOnlyRangeFormFieldExampleState extends State<DateOnlyRangeFormFieldEx
         controller: _controller,
         minDate: DateOnly(year: 2025, month: 12, day: 5),
         maxDate: DateOnly(year: 2025, month: 12, day: 25),
-        layoutBuilder: (context, minField, maxField) {
+        builder: (context, controlledFieldState, minField, maxField) {
           return Column(
             spacing: 10,
             children: [

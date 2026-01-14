@@ -5,7 +5,6 @@ class NumTextEditingController extends FooTextEditingController<num> {
   NumTextEditingController({
     super.initialValue,
     super.enabled,
-    super.forcedErrorText,
   }):super(
     mapper: NumToStringMapper()
   );
@@ -18,7 +17,6 @@ class NumRangeTextEditingController extends FooRangeTextEditingController<num, N
     required super.minController,
     required super.maxController,
     super.enabled,
-    super.forcedErrorText,
   }):super(
     mapper: NumRangeToStringRangeMapper(),
   );
