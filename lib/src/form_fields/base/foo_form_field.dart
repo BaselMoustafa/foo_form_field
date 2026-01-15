@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../foo_form_field.dart';
 
 typedef FooFormFieldBuilder<FieldValue> = Widget Function(BuildContext context, FooFormFieldState<FieldValue> fieldState);
+typedef FooFormFieldStateProvider<FieldValue> = void Function(FooFormFieldState<FieldValue> fieldState);
 
 class FooFormField<Value, FieldValue> extends StatefulWidget {
   const FooFormField({
@@ -9,6 +10,7 @@ class FooFormField<Value, FieldValue> extends StatefulWidget {
     required this.controller,
     required this.builder,
     this.properties,
+    this.stateProvider,
   });
 
   final FooFieldController<Value, FieldValue> controller;
@@ -16,6 +18,8 @@ class FooFormField<Value, FieldValue> extends StatefulWidget {
   final FooFormFieldBuilder<FieldValue> builder;
 
   final FooFormFieldProperties<Value>? properties;
+
+  final FooFormFieldStateProvider<FieldValue>? stateProvider;
   
   @override
   State<FooFormField<Value, FieldValue>> createState() => _FooFormFieldState<Value, FieldValue>();
@@ -35,8 +39,17 @@ class _FooFormFieldState<Value, FieldValue> extends State<FooFormField<Value, Fi
     }
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (_)=>_addListenerToCurrentController(),
+      (_)=>_afterFirstBuild(),
     );
+  }
+
+  void _afterFirstBuild() {
+    widget.stateProvider?.call(
+      FooFormFieldState(
+        fieldState: _fieldState,
+      ),
+    );
+    _addListenerToCurrentController();
   }
 
   @override

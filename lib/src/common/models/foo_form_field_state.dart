@@ -34,4 +34,15 @@ class FooFormFieldState<FieldValue>{
   FieldValue? get value => _fieldState.value;
   
   BuildContext get context => _fieldState.context;
+
+  @override
+  int get hashCode => _fieldState.hashCode;
+  
+  @override
+  bool operator ==(Object other) {
+    if (other is FooFormFieldState<FieldValue>) {
+      return _fieldState == other._fieldState;
+    }
+    return super == other;
+  }
 }
