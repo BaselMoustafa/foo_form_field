@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../foo_form_field.dart';
 import '../common/extentions/date_time_extension.dart';
+import '../common/extentions/input_decoration_extension.dart';
 
 class DateTimeFormField extends StatelessWidget {
   const DateTimeFormField({
@@ -12,7 +13,7 @@ class DateTimeFormField extends StatelessWidget {
     this.onTap,
     this.firstDate,
     this.lastDate,
-    this.decoration,
+    this.decorationBuilder,
   });
 
   /// Controller managing the selected date.
@@ -31,7 +32,7 @@ class DateTimeFormField extends StatelessWidget {
   
   final DateTime? lastDate;
   
-  final InputDecoration? decoration;
+  final DecorationBuilder<DateTime>? decorationBuilder;
   
   final FooFormFieldProperties<DateTime>? properties;
 
@@ -47,7 +48,7 @@ class DateTimeFormField extends StatelessWidget {
     return DecoratedFormField(
       controller: controller,
       properties: properties,
-      decoration: _effectiveDecoration,
+      decorationBuilder: _effectiveDecorationBuilder,
       onTap: _onTap,
       builder: _builder,
     );
@@ -107,46 +108,19 @@ class DateTimeFormField extends StatelessWidget {
   }
 
   /// Applies default icons to the provided decoration if missing.
-  InputDecoration get _effectiveDecoration {
-    if (decoration == null) {
-      return InputDecoration(
+  InputDecoration  _effectiveDecorationBuilder(FooFormFieldState<DateTime> fieldState) {
+    InputDecoration toReturn = decorationBuilder?.call(fieldState) ?? InputDecoration();
+    toReturn = toReturn.merge(
+      secondary: InputDecoration(
         prefixIcon: Icon(Icons.timer),
         suffixIcon: controller.value != null
-            ? _ClearButton(controller: controller)
+            ? CloseButton(
+              onPressed: () => controller.clear(),
+            )
             : null,
-      );
-    }
-
-    InputDecoration toReturn = decoration!;
-
-    if (toReturn.prefixIcon == null) {
-      toReturn = toReturn.copyWith(prefixIcon: Icon(Icons.timer));
-    }
-
-    if (toReturn.suffixIcon == null) {
-      toReturn = toReturn.copyWith(
-        suffixIcon: controller.value != null
-            ? _ClearButton(controller: controller)
-            : null,
-      );
-    }
-
+      ),
+    );
     return toReturn;
   }
 }
 
-/// Button that clears the selected date.
-class _ClearButton extends StatelessWidget {
-  const _ClearButton({required this.controller});
-  final FooFieldController<DateTime, DateTime> controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        controller.clear();
-      },
-      child: Icon(Icons.clear),
-    );
-  }
-}

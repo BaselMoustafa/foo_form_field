@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../foo_form_field.dart';
 
+typedef DecorationBuilder<T> = InputDecoration Function(FooFormFieldState<T> fieldState);
 class DateOnlyRangeFormField extends StatelessWidget {
   const DateOnlyRangeFormField({
     super.key,
@@ -11,8 +12,8 @@ class DateOnlyRangeFormField extends StatelessWidget {
     this.properties,
     this.minDate,
     this.maxDate,
-    this.minFieldDecoration,
-    this.maxFieldDecoration,
+    this.minFieldDecorationBuilder,
+    this.maxFieldDecorationBuilder,
     this.onTapMinField,
     this.onTapMaxField,
     this.minFieldBuilder,
@@ -28,8 +29,8 @@ class DateOnlyRangeFormField extends StatelessWidget {
   final DateOnly? minDate;
   final DateOnly? maxDate;
 
-  final InputDecoration? minFieldDecoration;
-  final InputDecoration? maxFieldDecoration;
+  final DecorationBuilder<DateOnly>? minFieldDecorationBuilder;
+  final DecorationBuilder<DateOnly>? maxFieldDecorationBuilder;
 
   final void Function(BuildContext context)? onTapMinField;
   final void Function(BuildContext context)? onTapMaxField;
@@ -60,7 +61,7 @@ class DateOnlyRangeFormField extends StatelessWidget {
       dateFormatter: dateFormatter,
       firstDate: minDate,
       lastDate: controller.maxController.value?? maxDate,
-      decoration: minFieldDecoration,
+      decorationBuilder: minFieldDecorationBuilder,
       onTap: onTapMinField,
     );
   }
@@ -74,7 +75,7 @@ class DateOnlyRangeFormField extends StatelessWidget {
       dateFormatter: dateFormatter,
       firstDate: controller.minController.value?? minDate,
       lastDate: maxDate,
-      decoration: maxFieldDecoration,
+      decorationBuilder: maxFieldDecorationBuilder,
       onTap: onTapMaxField,
     );
   }

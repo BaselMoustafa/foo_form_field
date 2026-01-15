@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-
 import '../../../foo_form_field.dart';
+import '../../common/extentions/input_decoration_extension.dart';
 
 class DecoratedFormField<Value, FieldValue> extends FooFormField<Value, FieldValue> {
   DecoratedFormField({
@@ -9,20 +9,18 @@ class DecoratedFormField<Value, FieldValue> extends FooFormField<Value, FieldVal
     required super.controller,
     super.properties,
     required void Function(BuildContext context)? onTap,
-    required InputDecoration? decoration,
+    required DecorationBuilder<FieldValue>? decorationBuilder,
     required FooFormFieldBuilder<FieldValue> builder,
   }) : super(
     builder: (BuildContext context, FooFormFieldState<FieldValue> fieldState) {
       
-      var effectiveDecoration = decoration ?? InputDecoration();
-      
-      effectiveDecoration = effectiveDecoration.applyDefaults(
-        Theme.of(context).inputDecorationTheme,
-      );
+      var effectiveDecoration = decorationBuilder?.call(fieldState) ?? InputDecoration();
 
-      effectiveDecoration = effectiveDecoration.copyWith(
-        errorText: fieldState.errorText,
-        enabled: fieldState.enabled,
+      effectiveDecoration = effectiveDecoration.merge(
+        secondary: InputDecoration(
+          errorText: fieldState.errorText,
+          enabled: fieldState.enabled,
+        ),
       );
 
       return AbsorbPointer(

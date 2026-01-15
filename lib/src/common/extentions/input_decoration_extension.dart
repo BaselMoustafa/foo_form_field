@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 extension InputDecorationExtension on InputDecoration? {
 
   InputDecoration merge({
-    required BuildContext context,
     required InputDecoration? secondary,
   }) {
 
     if (this == null) {
-      return secondary ?? InputDecoration().applyDefaults(
-        Theme.of(context).inputDecorationTheme,
-      );
+      return secondary ?? InputDecoration();
     }
 
     return InputDecoration(

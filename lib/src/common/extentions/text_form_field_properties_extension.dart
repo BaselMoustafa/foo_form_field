@@ -7,7 +7,6 @@ import 'input_decoration_extension.dart';
 extension FooFormFieldPropertiesExtension<T> on TextFormFieldProperties<T>? {
   
   TextFormFieldProperties<T> merge({
-    required BuildContext context,
     required TextFormFieldProperties<T>? secondary,
   }) {
 
@@ -17,7 +16,6 @@ extension FooFormFieldPropertiesExtension<T> on TextFormFieldProperties<T>? {
 
     return TextFormFieldProperties(
       decoration: this?.decoration.merge(
-        context: context,
         secondary: secondary?.decoration,
       ),
       autocorrect: this?.autocorrect ?? secondary?.autocorrect,
@@ -88,11 +86,9 @@ extension FooFormFieldPropertiesExtension<T> on TextFormFieldProperties<T>? {
   }
 
   TextFormFieldProperties<T> mergeDecoration({
-    required BuildContext context,
     required InputDecoration? secondaryDecoration,
   }) {
     return merge(
-      context: context, 
       secondary: TextFormFieldProperties<T>(
         decoration: secondaryDecoration,
       ),

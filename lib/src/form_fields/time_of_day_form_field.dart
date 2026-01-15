@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../foo_form_field.dart';
+import '../common/extentions/input_decoration_extension.dart';
 
 class TimeOfDayFormField extends StatelessWidget {
   const TimeOfDayFormField({
@@ -10,7 +11,7 @@ class TimeOfDayFormField extends StatelessWidget {
     this.timeFormatter,
     this.builder,
     this.onTap,
-    this.decoration,
+    this.decorationBuilder,
   });
 
   /// Controller managing the selected time.
@@ -24,7 +25,7 @@ class TimeOfDayFormField extends StatelessWidget {
 
   /// Optional tap handler; when omitted a time picker is presented.
   final void Function(BuildContext context)? onTap;
-  final InputDecoration? decoration;
+  final DecorationBuilder<TimeOfDay>? decorationBuilder;
   final FooFormFieldProperties<TimeOfDay>? properties;
 
   @override
@@ -39,7 +40,7 @@ class TimeOfDayFormField extends StatelessWidget {
     return DecoratedFormField(
       controller: controller,
       properties: properties,
-      decoration: _effectiveDecoration,
+      decorationBuilder: _effectiveDecorationBuilder,
       onTap: _onTap,
       builder: _builder,
     );
@@ -80,47 +81,18 @@ class TimeOfDayFormField extends StatelessWidget {
   }
 
   /// Applies default icons to the provided decoration if missing.
-  InputDecoration get _effectiveDecoration {
-    if (decoration == null) {
-      return InputDecoration(
+  InputDecoration _effectiveDecorationBuilder(FooFormFieldState<TimeOfDay> fieldState) {
+    InputDecoration toReturn = decorationBuilder?.call(fieldState) ?? InputDecoration();
+    toReturn = toReturn.merge(
+      secondary: InputDecoration(
         prefixIcon: Icon(Icons.access_time),
         suffixIcon: controller.value != null
-            ? _ClearButton(controller: controller)
+            ? CloseButton(
+              onPressed: () => controller.clear(),
+            )
             : null,
-      );
-    }
-
-    InputDecoration toReturn = decoration!;
-
-    if (toReturn.prefixIcon == null) {
-      toReturn = toReturn.copyWith(prefixIcon: Icon(Icons.access_time));
-    }
-
-    if (toReturn.suffixIcon == null) {
-      toReturn = toReturn.copyWith(
-        suffixIcon: controller.value != null
-            ? _ClearButton(controller: controller)
-            : null,
-      );
-    }
-
+      ),
+    );
     return toReturn;
   }
 }
-
-/// Button that clears the selected time.
-class _ClearButton extends StatelessWidget {
-  const _ClearButton({required this.controller});
-  final FooFieldController<TimeOfDay, TimeOfDay> controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        controller.clear();
-      },
-      child: Icon(Icons.clear),
-    );
-  }
-}
-

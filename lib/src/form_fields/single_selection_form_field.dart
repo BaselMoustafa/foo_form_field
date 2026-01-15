@@ -6,7 +6,7 @@ class SingleSelectionFormField<Entity extends Object> extends StatelessWidget {
   final BaseSingleSelectionFieldController<Entity> controller;
   final Widget Function(BuildContext context, Entity item) itemBuilder;
   final FooFormFieldProperties<Entity>? properties;
-  final InputDecoration? decoration;
+  final DecorationBuilder<Entity>? decorationBuilder;
   final void Function(BuildContext context) onTap;
   final Widget Function(BuildContext context, FooFormFieldState<Entity> fieldState)? builder;
 
@@ -17,7 +17,7 @@ class SingleSelectionFormField<Entity extends Object> extends StatelessWidget {
     required this.onTap,
     this.builder, 
     this.properties, 
-    this.decoration, 
+    this.decorationBuilder, 
   });
 
   @override
@@ -25,7 +25,7 @@ class SingleSelectionFormField<Entity extends Object> extends StatelessWidget {
     return DecoratedFormField(
       controller: controller, 
       onTap: onTap, 
-      decoration: decoration, 
+      decorationBuilder: decorationBuilder, 
       builder: _builder,
       properties: properties,
     );
