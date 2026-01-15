@@ -13,11 +13,17 @@ class TestScreen extends StatefulWidget {
 class _TestScreenState extends State<TestScreen> {
 
   bool _showField = true;
-  final _firstDateTimeController = DateTimeFieldController();
-  final _secondDateTimeController = DateTimeFieldController();
+  final _firstDateTimeController = DateTimeRangeFieldController(
+    minController: DateTimeFieldController(),
+    maxController: DateTimeFieldController(),
+  );
+  final _secondDateTimeController = DateTimeRangeFieldController(
+    minController: DateTimeFieldController(),
+    maxController: DateTimeFieldController(),
+  );
 
   bool _duplicateFirstDate = true;
-  FooFormFieldState<DateTime>? _controlledFieldState;
+  FooFormFieldState<Range<DateTime>>? _controlledFieldState;
 
   @override
   Widget build(BuildContext context) {
@@ -38,53 +44,92 @@ class _TestScreenState extends State<TestScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          spacing: 16,
+          spacing: 25,
           children:!_showField ? []:[
-            DateTimeFormField(
+            DateTimeRangeFormField(
               controller: _firstDateTimeController,
-              decorationBuilder: (fieldState) => InputDecoration(
-                label: Text('First Date '),
-              ),
               properties: FooFormFieldProperties(
                 onChanged: (value) {
                   log("First Date Changed Called: $value");
                 },
               ),
+              minFieldDecorationBuilder: (fieldState) => InputDecoration(
+                label: Text('First From Date'),
+              ),
+              maxFieldDecorationBuilder: (fieldState) => InputDecoration(
+                label: Text('First To Date'),
+              ),
+              builder: (context, minField, maxField, fieldState) {
+                return Column(
+                  spacing: 10,
+                  children: [
+                    minField,
+                    maxField,
+                  ],
+                );
+              },
             ),
 
-            DateTimeFormField(
+            DateTimeRangeFormField(
               stateProvider: (fieldState) {
                 log("State Provider Called: ${fieldState.isValid}");
                 _controlledFieldState = fieldState;
               },
               controller:_duplicateFirstDate ? _firstDateTimeController : _secondDateTimeController,
-              decorationBuilder: (fieldState) => InputDecoration(
-                label: Text('Duplicated ${_duplicateFirstDate ? 'First' : 'Second'} Date'),
-              ),
               properties: FooFormFieldProperties(
-                validator: (value) {
-                  if (value == null) {
+                validator: (Range<DateTime>? value) {
+                  log("Duplicated Date Validator Called: $value");
+                  if (value == null || (value.min == null && value.max == null)) {
                     return 'This field is required';
                   }
+                  log("Duplicated Date Validator Returned: null");
                   return null;
                 },
                 onChanged: (value) {
                   log("Duplicated Date Changed Called: $value");
                 },
               ),
+              minFieldDecorationBuilder: (fieldState) => InputDecoration(
+                label: Text('Duplicated From Date'),
+              ),
+              maxFieldDecorationBuilder: (fieldState) => InputDecoration(
+                label: Text('Duplicated To Date'),
+              ),
+              builder: (context, minField, maxField, fieldState) {
+                return Column(
+                  spacing: 10,
+                  children: [
+                    minField,
+                    maxField,
+                    ErrorTextWidget(errorText: fieldState.errorText),
+                  ],
+                );
+              },
             ),
 
-            DateTimeFormField(
-              
-              controller: _secondDateTimeController,
-              decorationBuilder: (fieldState) => InputDecoration(
-                label: Text('Second Date'),
+            DateTimeRangeFormField(
+              minFieldDecorationBuilder: (fieldState) => InputDecoration(
+                label: Text('Second From Date'),
               ),
+              maxFieldDecorationBuilder: (fieldState) => InputDecoration(
+                label: Text('Second To Date'),
+              ),
+              controller: _secondDateTimeController,
               properties: FooFormFieldProperties(
                 onChanged: (value) {
                   log("Second Date Changed Called: $value");
                 },
               ),
+              builder: (context, minField, maxField, fieldState) {
+                return Column(
+                  spacing: 10,
+                  children: [
+                    minField,
+                    maxField,
+                  ],
+                );
+              },
+
             ),  
 
             ElevatedButton(

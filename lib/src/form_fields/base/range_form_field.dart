@@ -19,7 +19,8 @@ class RangeFormField<
     required this.minFieldBuilder,
     required this.maxFieldBuilder,
     this.builder,
-    this.properties
+    this.properties,
+    this.stateProvider,
   }):rangeValidator = rangeValidator ?? const RangeValidator();
 
   final ConvertableRangeFieldController<Value, FieldValue, BoundryController> controller;
@@ -33,43 +34,47 @@ class RangeFormField<
   final RangeFormFieldBuilder<FieldValue>? builder;
 
   final FooFormFieldProperties<Range<Value>>? properties;
-
-  FooFormFieldProperties<Range<Value>> get _properties{
-    return properties ?? FooFormFieldProperties<Range<Value>>();
-  }
+  
+  final FooFormFieldStateProvider<Range<FieldValue>>? stateProvider;
 
   @override
   Widget build(BuildContext context) {
     return FooFormField<Range<Value>, Range<FieldValue>>(
+      stateProvider: stateProvider,
       builder: (BuildContext context, FooFormFieldState<Range<FieldValue>> fieldState) {
         return _builder(context, fieldState);
       },
       controller: controller,
-      properties: _properties.copyWith(
-        validator: _validator
-      ),
+      properties: _properties,
     );
   }
 
-  /// Runs equality and min validations before delegating to the optional validator.
-  String? _validator(Range<Value>? value) {
-    if (value == null) {
-      return properties?.validator?.call(value);
-    }
+  FooFormFieldProperties<Range<Value>> get _properties{
+    var toReturn = properties?? FooFormFieldProperties<Range<Value>>();
+    final currentValidator = toReturn.validator;
 
-    String? equalityError = rangeValidator.validateEquality(value);
+    toReturn = toReturn.copyWith(
+      validator: (Range<Value>? value) {
+         if (value == null) {
+          return properties?.validator?.call(value);
+        }
 
-    if (equalityError != null) {
-      return equalityError;
-    }
+        String? equalityError = rangeValidator.validateEquality(value);
 
-    String? minError = rangeValidator.validateMin(value);
-    if (minError != null) {
-      return minError;
-    }
+        if (equalityError != null) {
+          return equalityError;
+        }
 
-    return properties?.validator?.call(value);
+        String? minError = rangeValidator.validateMin(value);
+        if (minError != null) {
+          return minError;
+        }
+        return currentValidator?.call(value);
+      },
+    );
+    return toReturn;
   }
+
 
   /// Builds the inner field layout, wrapping it with error presentation.
   Widget _builder(BuildContext context, FooFormFieldState<Range<FieldValue>> fieldState) {

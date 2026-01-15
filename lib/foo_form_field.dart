@@ -26,6 +26,7 @@ export 'src/common/widgets/single_selection_list_view.dart';
 export 'src/common/widgets/multi_selection_list_view.dart';
 export 'src/common/widgets/selection_button.dart';
 export 'src/common/widgets/custom_checkbox.dart';
+export 'src/common/widgets/error_text_widget.dart';
 
 
 

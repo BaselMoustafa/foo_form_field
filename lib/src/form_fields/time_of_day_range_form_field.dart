@@ -18,9 +18,11 @@ class TimeOfDayRangeFormField extends StatelessWidget {
     this.builder,
     this.minFieldStateProvider,
     this.maxFieldStateProvider,
+    this.stateProvider,
   });
 
   final TimeOfDayRangeFieldController controller;
+  final FooFormFieldStateProvider<Range<TimeOfDay>>? stateProvider;
   final String? Function(TimeOfDay? time)? timeFormatter;
   final RangeValidator? rangeValidator;
   final FooFormFieldProperties<Range<TimeOfDay>>? properties;
@@ -43,6 +45,7 @@ class TimeOfDayRangeFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return RangeFormField(
       controller: controller, 
+      stateProvider: stateProvider,
       minFieldBuilder: _minFieldBuilder,
       maxFieldBuilder: _maxFieldBuilder, 
       rangeValidator: rangeValidator,

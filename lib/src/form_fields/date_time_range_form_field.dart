@@ -20,9 +20,11 @@ class DateTimeRangeFormField extends StatelessWidget {
     this.builder,
     this.minFieldStateProvider,
     this.maxFieldStateProvider,
+    this.stateProvider,
   });
 
   final DateTimeRangeFieldController controller;
+  final FooFormFieldStateProvider<Range<DateTime>>? stateProvider;
   final String? Function(DateTime? date)? dateFormatter;
   final RangeValidator? rangeValidator;
   final FooFormFieldProperties<Range<DateTime>>? properties;
@@ -48,6 +50,7 @@ class DateTimeRangeFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return RangeFormField(
       controller: controller, 
+      stateProvider: stateProvider,
       minFieldBuilder: _minFieldBuilder,
       maxFieldBuilder: _maxFieldBuilder, 
       rangeValidator: rangeValidator,
