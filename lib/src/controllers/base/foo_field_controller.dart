@@ -42,9 +42,11 @@ class FooFieldController<Value, FieldValue> extends ChangeNotifier {
       );
     }
 
+    bool shouldNotifyListeners = shouldNotify();
+
     _value = newValue;
     
-    if (shouldNotify()) {
+    if (shouldNotifyListeners) {
       notifyListeners();
     }
   }
