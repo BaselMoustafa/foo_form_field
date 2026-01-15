@@ -45,6 +45,11 @@ class _TestScreenState extends State<TestScreen> {
               decorationBuilder: (fieldState) => InputDecoration(
                 label: Text('First Date '),
               ),
+              properties: FooFormFieldProperties(
+                onChanged: (value) {
+                  log("First Date Changed Called: $value");
+                },
+              ),
             ),
 
             DateTimeFormField(
@@ -63,6 +68,9 @@ class _TestScreenState extends State<TestScreen> {
                   }
                   return null;
                 },
+                onChanged: (value) {
+                  log("Duplicated Date Changed Called: $value");
+                },
               ),
             ),
 
@@ -71,6 +79,11 @@ class _TestScreenState extends State<TestScreen> {
               controller: _secondDateTimeController,
               decorationBuilder: (fieldState) => InputDecoration(
                 label: Text('Second Date'),
+              ),
+              properties: FooFormFieldProperties(
+                onChanged: (value) {
+                  log("Second Date Changed Called: $value");
+                },
               ),
             ),  
 
