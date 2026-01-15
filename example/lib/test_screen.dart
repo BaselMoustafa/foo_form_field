@@ -48,6 +48,10 @@ class _TestScreenState extends State<TestScreen> {
             ),
 
             DateTimeFormField(
+              stateProvider: (fieldState) {
+                log("State Provider Called: ${fieldState.isValid}");
+                _controlledFieldState = fieldState;
+              },
               controller:_duplicateFirstDate ? _firstDateTimeController : _secondDateTimeController,
               decorationBuilder: (fieldState) => InputDecoration(
                 label: Text('Duplicated ${_duplicateFirstDate ? 'First' : 'Second'} Date'),
@@ -63,6 +67,7 @@ class _TestScreenState extends State<TestScreen> {
             ),
 
             DateTimeFormField(
+              
               controller: _secondDateTimeController,
               decorationBuilder: (fieldState) => InputDecoration(
                 label: Text('Second Date'),
