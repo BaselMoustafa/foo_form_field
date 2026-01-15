@@ -29,6 +29,13 @@ class TimeOfDayFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(builder != null) {
+      return FooFormField(
+        controller: controller,
+        properties: properties,
+        builder: builder!,
+      );
+    }
     return DecoratedFormField(
       controller: controller,
       properties: properties,
@@ -40,10 +47,6 @@ class TimeOfDayFormField extends StatelessWidget {
 
   Widget _builder(BuildContext context, FooFormFieldState<TimeOfDay> fieldState) {
     
-    if(builder != null) {
-      return builder!(context, fieldState);
-    }
-
     final value = fieldState.value;
 
     return FittedBox(

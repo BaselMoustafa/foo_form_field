@@ -60,10 +60,6 @@ class _TestScreenState extends State<TestScreen> {
                   return null;
                 },
               ),
-              builder: (context, controlledFieldState) {
-                _controlledFieldState = controlledFieldState;
-                return Text(controlledFieldState.value.toString());
-              },
             ),
 
             DateTimeFormField(
@@ -91,8 +87,8 @@ class _TestScreenState extends State<TestScreen> {
             
             ElevatedButton(
               onPressed: () {
-                log(_firstDateTimeController.value.toString());
-                log(_secondDateTimeController.value.toString());
+                log("First Date: ${_firstDateTimeController.value.toString()}");
+                log("Second Date: ${_secondDateTimeController.value.toString()}");
               },
               child: Text('Show Values'),
             ),

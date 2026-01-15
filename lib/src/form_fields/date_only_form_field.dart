@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../foo_form_field.dart';
-import '../common/models/foo_form_field_state.dart';
 
 class DateOnlyFormField extends StatelessWidget {
   const DateOnlyFormField({
@@ -34,6 +33,13 @@ class DateOnlyFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(builder != null) {
+      return FooFormField(
+        controller: controller,
+        properties: properties,
+        builder: builder!,
+      );
+    }
     return DecoratedFormField(
       controller: controller,
       properties: properties,
@@ -45,9 +51,6 @@ class DateOnlyFormField extends StatelessWidget {
 
   Widget _builder(BuildContext context, FooFormFieldState<DateOnly> fieldState) {
     
-    if(builder != null) {
-      return builder!(context, fieldState);
-    }
     final value = fieldState.value;
 
     return FittedBox(
