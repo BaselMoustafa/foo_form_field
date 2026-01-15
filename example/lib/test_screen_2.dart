@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:foo_form_field/foo_form_field.dart';
@@ -88,6 +89,13 @@ class _TestScreen2State extends State<TestScreen2> {
                   log("Second Date Changed Called: $value");
                 },
               ),
+            ),
+
+            ElevatedButton(
+              onPressed: () {
+                _firstDateTimeController.value = math.Random().nextInt(100);
+              },
+              child: Text('Change First To Random Value'),
             ),
 
             ElevatedButton(
