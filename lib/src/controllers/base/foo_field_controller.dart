@@ -1,14 +1,9 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../foo_form_field.dart';
-
-
-class FooFieldController<Value, FieldValue> extends ChangeNotifier {
+class FooFieldController<Value> extends ChangeNotifier {
 
   Value? _value;
-
-  final Mapper<Value, FieldValue> mapper;
 
   final Value? initialValue;
   
@@ -16,11 +11,9 @@ class FooFieldController<Value, FieldValue> extends ChangeNotifier {
 
   FooFieldController({
     this.initialValue,
-    required this.mapper,
     required this.areEqual,
   }) :  _value = initialValue;
 
-  FieldValue? get fieldValue => mapper.toFieldValue(_value);
 
   Value? get value => _value;
 

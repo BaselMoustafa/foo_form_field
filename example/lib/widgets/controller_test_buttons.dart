@@ -20,7 +20,7 @@ class ControllerTestButtons<O,I> extends StatelessWidget {
   final O firstDummyValue;
   final O secondDummyValue;
   final String Function(O value) valueToString;
-  final FooFieldController<O,I> controller;
+  final FooFieldController<O> controller;
 
   @override
   Widget build(BuildContext context) {

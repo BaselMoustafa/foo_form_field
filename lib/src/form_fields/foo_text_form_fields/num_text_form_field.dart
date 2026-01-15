@@ -9,11 +9,13 @@ class NumTextFormField extends StatelessWidget {
     required this.controller,
     this.properties,
     this.formatter,
+    this.stateProvider,
   });
 
   final NumTextEditingController controller;
   final TextFormFieldProperties<num>? properties;
   final NumTextFormatter? formatter;
+  final FooFormFieldStateProvider<String>? stateProvider;
   
 
   NumTextFormatter get _formatter => formatter ?? NumTextFormatter();
@@ -21,6 +23,7 @@ class NumTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FooTextFormField(
+      stateProvider: stateProvider,
       controller: controller,
       properties: properties,
       fooTextFormatters: [

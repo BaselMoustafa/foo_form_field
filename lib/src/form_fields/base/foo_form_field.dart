@@ -4,7 +4,7 @@ import '../../../foo_form_field.dart';
 typedef FooFormFieldBuilder<FieldValue> = Widget Function(BuildContext context, FooFormFieldState<FieldValue> fieldState);
 typedef FooFormFieldStateProvider<FieldValue> = void Function(FooFormFieldState<FieldValue> fieldState);
 
-class FooFormField<Value, FieldValue> extends StatefulWidget {
+class FooFormField<Value> extends StatefulWidget {
   const FooFormField({
     super.key,
     required this.controller,
@@ -13,31 +13,27 @@ class FooFormField<Value, FieldValue> extends StatefulWidget {
     this.stateProvider,
   });
 
-  final FooFieldController<Value, FieldValue> controller;
+  final FooFieldController<Value> controller;
 
-  final FooFormFieldBuilder<FieldValue> builder;
+  final FooFormFieldBuilder<Value> builder;
 
   final FooFormFieldProperties<Value>? properties;
 
-  final FooFormFieldStateProvider<FieldValue>? stateProvider;
+  final FooFormFieldStateProvider<Value>? stateProvider;
   
   @override
-  State<FooFormField<Value, FieldValue>> createState() => _FooFormFieldState<Value, FieldValue>();
+  State<FooFormField<Value>> createState() => _FooFormFieldState<Value>();
 }
 
-class _FooFormFieldState<Value, FieldValue> extends State<FooFormField<Value, FieldValue>> {
+class _FooFormFieldState<Value> extends State<FooFormField<Value>> {
   
-  late FormFieldState<FieldValue> _fieldState;
+  late FormFieldState<Value> _fieldState;
 
-  FooFieldController<Value, FieldValue> get controller => widget.controller;
+  FooFieldController<Value> get controller => widget.controller;
 
   @override
   void initState() {
     super.initState();
-    if (controller is ConvertableRangeFieldController) {
-      (controller as ConvertableRangeFieldController).invokeSyncers();
-    }
-
     WidgetsBinding.instance.addPostFrameCallback(
       (_)=>_afterFirstBuild(),
     );
@@ -53,7 +49,7 @@ class _FooFormFieldState<Value, FieldValue> extends State<FooFormField<Value, Fi
   }
 
   @override
-  void didUpdateWidget(covariant FooFormField<Value, FieldValue> oldWidget) {
+  void didUpdateWidget(covariant FooFormField<Value> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.controller != controller) {
       oldWidget.controller.removeListener(_onControllerValueChanged);
@@ -68,13 +64,9 @@ class _FooFormFieldState<Value, FieldValue> extends State<FooFormField<Value, Fi
 
   @override
   Widget build(BuildContext context) {
-    return FormField<FieldValue>(
-      onSaved: (FieldValue? fieldValue) => widget.properties?.onSaved?.call(
-        controller.mapper.toValue(fieldValue),
-      ),
-      validator: (FieldValue? fieldValue) => widget.properties?.validator?.call(
-        controller.mapper.toValue(fieldValue),
-      ),
+    return FormField<Value>(
+      onSaved: widget.properties?.onSaved,
+      validator: widget.properties?.validator,
       errorBuilder: widget.properties?.errorBuilder,
       autovalidateMode: widget.properties?.autovalidateMode,
       restorationId: widget.properties?.restorationId,
@@ -92,8 +84,11 @@ class _FooFormFieldState<Value, FieldValue> extends State<FooFormField<Value, Fi
   }
 
   void _addListenerToCurrentController() {
+    if (controller is RangeFieldController) {
+      (controller as RangeFieldController).invokeSyncers();
+    }
     _fieldState.didChange(
-      controller.fieldValue
+      controller.value,
     );
     controller.addListener(
       _onControllerValueChanged,
@@ -102,7 +97,7 @@ class _FooFormFieldState<Value, FieldValue> extends State<FooFormField<Value, Fi
 
   void _onControllerValueChanged() {
     _fieldState.didChange(
-      controller.fieldValue,
+      controller.value,
     );
     widget.properties?.onChanged?.call(
       controller.value,

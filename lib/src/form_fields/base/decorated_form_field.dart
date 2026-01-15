@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import '../../../foo_form_field.dart';
 import '../../common/extentions/input_decoration_extension.dart';
 
-class DecoratedFormField<Value, FieldValue> extends FooFormField<Value, FieldValue> {
+class DecoratedFormField<Value> extends FooFormField<Value> {
   DecoratedFormField({
     super.key,
     required super.controller,
     super.properties,
     super.stateProvider,
     required void Function(BuildContext context)? onTap,
-    required DecorationBuilder<FieldValue>? decorationBuilder,
-    required FooFormFieldBuilder<FieldValue> builder,
+    required DecorationBuilder<Value>? decorationBuilder,
+    required FooFormFieldBuilder<Value> builder,
   }) : super(
-    builder: (BuildContext context, FooFormFieldState<FieldValue> fieldState) {
+    builder: (BuildContext context, FooFormFieldState<Value> fieldState) {
       
       var effectiveDecoration = decorationBuilder?.call(fieldState) ?? InputDecoration();
 

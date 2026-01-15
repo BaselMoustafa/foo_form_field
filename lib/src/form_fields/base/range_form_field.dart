@@ -2,15 +2,14 @@
 import 'package:flutter/material.dart';
 import '../../common/widgets/field_with_error_text_widget.dart';
 import '../../../foo_form_field.dart';
-typedef RangeFormFieldBuilder<FieldValue extends Comparable> = Widget Function(
-  BuildContext context, Widget minField, Widget maxField, FooFormFieldState<Range<FieldValue>> fieldState
+typedef RangeFormFieldBuilder<Value extends Comparable> = Widget Function(
+  BuildContext context, Widget minField, Widget maxField, FooFormFieldState<Range<Value>> fieldState
 );
 
 /// Generic range form field that renders min/max inputs backed by a convertible controller.
 class RangeFormField<
   Value extends Comparable, 
-  FieldValue extends Comparable, 
-  BoundryController extends FooFieldController<Value, FieldValue>
+  BoundryController extends FooFieldController<Value>
 > extends StatelessWidget {
   const RangeFormField({
     super.key,
@@ -23,25 +22,25 @@ class RangeFormField<
     this.stateProvider,
   }):rangeValidator = rangeValidator ?? const RangeValidator();
 
-  final ConvertableRangeFieldController<Value, FieldValue, BoundryController> controller;
+  final RangeFieldController<Value, BoundryController> controller;
 
   final RangeValidator rangeValidator;
 
-  final Widget Function(BuildContext context, FieldValue? value) minFieldBuilder;
+  final Widget Function(BuildContext context, Value? value) minFieldBuilder;
   
-  final Widget Function(BuildContext context, FieldValue? value) maxFieldBuilder;
+  final Widget Function(BuildContext context, Value? value) maxFieldBuilder;
 
-  final RangeFormFieldBuilder<FieldValue>? builder;
+  final RangeFormFieldBuilder<Value>? builder;
 
   final FooFormFieldProperties<Range<Value>>? properties;
   
-  final FooFormFieldStateProvider<Range<FieldValue>>? stateProvider;
+  final FooFormFieldStateProvider<Range<Value>>? stateProvider;
 
   @override
   Widget build(BuildContext context) {
-    return FooFormField<Range<Value>, Range<FieldValue>>(
+    return FooFormField<Range<Value>>(
       stateProvider: stateProvider,
-      builder: (BuildContext context, FooFormFieldState<Range<FieldValue>> fieldState) {
+      builder: (BuildContext context, FooFormFieldState<Range<Value>> fieldState) {
         return _builder(context, fieldState);
       },
       controller: controller,
@@ -77,9 +76,9 @@ class RangeFormField<
 
 
   /// Builds the inner field layout, wrapping it with error presentation.
-  Widget _builder(BuildContext context, FooFormFieldState<Range<FieldValue>> fieldState) {
-    final minField = minFieldBuilder(context, controller.minController.fieldValue);
-    final maxField = maxFieldBuilder(context, controller.maxController.fieldValue);
+  Widget _builder(BuildContext context, FooFormFieldState<Range<Value>> fieldState) {
+    final minField = minFieldBuilder(context, controller.minController.value);
+    final maxField = maxFieldBuilder(context, controller.maxController.value);
 
     if (builder != null) {
       return builder!(context, minField, maxField, fieldState);

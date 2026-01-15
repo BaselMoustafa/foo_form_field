@@ -5,8 +5,14 @@ class NumTextEditingController extends FooTextEditingController<num> {
   NumTextEditingController({
     super.initialValue,
   }):super(
-    mapper: NumToStringMapper()
+    areEqual: (num x, num y) => x == y,
   );
+
+  @override
+  String? toText(num? value) => value?.toString();
+
+  @override
+  num? fromText(String? text) => num.tryParse(text ?? '');
 
 }
 
@@ -15,7 +21,5 @@ class NumRangeTextEditingController extends FooRangeTextEditingController<num, N
   NumRangeTextEditingController({
     required super.minController,
     required super.maxController,
-  }):super(
-    mapper: NumRangeToStringRangeMapper(),
-  );
+  });
 }

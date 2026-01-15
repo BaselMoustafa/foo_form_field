@@ -32,8 +32,6 @@ export 'src/common/widgets/error_text_widget.dart';
 
 // Base controllers exports
 export 'src/controllers/base/foo_field_controller.dart';
-export "src/controllers/base/convertable_range_field_controller.dart";
-export "src/controllers/base/value_field_controller.dart";
 export "src/controllers/base/range_field_controller.dart";
 
 export 'src/controllers/foo_text_editing_controllers/foo_text_editing_controller.dart';

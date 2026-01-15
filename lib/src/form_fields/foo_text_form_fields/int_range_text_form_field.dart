@@ -36,14 +36,15 @@ class IntRangeTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RangeFormField(
-      controller: controller,
-      builder: builder,
-      properties: properties,
-      rangeValidator: rangeValidator,
-      minFieldBuilder: _minFieldBuilder,
-      maxFieldBuilder: _maxFieldBuilder,
-    );
+    throw UnimplementedError();
+    // return RangeFormField<int, IntTextEditingController>(
+    //   controller: controller,
+    //   builder: builder,
+    //   properties: properties,
+    //   rangeValidator: rangeValidator,
+    //   minFieldBuilder: _minFieldBuilder,
+    //   maxFieldBuilder: _maxFieldBuilder,
+    // );
   }
 
   Widget _minFieldBuilder(BuildContext context, String? value) {

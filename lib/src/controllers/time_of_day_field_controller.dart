@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../foo_form_field.dart';
 import '../common/extentions/comparable_extension.dart';
 
-class TimeOfDayFieldController extends ValueFieldController<TimeOfDay> {
+class TimeOfDayFieldController extends FooFieldController<TimeOfDay> {
   
   TimeOfDayFieldController({
     super.initialValue,

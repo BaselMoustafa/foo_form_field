@@ -80,7 +80,7 @@ class _ActionButton extends StatelessWidget {
   final bool enabled;
   final BooleanFormField parentWidget;
 
-  ValueFieldController<bool> get _controller => parentWidget.controller;
+  FooFieldController<bool> get _controller => parentWidget.controller;
 
   @override
   Widget build(BuildContext context) {

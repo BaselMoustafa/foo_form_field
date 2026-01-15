@@ -6,7 +6,7 @@ import '../common/get_items_state.dart';
 /// 
 /// This class provides the basic functionality for managing a selected value
 /// that can be committed to the underlying field value.
-abstract class SelectionFieldController<SelectedValue,Entity> extends ValueFieldController<SelectedValue> {
+abstract class SelectionFieldController<SelectedValue,Entity> extends FooFieldController<SelectedValue> {
 
   SelectedValue? _selectedValue;
 

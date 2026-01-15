@@ -1,7 +1,7 @@
 import '../../foo_form_field.dart';
 import '../common/extentions/comparable_extension.dart';
 
-class DateOnlyFieldController extends ValueFieldController<DateOnly> {
+class DateOnlyFieldController extends FooFieldController<DateOnly> {
   
   DateOnlyFieldController({
     super.initialValue,

@@ -5,6 +5,12 @@ class StringTextEditingController extends FooTextEditingController<String> {
   StringTextEditingController({
     super.initialValue,
   }):super(
-    mapper: Mapper.sameValueMapper<String>()
+    areEqual: (String x, String y) => x == y,
   );
+
+  @override
+  String? toText(String? value) => value;
+
+  @override
+  String? fromText(String? text) => text;
 }

@@ -1,7 +1,7 @@
 import '../../foo_form_field.dart';
 import '../common/extentions/comparable_extension.dart';
 
-class DateTimeFieldController extends ValueFieldController<DateTime> {
+class DateTimeFieldController extends FooFieldController<DateTime> {
   
   DateTimeFieldController({
     super.initialValue,
