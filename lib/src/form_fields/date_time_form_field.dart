@@ -62,7 +62,7 @@ class DateTimeFormField extends StatelessWidget {
       fit: BoxFit.scaleDown,
       child: Text(
         dateFormatter?.call(value) ??
-            "${value?.hour}:${value?.minute} / ${value?.year}-${value?.month}-${value?.day}",
+          "${value?.hour}:${value?.minute} / ${value?.year}-${value?.month}-${value?.day}",
         textAlign: TextAlign.start,
       ),
     );
