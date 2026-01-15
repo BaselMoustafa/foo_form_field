@@ -14,6 +14,7 @@ class DateOnlyFormField extends StatelessWidget {
     this.firstDate,
     this.lastDate,
     this.decorationBuilder,
+    this.stateProvider,
   });
 
   /// Controller managing the selected date.
@@ -31,6 +32,7 @@ class DateOnlyFormField extends StatelessWidget {
   final DateOnly? lastDate;
   final InputDecoration Function(FooFormFieldState<DateOnly> fieldState)? decorationBuilder;
   final FooFormFieldProperties<DateOnly>? properties;
+  final FooFormFieldStateProvider<DateOnly>? stateProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +41,13 @@ class DateOnlyFormField extends StatelessWidget {
         controller: controller,
         properties: properties,
         builder: builder!,
+        stateProvider: stateProvider,
       );
     }
     return DecoratedFormField(
       controller: controller,
       properties: properties,
+      stateProvider: stateProvider,
       onTap: _onTap,
       builder: _builder,
       decorationBuilder: _effectiveDecorationBuilder,

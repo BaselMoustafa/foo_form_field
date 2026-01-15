@@ -12,6 +12,7 @@ class TimeOfDayFormField extends StatelessWidget {
     this.builder,
     this.onTap,
     this.decorationBuilder,
+    this.stateProvider,
   });
 
   /// Controller managing the selected time.
@@ -27,6 +28,7 @@ class TimeOfDayFormField extends StatelessWidget {
   final void Function(BuildContext context)? onTap;
   final DecorationBuilder<TimeOfDay>? decorationBuilder;
   final FooFormFieldProperties<TimeOfDay>? properties;
+  final FooFormFieldStateProvider<TimeOfDay>? stateProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +37,13 @@ class TimeOfDayFormField extends StatelessWidget {
         controller: controller,
         properties: properties,
         builder: builder!,
+        stateProvider: stateProvider,
       );
     }
     return DecoratedFormField(
       controller: controller,
       properties: properties,
+      stateProvider: stateProvider,
       decorationBuilder: _effectiveDecorationBuilder,
       onTap: _onTap,
       builder: _builder,

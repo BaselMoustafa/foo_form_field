@@ -14,6 +14,7 @@ class DateTimeFormField extends StatelessWidget {
     this.firstDate,
     this.lastDate,
     this.decorationBuilder,
+    this.stateProvider,
   });
 
   /// Controller managing the selected date.
@@ -35,6 +36,8 @@ class DateTimeFormField extends StatelessWidget {
   final DecorationBuilder<DateTime>? decorationBuilder;
   
   final FooFormFieldProperties<DateTime>? properties;
+  
+  final FooFormFieldStateProvider<DateTime>? stateProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +46,13 @@ class DateTimeFormField extends StatelessWidget {
         controller: controller,
         properties: properties,
         builder: builder!,
+        stateProvider: stateProvider,
       );
     }
     return DecoratedFormField(
       controller: controller,
       properties: properties,
+      stateProvider: stateProvider,
       decorationBuilder: _effectiveDecorationBuilder,
       onTap: _onTap,
       builder: _builder,

@@ -18,6 +18,8 @@ class DateTimeRangeFormField extends StatelessWidget {
     this.minFieldBuilder,
     this.maxFieldBuilder,
     this.builder,
+    this.minFieldStateProvider,
+    this.maxFieldStateProvider,
   });
 
   final DateTimeRangeFieldController controller;
@@ -38,6 +40,9 @@ class DateTimeRangeFormField extends StatelessWidget {
   final Widget Function(BuildContext context, DateTime? value)? maxFieldBuilder;
 
   final RangeFormFieldBuilder<DateTime>? builder;
+  
+  final FooFormFieldStateProvider<DateTime>? minFieldStateProvider;
+  final FooFormFieldStateProvider<DateTime>? maxFieldStateProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +67,7 @@ class DateTimeRangeFormField extends StatelessWidget {
       lastDate: controller.maxController.value?? maxDate,
       decorationBuilder: minFieldDecorationBuilder,
       onTap: onTapMinField,
+      stateProvider: minFieldStateProvider,
     );
   }
 
@@ -76,6 +82,7 @@ class DateTimeRangeFormField extends StatelessWidget {
       lastDate: maxDate,
       decorationBuilder: maxFieldDecorationBuilder,
       onTap: onTapMaxField,
+      stateProvider: maxFieldStateProvider,
     );
   }
 }

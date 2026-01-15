@@ -14,6 +14,7 @@ class BooleanFormField extends StatelessWidget {
     this.textStyle,
     this.builder,
     this.properties,
+    this.stateProvider,
   }); 
 
   final BoolFieldController controller;
@@ -27,6 +28,8 @@ class BooleanFormField extends StatelessWidget {
   final FooFormFieldBuilder<bool>? builder;
 
   final FooFormFieldProperties<bool>? properties;
+  
+  final FooFormFieldStateProvider<bool>? stateProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +37,7 @@ class BooleanFormField extends StatelessWidget {
       controller: controller,
       builder: _fieldBuilder,
       properties: properties,
+      stateProvider: stateProvider,
     );
   }
 

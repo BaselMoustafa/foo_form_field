@@ -10,6 +10,7 @@ class MultiSelectionFormField<Entity extends Object> extends StatelessWidget {
   final DecorationBuilder<List<Entity>>? decorationBuilder;
   final void Function(BuildContext context) onTap;
   final Widget Function(BuildContext context, FooFormFieldState<List<Entity>> fieldState)? builder;
+  final FooFormFieldStateProvider<List<Entity>>? stateProvider;
 
   const MultiSelectionFormField({
     super.key,
@@ -18,7 +19,8 @@ class MultiSelectionFormField<Entity extends Object> extends StatelessWidget {
     required this.onTap,
     this.builder, 
     this.properties, 
-    this.decorationBuilder, 
+    this.decorationBuilder,
+    this.stateProvider,
     this.separatorBuilder,
   });
 
@@ -30,6 +32,7 @@ class MultiSelectionFormField<Entity extends Object> extends StatelessWidget {
       decorationBuilder: decorationBuilder, 
       builder: _builder,
       properties: properties,
+      stateProvider: stateProvider,
     );
   }
 

@@ -8,6 +8,7 @@ class DecoratedFormField<Value, FieldValue> extends FooFormField<Value, FieldVal
     super.key,
     required super.controller,
     super.properties,
+    super.stateProvider,
     required void Function(BuildContext context)? onTap,
     required DecorationBuilder<FieldValue>? decorationBuilder,
     required FooFormFieldBuilder<FieldValue> builder,

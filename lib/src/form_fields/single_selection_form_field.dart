@@ -9,6 +9,7 @@ class SingleSelectionFormField<Entity extends Object> extends StatelessWidget {
   final DecorationBuilder<Entity>? decorationBuilder;
   final void Function(BuildContext context) onTap;
   final Widget Function(BuildContext context, FooFormFieldState<Entity> fieldState)? builder;
+  final FooFormFieldStateProvider<Entity>? stateProvider;
 
   const SingleSelectionFormField({
     super.key,
@@ -17,7 +18,8 @@ class SingleSelectionFormField<Entity extends Object> extends StatelessWidget {
     required this.onTap,
     this.builder, 
     this.properties, 
-    this.decorationBuilder, 
+    this.decorationBuilder,
+    this.stateProvider,
   });
 
   @override
@@ -28,6 +30,7 @@ class SingleSelectionFormField<Entity extends Object> extends StatelessWidget {
       decorationBuilder: decorationBuilder, 
       builder: _builder,
       properties: properties,
+      stateProvider: stateProvider,
     );
   }
 
