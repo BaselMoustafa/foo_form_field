@@ -42,14 +42,14 @@ class _TestScreenState extends State<TestScreen> {
           children:!_showField ? []:[
             DateTimeFormField(
               controller: _firstDateTimeController,
-              decoration: InputDecoration(
+              decorationBuilder: (fieldState) => InputDecoration(
                 label: Text('First Date '),
               ),
             ),
 
             DateTimeFormField(
               controller:_duplicateFirstDate ? _firstDateTimeController : _secondDateTimeController,
-              decoration: InputDecoration(
+              decorationBuilder: (fieldState) => InputDecoration(
                 label: Text('Duplicated ${_duplicateFirstDate ? 'First' : 'Second'} Date'),
               ),
               properties: FooFormFieldProperties(
@@ -64,7 +64,7 @@ class _TestScreenState extends State<TestScreen> {
 
             DateTimeFormField(
               controller: _secondDateTimeController,
-              decoration: InputDecoration(
+              decorationBuilder: (fieldState) => InputDecoration(
                 label: Text('Second Date'),
               ),
             ),  

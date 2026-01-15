@@ -31,7 +31,7 @@ class _DateOnlyFormFieldExampleState extends State<DateOnlyFormFieldExample> {
       title: "Date Only Form Field",
       fieldBuilder: () => DateOnlyFormField(
         controller: _controller,
-        decoration: InputDecoration(
+        decorationBuilder: (fieldState) =>  InputDecoration(
           label: Text("Date"),
         ),
         properties: FooFormFieldProperties(

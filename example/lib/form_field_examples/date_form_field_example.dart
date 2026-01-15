@@ -31,7 +31,7 @@ class _DateFormFieldExampleState extends State<DateFormFieldExample> {
       title: "Date Form Field",
       fieldBuilder: () => DateTimeFormField(
         controller: _controller,
-        decoration: InputDecoration(
+        decorationBuilder: (fieldState) => InputDecoration(
           label: Text("Date"),
         ),
         properties: FooFormFieldProperties(
@@ -55,7 +55,7 @@ class _DateFormFieldExampleState extends State<DateFormFieldExample> {
         ),
         DateTimeFormField(
           controller: _controller,
-          decoration: InputDecoration(
+          decorationBuilder: (fieldState) => InputDecoration(
             label: Text("Copeird Date Form Field"),
           ),
           builder: (context, controlledFieldState) => Text(controlledFieldState.value.toString()),
