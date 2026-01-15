@@ -73,5 +73,5 @@ export 'src/form_fields/date_only_range_form_field.dart';
 export 'src/form_fields/time_of_day_form_field.dart';
 export 'src/form_fields/time_of_day_range_form_field.dart';
 
-export 'src/form_fields/selection_form_fields/single_selection_form_field.dart';
-export 'src/form_fields/selection_form_fields/multi_selection_form_field.dart';
+export 'src/form_fields/single_selection_form_field.dart';
+export 'src/form_fields/multi_selection_form_field.dart';

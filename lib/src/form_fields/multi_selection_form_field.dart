@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../foo_form_field.dart';
+import '../../foo_form_field.dart';
 
 class MultiSelectionFormField<Entity extends Object> extends StatelessWidget {
   

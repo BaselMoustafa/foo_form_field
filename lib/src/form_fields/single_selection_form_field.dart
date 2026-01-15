@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../foo_form_field.dart';
+import '../../foo_form_field.dart';
 
 class SingleSelectionFormField<Entity extends Object> extends StatelessWidget {
   
