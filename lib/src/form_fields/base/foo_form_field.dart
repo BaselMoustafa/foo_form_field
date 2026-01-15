@@ -1,9 +1,6 @@
 
 import 'package:flutter/material.dart';
 import '../../../foo_form_field.dart';
-import '../../common/models/foo_form_field_state.dart';
-import '../../common/models/foo_form_field_properties.dart';
-import '../../controllers/base/foo_field_controller.dart';
 
 class FooFormField<Value, FieldValue> extends StatefulWidget {
   const FooFormField({
@@ -29,46 +26,42 @@ class _FooFormFieldState<Value, FieldValue> extends State<FooFormField<Value, Fi
   
   late FormFieldState<FieldValue> _fieldState;
 
+  FooFieldController<Value, FieldValue> get controller => widget.controller;
+
   @override
   void initState() {
     super.initState();
-    if (widget.controller is ConvertableRangeFieldController) {
-      (widget.controller as ConvertableRangeFieldController).invokeSyncers();
+    if (controller is ConvertableRangeFieldController) {
+      (controller as ConvertableRangeFieldController).invokeSyncers();
     }
 
     WidgetsBinding.instance.addPostFrameCallback(
-      _afterFirstBuild,
+      (_)=>_addListenerToCurrentController(),
     );
-  }
-
-  void _afterFirstBuild(Duration timeStamp) {
-    _onControllerValueChanged();
-    _addListenerToCurrentController();
   }
 
   @override
   void didUpdateWidget(covariant FooFormField<Value, FieldValue> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.controller != widget.controller) {
+    if (oldWidget.controller != controller) {
       oldWidget.controller.removeListener(_onControllerValueChanged);
       _addListenerToCurrentController();
     }
   }
   @override
   void dispose() {
-    widget.controller.removeListener(_onControllerValueChanged);
+    controller.removeListener(_onControllerValueChanged);
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
     return FormField<FieldValue>(
       onSaved: (FieldValue? fieldValue) => widget.properties?.onSaved?.call(
-        widget.controller.mapper.toValue(fieldValue),
+        controller.mapper.toValue(fieldValue),
       ),
       validator: (FieldValue? fieldValue) => widget.properties?.validator?.call(
-        widget.controller.mapper.toValue(fieldValue),
+        controller.mapper.toValue(fieldValue),
       ),
       errorBuilder: widget.properties?.errorBuilder,
       autovalidateMode: widget.properties?.autovalidateMode,
@@ -86,16 +79,21 @@ class _FooFormFieldState<Value, FieldValue> extends State<FooFormField<Value, Fi
     );
   }
 
-  void _onControllerValueChanged() {
+  void _addListenerToCurrentController() {
     _fieldState.didChange(
-      widget.controller.fieldValue,
+      controller.fieldValue
+    );
+    controller.addListener(
+      _onControllerValueChanged,
     );
   }
 
-  void _addListenerToCurrentController() {
-    _fieldState.didChange(widget.controller.fieldValue);
-    widget.controller.addListener(
-      _onControllerValueChanged,
+  void _onControllerValueChanged() {
+    _fieldState.didChange(
+      controller.fieldValue,
+    );
+    widget.properties?.onChanged?.call(
+      controller.value,
     );
   }
   

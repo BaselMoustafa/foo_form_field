@@ -25,8 +25,28 @@ class FooFieldController<Value, FieldValue> extends ChangeNotifier {
   Value? get value => _value;
 
   set value(Value? newValue) {
+
+    bool shouldNotify(){
+      if (_value == null && newValue == null) {
+        return false;
+      }
+      if (_value == null && newValue != null) {
+        return true;
+      }
+      if (_value != null && newValue == null) {
+        return true;
+      }
+      return ! areEqual(
+        _value as Value, 
+        newValue as Value,
+      );
+    }
+
     _value = newValue;
-    notifyListeners();
+    
+    if (shouldNotify()) {
+      notifyListeners();
+    }
   }
 
   void clear() => value = null;
