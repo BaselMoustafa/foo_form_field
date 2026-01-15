@@ -51,11 +51,9 @@ export 'src/controllers/multi_selection_field_controller.dart';
 
 
 // Base form fields exports
-export 'src/form_fields/base/convertable_range_form_field.dart';
-export 'src/form_fields/base/decorated_value_form_field.dart';
-export 'src/form_fields/base/foo_form_field.dart';
 export 'src/form_fields/base/range_form_field.dart';
-export 'src/form_fields/base/value_form_field.dart';
+export 'src/form_fields/base/decorated_form_field.dart';
+export 'src/form_fields/base/foo_form_field.dart';
 
 export 'src/form_fields/foo_text_form_fields/foo_text_form_field.dart';
 export 'src/form_fields/foo_text_form_fields/int_text_form_field.dart';

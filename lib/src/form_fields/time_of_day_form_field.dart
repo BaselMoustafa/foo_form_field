@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../foo_form_field.dart';
-import '../common/models/foo_form_field_state.dart';
 
 class TimeOfDayFormField extends StatelessWidget {
   const TimeOfDayFormField({
@@ -21,7 +20,7 @@ class TimeOfDayFormField extends StatelessWidget {
   final String? Function(TimeOfDay? time)? timeFormatter;
 
   /// Custom widget builder overriding the decorated default.
-  final Widget Function(BuildContext context, FooFormFieldState<TimeOfDay> fieldState)? builder;
+  final FooFormFieldBuilder<TimeOfDay>? builder;
 
   /// Optional tap handler; when omitted a time picker is presented.
   final void Function(BuildContext context)? onTap;
@@ -30,7 +29,7 @@ class TimeOfDayFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedValueFormField<TimeOfDay>(
+    return DecoratedFormField(
       controller: controller,
       properties: properties,
       decoration: _effectiveDecoration,

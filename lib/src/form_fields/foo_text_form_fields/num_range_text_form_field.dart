@@ -8,7 +8,7 @@ import '../../controllers/foo_text_editing_controllers/num_text_editing_controll
 import '../../common/models/foo_form_field_properties.dart';
 import '../../common/ranges/ranges.dart';
 import '../../common/models/text_from_field_properties.dart';
-import '../base/convertable_range_form_field.dart';
+import '../base/range_form_field.dart';
 import 'num_text_form_field.dart';
 
 class NumRangeTextFormField extends StatelessWidget {
@@ -36,7 +36,7 @@ class NumRangeTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConvertableRangeFormField(
+    return RangeFormField(
       controller: controller,
       builder: builder,
       properties: properties,

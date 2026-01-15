@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../foo_form_field.dart';
 import '../common/extentions/date_time_extension.dart';
-import '../common/models/foo_form_field_state.dart';
-enum X{
-  a,b,c;
-}
+
 class DateTimeFormField extends StatelessWidget {
   const DateTimeFormField({
     super.key,
@@ -25,18 +22,22 @@ class DateTimeFormField extends StatelessWidget {
   final String? Function(DateTime? date)? dateFormatter;
 
   /// Custom widget builder overriding the decorated default.
-  final Widget Function(BuildContext context, FooFormFieldState<DateTime> fieldState)? builder;
+  final FooFormFieldBuilder<DateTime>? builder;
 
   /// Optional tap handler; when omitted a date picker is presented.
   final void Function(BuildContext context)? onTap;
+
   final DateTime? firstDate;
+  
   final DateTime? lastDate;
+  
   final InputDecoration? decoration;
+  
   final FooFormFieldProperties<DateTime>? properties;
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedValueFormField<DateTime>(
+    return DecoratedFormField(
       controller: controller,
       properties: properties,
       decoration: _effectiveDecoration,

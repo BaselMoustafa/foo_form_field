@@ -23,7 +23,7 @@ class DateOnlyFormField extends StatelessWidget {
   final String? Function(DateOnly? date)? dateFormatter;
 
   /// Custom widget builder overriding the decorated default.
-  final Widget Function(BuildContext context, FooFormFieldState<DateOnly> fieldState)? builder;
+  final FooFormFieldBuilder<DateOnly>? builder;
 
   /// Optional tap handler; when omitted a date picker is presented.
   final void Function(BuildContext context)? onTap;
@@ -34,7 +34,7 @@ class DateOnlyFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedValueFormField<DateOnly>(
+    return DecoratedFormField(
       controller: controller,
       properties: properties,
       decoration: _effectiveDecoration,

@@ -22,7 +22,7 @@ class SingleSelectionFormField<Entity extends Object> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedValueFormField(
+    return DecoratedFormField(
       controller: controller, 
       onTap: onTap, 
       decoration: decoration, 

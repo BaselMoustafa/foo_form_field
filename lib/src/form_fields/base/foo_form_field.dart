@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import '../../../foo_form_field.dart';
 
+typedef FooFormFieldBuilder<FieldValue> = Widget Function(BuildContext context, FooFormFieldState<FieldValue> fieldState);
+
 class FooFormField<Value, FieldValue> extends StatefulWidget {
   const FooFormField({
     super.key,
@@ -12,12 +14,10 @@ class FooFormField<Value, FieldValue> extends StatefulWidget {
 
   final FooFieldController<Value, FieldValue> controller;
 
-  final Widget Function(BuildContext context, FooFormFieldState<FieldValue> fieldState) builder;
-
+  final FooFormFieldBuilder<FieldValue> builder;
 
   final FooFormFieldProperties<Value>? properties;
   
-
   @override
   State<FooFormField<Value, FieldValue>> createState() => _FooFormFieldState<Value, FieldValue>();
 }

@@ -1,23 +1,25 @@
 
 import 'package:flutter/material.dart';
 
-import '../../common/models/foo_form_field_state.dart';
-import 'foo_form_field.dart';
+import '../../../foo_form_field.dart';
 
-class DecoratedValueFormField<T> extends FooFormField<T, T> {
-  DecoratedValueFormField({
+class DecoratedFormField<Value, FieldValue> extends FooFormField<Value, FieldValue> {
+  DecoratedFormField({
     super.key,
     required super.controller,
     super.properties,
     required void Function(BuildContext context)? onTap,
     required InputDecoration? decoration,
-    required Widget Function(BuildContext context, FooFormFieldState<T> fieldState) builder,
+    required FooFormFieldBuilder<FieldValue> builder,
   }) : super(
-    builder: (BuildContext context, FooFormFieldState<T> fieldState) {
+    builder: (BuildContext context, FooFormFieldState<FieldValue> fieldState) {
+      
       var effectiveDecoration = decoration ?? InputDecoration();
+      
       effectiveDecoration = effectiveDecoration.applyDefaults(
         Theme.of(context).inputDecorationTheme,
       );
+
       effectiveDecoration = effectiveDecoration.copyWith(
         errorText: fieldState.errorText,
         enabled: fieldState.enabled,
