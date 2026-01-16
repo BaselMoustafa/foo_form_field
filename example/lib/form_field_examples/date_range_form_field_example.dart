@@ -16,12 +16,8 @@ class DateRangeFormFieldExample extends StatefulWidget {
 class _DateRangeFormFieldExampleState extends State<DateRangeFormFieldExample> {
 
   final _controller = DateTimeRangeFieldController(
-    minController: DateTimeFieldController(
-      initialValue: DateTime(2025, 12 , 10),
-    ),
-    maxController: DateTimeFieldController(
-      initialValue: DateTime(2025, 12, 20),
-    ),
+    initialMin: DateTime(2025, 12 , 10),
+    initialMax: DateTime(2025, 12, 20),
   );
   
   @override

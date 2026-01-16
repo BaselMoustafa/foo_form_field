@@ -15,12 +15,8 @@ class IntRangeTextFormFieldExampleScreen extends StatefulWidget {
 class _IntRangeTextFormFieldExampleScreenState extends State<IntRangeTextFormFieldExampleScreen> {
 
   final _controller = IntRangeTextEditingController(
-    minController: IntTextEditingController(
-      initialValue: 50,
-    ),
-    maxController: IntTextEditingController(
-      initialValue: 100,
-    ),
+    initialMin: 50,
+    initialMax: 100,
   );
 
   @override

@@ -15,20 +15,12 @@ class _TestScreen2State extends State<TestScreen2> {
 
   bool _showField = true;
   final _firstDateTimeController = IntRangeTextEditingController(
-    minController: IntTextEditingController(
-      initialValue: 10,
-    ),
-    maxController: IntTextEditingController(
-      initialValue: 20,
-    ),
+    initialMin: 10,
+    initialMax: 20,
   );
   final _secondDateTimeController = IntRangeTextEditingController(
-    minController: IntTextEditingController(
-      initialValue: 80,
-    ),
-    maxController: IntTextEditingController(
-      initialValue: 90,
-    ),
+    initialMin: 80,
+    initialMax: 90,
   );
 
   bool _duplicateFirstDate = true;

@@ -16,12 +16,8 @@ class DateOnlyRangeFormFieldExample extends StatefulWidget {
 class _DateOnlyRangeFormFieldExampleState extends State<DateOnlyRangeFormFieldExample> {
 
   final _controller = DateOnlyRangeFieldController(
-    minController: DateOnlyFieldController(
-      initialValue: DateOnly(year: 2025, month: 12, day: 10),
-    ),
-    maxController: DateOnlyFieldController(
-      initialValue: DateOnly(year: 2025, month: 12, day: 20),
-    ),
+    initialMin: DateOnly(year: 2025, month: 12, day: 10),
+    initialMax: DateOnly(year: 2025, month: 12, day: 20),
   );
   
   @override

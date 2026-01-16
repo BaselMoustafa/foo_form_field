@@ -14,12 +14,12 @@ class _TestScreenState extends State<TestScreen> {
 
   bool _showField = true;
   final _firstDateTimeController = DateTimeRangeFieldController(
-    minController: DateTimeFieldController(),
-    maxController: DateTimeFieldController(),
+    initialMin: DateTime(2025, 12, 10),
+    initialMax: DateTime(2025, 12, 20),
   );
   final _secondDateTimeController = DateTimeRangeFieldController(
-    minController: DateTimeFieldController(),
-    maxController: DateTimeFieldController(),
+    initialMin: DateTime(2025, 12, 10),
+    initialMax: DateTime(2025, 12, 20),
   );
 
   bool _duplicateFirstDate = true;
