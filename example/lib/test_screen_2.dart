@@ -16,7 +16,7 @@ class _TestScreen2State extends State<TestScreen2> {
   bool _showField = true;
   final _firstDateTimeController = IntRangeTextEditingController(
     initialMin: 10,
-    initialMax: 20,
+    //initialMax: 20,
   );
   final _secondDateTimeController = IntRangeTextEditingController(
     initialMin: 80,

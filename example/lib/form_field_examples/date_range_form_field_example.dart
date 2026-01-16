@@ -34,6 +34,8 @@ class _DateRangeFormFieldExampleState extends State<DateRangeFormFieldExample> {
             children: [
               minField,
               maxField,
+              if (fieldState.errorText != null)
+              ErrorTextWidget(errorText: fieldState.errorText),
             ],
           );
         },
@@ -41,7 +43,9 @@ class _DateRangeFormFieldExampleState extends State<DateRangeFormFieldExample> {
           onChanged: (value) => log("Range Changed To: $value"),
           onSaved: (value) => log("Range Saved: $value"),
           validator: (value) {
-            if (value == null || value.min == null || value.max == null) {
+            print("Validator Called: $value");
+            if (value == null || (value.min == null && value.max == null)) {
+              print("Validator Returned: This field is required");
               return 'This field is required';
             } 
             return null;

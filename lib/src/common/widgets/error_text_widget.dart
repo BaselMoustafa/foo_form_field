@@ -19,6 +19,7 @@ class ErrorTextWidget extends StatelessWidget {
       duration: Duration(milliseconds: 300),
       child: errorText != null
           ? Padding(
+              key: ValueKey(errorText),
               padding: const EdgeInsets.only(top: 2.0),
               child: Text(
                 errorText!,
@@ -32,7 +33,7 @@ class ErrorTextWidget extends StatelessWidget {
                     ),
               ),
             )
-          : SizedBox.shrink(key: ValueKey(errorText)),
+          : SizedBox.shrink(key: UniqueKey()),
     );
   }
 }
