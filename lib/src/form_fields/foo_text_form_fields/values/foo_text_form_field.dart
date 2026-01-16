@@ -167,9 +167,9 @@ class _FooTextFormFieldState<Value> extends State<FooTextFormField<Value>> {
     controller.addListener(
       _onControllerValueChanged,
     );
-    setState(() {
-      
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_)=>setState(() {}),
+    );
   }
 
   void _onControllerValueChanged() {

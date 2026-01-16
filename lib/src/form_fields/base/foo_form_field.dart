@@ -85,8 +85,10 @@ class _FooFormFieldState<Value> extends State<FooFormField<Value>> {
     if (controller is RangeFieldController) {
       (controller as RangeFieldController).invokeSyncers();
     }
-    _fieldState.didChange(
-      controller.value,
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_)=>_fieldState.didChange(
+        controller.value,
+      ),
     );
     controller.addListener(
       _onControllerValueChanged,
