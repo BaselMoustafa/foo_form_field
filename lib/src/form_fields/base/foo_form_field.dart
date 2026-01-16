@@ -1,96 +1,105 @@
-
 import 'package:flutter/material.dart';
+import '../../../foo_form_field.dart';
 
-import '../../common/models/foo_form_field_properties.dart';
-import '../../controllers/base/foo_field_controller.dart';
-
-class FooFormField<Value, FieldValue> extends StatefulWidget {
+class FooFormField<Value> extends StatefulWidget {
   const FooFormField({
     super.key,
     required this.controller,
     required this.builder,
     this.properties,
+    this.stateProvider,
   });
 
-  final FooFieldController<Value, FieldValue> controller;
+  final FooFieldController<Value> controller;
 
-  final Widget Function(BuildContext context, FieldValue? value) builder;
-
+  final FooFormFieldBuilder<Value> builder;
 
   final FooFormFieldProperties<Value>? properties;
-  
 
+  final FooFormFieldStateProvider<Value>? stateProvider;
+  
   @override
-  State<FooFormField<Value, FieldValue>> createState() => _FooFormFieldState<Value, FieldValue>();
+  State<FooFormField<Value>> createState() => _FooFormFieldState<Value>();
 }
 
-class _FooFormFieldState<O, I> extends State<FooFormField<O, I>> {
+class _FooFormFieldState<Value> extends State<FooFormField<Value>> {
+  
+  late FormFieldState<Value> _fieldState;
 
-  late final GlobalKey<FormFieldState<I>> _formFieldKey;
-
-  O? _latestValue;
+  FooFieldController<Value> get controller => widget.controller;
 
   @override
   void initState() {
     super.initState();
-    _formFieldKey = GlobalKey<FormFieldState<I>>();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.controller.setFormFieldState(_formFieldKey.currentState!);
-      widget.controller.addListener(_onEvent);
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_)=>_afterFirstBuild(),
+    );
+  }
+
+  void _afterFirstBuild() {
+    widget.stateProvider?.call(
+      FooFormFieldState(
+        fieldState: _fieldState,
+      ),
+    );
+    _addListenerToCurrentController();
   }
 
   @override
+  void didUpdateWidget(covariant FooFormField<Value> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != controller) {
+      oldWidget.controller.removeListener(_onControllerValueChanged);
+      _addListenerToCurrentController();
+    }
+  }
+  
+  @override
   void dispose() {
-    widget.controller.removeListener(_onEvent);
-    widget.controller.removeFormFieldState();
+    controller.removeListener(_onControllerValueChanged);
     super.dispose();
-  }
-
-  void _onEvent() {
-    setState(() {});
-    if (_shouldNotifyUser) {
-      widget.properties?.onChanged?.call(widget.controller.value);
-      _latestValue = widget.controller.value;
-    }
-  }
-
-  bool get _shouldNotifyUser {
-    final value = widget.controller.value;
-    if(value == null && _latestValue == null){
-      return false;
-    }
-    if(value == null && _latestValue != null){
-      return true;
-    }
-    if(value != null && _latestValue == null){
-      return true;
-    }
-    return ! widget.controller.areEqual(
-      value as O, 
-      _latestValue as O,
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return FormField<I>(
-      key: _formFieldKey,
-      onSaved: (I? inputValue) => widget.properties?.onSaved?.call(
-        widget.controller.mapper.toValue(inputValue),
-      ),
-      validator: (I? inputValue) => widget.properties?.validator?.call(
-        widget.controller.mapper.toValue(inputValue),
-      ),
+    return FormField<Value>(
+      onSaved: widget.properties?.onSaved,
+      validator: widget.properties?.validator,
       errorBuilder: widget.properties?.errorBuilder,
-      initialValue: widget.controller.initialValueAsFieldValue,
-      enabled: widget.controller.enabled,
       autovalidateMode: widget.properties?.autovalidateMode,
       restorationId: widget.properties?.restorationId,
-      forceErrorText: widget.controller.forcedErrorText,
-      builder: (FormFieldState<I> fieldState) {
-        return widget.builder(context, fieldState.value);
+      forceErrorText: widget.properties?.forceErrorText,
+      builder: (formFieldState) {
+        _fieldState = formFieldState;
+        return widget.builder(
+          context, 
+          FooFormFieldState(
+            fieldState: _fieldState,
+          ),
+        );
       },
     );
   }
+
+  void _addListenerToCurrentController() {
+    if (controller is RangeFieldController) {
+      (controller as RangeFieldController).invokeSyncers();
+    }
+    _fieldState.didChange(
+      controller.value,
+    );
+    controller.addListener(
+      _onControllerValueChanged,
+    );
+  }
+
+  void _onControllerValueChanged() {
+    _fieldState.didChange(
+      controller.value,
+    );
+    widget.properties?.onChanged?.call(
+      controller.value,
+    );
+  }
+  
 }

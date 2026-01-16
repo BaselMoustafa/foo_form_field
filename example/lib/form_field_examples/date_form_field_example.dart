@@ -15,7 +15,6 @@ class DateFormFieldExample extends StatefulWidget {
 class _DateFormFieldExampleState extends State<DateFormFieldExample> {
   final _controller = DateTimeFieldController(
     initialValue: DateTime(2025, 1, 1),
-    enabled: false,
   );
 
   @override
@@ -32,7 +31,7 @@ class _DateFormFieldExampleState extends State<DateFormFieldExample> {
       title: "Date Form Field",
       fieldBuilder: () => DateTimeFormField(
         controller: _controller,
-        decoration: InputDecoration(
+        decorationBuilder: (fieldState) => InputDecoration(
           label: Text("Date"),
         ),
         properties: FooFormFieldProperties(
@@ -53,6 +52,13 @@ class _DateFormFieldExampleState extends State<DateFormFieldExample> {
           firstDummyValue: DateTime(2025, 1, 1),
           secondDummyValue: DateTime(2025, 1, 25),
           valueToString: (value) => "${value.year}/${value.month}/${value.day}",
+        ),
+        DateTimeFormField(
+          controller: _controller,
+          decorationBuilder: (fieldState) => InputDecoration(
+            label: Text("Copeird Date Form Field"),
+          ),
+          builder: (context, controlledFieldState) => Text(controlledFieldState.value.toString()),
         ),
       ],
     );

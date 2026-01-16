@@ -1,10 +1,7 @@
-
 import 'package:flutter/material.dart';
-
-import '../../foo_form_field.dart';
-import '../common/widgets/field_with_error_text_widget.dart';
-import '../common/widgets/selection_card.dart';
-
+import '../../../foo_form_field.dart';
+import '../../common/widgets/field_with_error_text_widget.dart';
+import '../../common/widgets/selection_card.dart';
 class BooleanFormField extends StatelessWidget {
  
   const BooleanFormField({
@@ -15,6 +12,7 @@ class BooleanFormField extends StatelessWidget {
     this.textStyle,
     this.builder,
     this.properties,
+    this.stateProvider,
   }); 
 
   final BoolFieldController controller;
@@ -25,34 +23,43 @@ class BooleanFormField extends StatelessWidget {
 
   final TextStyle? textStyle;
 
-  final Widget Function(BuildContext context, bool? value)? builder;
+  final FooFormFieldBuilder<bool>? builder;
 
   final FooFormFieldProperties<bool>? properties;
+  
+  final FooFormFieldStateProvider<bool>? stateProvider;
 
   @override
   Widget build(BuildContext context) {
-    return ValueFormField<bool>(
-
+    return FooFormField(
       controller: controller,
       builder: _fieldBuilder,
       properties: properties,
+      stateProvider: stateProvider,
     );
   }
 
   /// Builds the default toggle presentation using the controller value.
-  Widget _fieldBuilder(BuildContext context, bool? value) {
+  Widget _fieldBuilder(BuildContext context, FooFormFieldState<bool> fieldState) {
     if (builder != null) {
-      return builder!(context, value);
+      return builder!(context, fieldState);
     }
 
     return FieldWithErrorTextWidget(
-      errorText: controller.errorText,
+      errorText: fieldState.errorText,
       fieldWidget: Row(
         spacing: 6,
         children: [
-          _ActionButton(parentWidget: this, isYesButton: true),
-
-          _ActionButton(parentWidget: this, isYesButton: false),
+          _ActionButton(
+            parentWidget: this, 
+            isYesButton: true, 
+            enabled: fieldState.enabled,
+          ),
+          _ActionButton(
+            parentWidget: this, 
+            isYesButton: false, 
+            enabled: fieldState.enabled,
+          ),
         ],
       ),
     );
@@ -61,17 +68,22 @@ class BooleanFormField extends StatelessWidget {
 
 /// Single option button toggling the boolean controller value.
 class _ActionButton extends StatelessWidget {
-  const _ActionButton({required this.parentWidget, required this.isYesButton});
+  const _ActionButton({
+    required this.parentWidget, 
+    required this.isYesButton, 
+    required this.enabled,
+  });
 
   final bool isYesButton;
+  final bool enabled;
   final BooleanFormField parentWidget;
 
-  ValueFieldController<bool> get _controller => parentWidget.controller;
+  FooFieldController<bool> get _controller => parentWidget.controller;
 
   @override
   Widget build(BuildContext context) {
     return SelectionCard(
-      enabled: _controller.enabled,
+      enabled: enabled,
       onTap: _onTap,
       isSelected: _controller.value == isYesButton,
       defaultTextStyle: parentWidget.textStyle,

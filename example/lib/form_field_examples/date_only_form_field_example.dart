@@ -15,7 +15,6 @@ class DateOnlyFormFieldExample extends StatefulWidget {
 class _DateOnlyFormFieldExampleState extends State<DateOnlyFormFieldExample> {
   final _controller = DateOnlyFieldController(
     initialValue: DateOnly(year: 2025, month: 1, day: 1),
-    enabled: false,
   );
 
   @override
@@ -32,7 +31,7 @@ class _DateOnlyFormFieldExampleState extends State<DateOnlyFormFieldExample> {
       title: "Date Only Form Field",
       fieldBuilder: () => DateOnlyFormField(
         controller: _controller,
-        decoration: InputDecoration(
+        decorationBuilder: (fieldState) =>  InputDecoration(
           label: Text("Date"),
         ),
         properties: FooFormFieldProperties(

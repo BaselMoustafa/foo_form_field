@@ -16,13 +16,8 @@ class DateRangeFormFieldExample extends StatefulWidget {
 class _DateRangeFormFieldExampleState extends State<DateRangeFormFieldExample> {
 
   final _controller = DateTimeRangeFieldController(
-    minController: DateTimeFieldController(
-      initialValue: DateTime(2025, 12 , 10),
-      enabled: false,
-    ),
-    maxController: DateTimeFieldController(
-      initialValue: DateTime(2025, 12, 20),
-    ),
+    initialMin: DateTime(2025, 12 , 10),
+    initialMax: DateTime(2025, 12, 20),
   );
   
   @override
@@ -33,12 +28,14 @@ class _DateRangeFormFieldExampleState extends State<DateRangeFormFieldExample> {
         controller: _controller,
         minDate: DateTime(2025, 12, 5),
         maxDate: DateTime(2025, 12, 25),
-        layoutBuilder: (context, minField, maxField) {
+        builder: (context, minField, maxField, fieldState) {
           return Column(
             spacing: 10,
             children: [
               minField,
               maxField,
+              if (fieldState.errorText != null)
+              ErrorTextWidget(errorText: fieldState.errorText),
             ],
           );
         },
@@ -46,7 +43,9 @@ class _DateRangeFormFieldExampleState extends State<DateRangeFormFieldExample> {
           onChanged: (value) => log("Range Changed To: $value"),
           onSaved: (value) => log("Range Saved: $value"),
           validator: (value) {
-            if (value == null || value.min == null || value.max == null) {
+            print("Validator Called: $value");
+            if (value == null || (value.min == null && value.max == null)) {
+              print("Validator Returned: This field is required");
               return 'This field is required';
             } 
             return null;

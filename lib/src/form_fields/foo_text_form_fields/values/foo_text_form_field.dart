@@ -1,11 +1,7 @@
-
 import 'dart:ui';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-import '../../../foo_form_field.dart';
-import '../../common/extentions/foo_text_formatter_list_extension.dart';
+import '../../../../foo_form_field.dart';
 
 class FooTextFormField<Value> extends StatefulWidget {
   const FooTextFormField({
@@ -14,8 +10,10 @@ class FooTextFormField<Value> extends StatefulWidget {
     this.fooTextFormatters = const [],
     this.keyboardType,
     this.properties,
+    this.stateProvider,
   });
 
+  final FooFormFieldStateProvider<String>? stateProvider;
   /// Controller that provides the value mapping between string input and client type.
   final FooTextEditingController<Value> controller;
   // /// Additional formatters applied after the standard `TextFormField` formatters.
@@ -30,78 +28,61 @@ class FooTextFormField<Value> extends StatefulWidget {
 
 class _FooTextFormFieldState<Value> extends State<FooTextFormField<Value>> {
 
-  final GlobalKey<FormFieldState<String>> _formFieldKey = GlobalKey<FormFieldState<String>>();
+  final _formFieldKey = GlobalKey<FormFieldState<String>>();
+  late final _fieldState = _formFieldKey.currentState!;
 
   TextFormFieldProperties<Value>? get _properties => widget.properties;
 
-  Value? _latestValue;
-  
+  FooTextEditingController<Value> get controller => widget.controller;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.controller.setFormFieldState(_formFieldKey.currentState!);
-      widget.controller.addListener(
-        _notifyChangeInValue,
-      );
-    });
+    controller.init();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_)=>_afterFirstBuild(),
+    );
+  }
+
+  void _afterFirstBuild() {
+    widget.stateProvider?.call(
+      FooFormFieldState<String>(
+        fieldState: _fieldState,
+      ),
+    );
+    _addListenerToCurrentController();
+  }
+
+  @override
+  void didUpdateWidget(covariant FooTextFormField<Value> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != controller) {
+      oldWidget.controller.removeListener(_onControllerValueChanged);
+      _addListenerToCurrentController();
+    }
   }
 
   @override
   void dispose() {
-    widget.controller.removeListener(
-      _notifyChangeInValue,
-    );
-    widget.controller.removeFormFieldState();
+    controller.removeListener(_onControllerValueChanged);
     super.dispose();
-  }
-
-  /// Propagates controller updates to the widget tree and optional callbacks.
-  void _notifyChangeInValue() {
-    setState(() {});
-    if (_shouldNotifyUser) {
-      widget.properties?.onChanged?.call(widget.controller.value);
-      _latestValue = widget.controller.value;
-    }
-  }
-
-  bool get _shouldNotifyUser {
-    final value = widget.controller.value;
-    if(value == null && _latestValue == null){
-      return false;
-    }
-    if(value == null && _latestValue != null){
-      return true;
-    }
-    if(value != null && _latestValue == null){
-      return true;
-    }
-    return ! widget.controller.areEqual(
-      value as Value, _latestValue as Value,
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       key: _formFieldKey,
+      controller: controller.textEditingController,
       keyboardType: widget.keyboardType,
-      enabled: widget.controller.enabled,
-      initialValue: widget.controller.initialValueAsFieldValue,
-      forceErrorText: widget.controller.forcedErrorText,
+      // initialValue: widget.controller.initialValueAsFieldValue,
 
       //Gives access to the TextFormField's properties
-      onChanged: (_){
-        if(_shouldNotifyUser){
-          widget.controller.value = widget.controller.value;
-        }
-        _latestValue = widget.controller.value;
-      },
+      forceErrorText: _properties?.forceErrorText,
       onFieldSubmitted: (String? value) => _properties?.onFieldSubmitted?.call(
-        widget.controller.mapper.toValue(value),
+        widget.controller.fromText(value),
       ),
       onSaved: (String? value) => _properties?.onSaved?.call(
-        widget.controller.mapper.toValue(value),
+        widget.controller.fromText(value),
       ),
       validator: (String? value) {
         if (value != null && widget.fooTextFormatters.validate(value) != null) {
@@ -174,6 +155,26 @@ class _FooTextFormFieldState<Value> extends State<FooTextFormField<Value>> {
       clipBehavior: _properties?.clipBehavior ?? Clip.hardEdge,
       stylusHandwritingEnabled: _properties?.stylusHandwritingEnabled ?? true,
       canRequestFocus: _properties?.canRequestFocus ?? true,
+    );
+  }
+
+  void _addListenerToCurrentController() {
+    if (controller is RangeFieldController) {
+      (controller as RangeFieldController).invokeSyncers();
+    }
+    controller.init();
+   
+    controller.addListener(
+      _onControllerValueChanged,
+    );
+    setState(() {
+      
+    });
+  }
+
+  void _onControllerValueChanged() {
+    widget.properties?.onChanged?.call(
+      controller.value,
     );
   }
 }

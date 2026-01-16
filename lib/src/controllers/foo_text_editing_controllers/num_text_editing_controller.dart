@@ -4,22 +4,29 @@ class NumTextEditingController extends FooTextEditingController<num> {
 
   NumTextEditingController({
     super.initialValue,
-    super.enabled,
-    super.forcedErrorText,
   }):super(
-    mapper: NumToStringMapper()
+    areEqual: (num x, num y) => x == y,
   );
+
+  @override
+  String? toText(num? value) => value?.toString();
+
+  @override
+  num? fromText(String? text) => num.tryParse(text ?? '');
 
 }
 
 class NumRangeTextEditingController extends FooRangeTextEditingController<num, NumTextEditingController>{
   
   NumRangeTextEditingController({
-    required super.minController,
-    required super.maxController,
-    super.enabled,
-    super.forcedErrorText,
+    num? initialMin,
+    num? initialMax,
   }):super(
-    mapper: NumRangeToStringRangeMapper(),
+    minController: NumTextEditingController(
+      initialValue: initialMin,
+    ),
+    maxController: NumTextEditingController(
+      initialValue: initialMax,
+    ),
   );
 }

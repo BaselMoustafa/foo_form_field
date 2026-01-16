@@ -7,9 +7,10 @@ class MultiSelectionFormField<Entity extends Object> extends StatelessWidget {
   final Widget Function(BuildContext context, int index , Entity item) itemBuilder;
   final Widget Function(BuildContext context, int index)? separatorBuilder;
   final FooFormFieldProperties<List<Entity>>? properties;
-  final InputDecoration? decoration;
+  final DecorationBuilder<List<Entity>>? decorationBuilder;
   final void Function(BuildContext context) onTap;
-  final Widget Function(BuildContext context, List<Entity>? value)? builder;
+  final FooFormFieldBuilder<List<Entity>>? builder;
+  final FooFormFieldStateProvider<List<Entity>>? stateProvider;
 
   const MultiSelectionFormField({
     super.key,
@@ -18,24 +19,26 @@ class MultiSelectionFormField<Entity extends Object> extends StatelessWidget {
     required this.onTap,
     this.builder, 
     this.properties, 
-    this.decoration, 
+    this.decorationBuilder,
+    this.stateProvider,
     this.separatorBuilder,
   });
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedValueFormField(
+    return DecoratedFormField(
       controller: controller, 
       onTap: onTap, 
-      decoration: decoration, 
+      decorationBuilder: decorationBuilder, 
       builder: _builder,
       properties: properties,
+      stateProvider: stateProvider,
     );
   }
 
-  Widget _builder(BuildContext context, List<Entity>? value){
+  Widget _builder(BuildContext context, FooFormFieldState<List<Entity>> fieldState){
     if (builder!=null) {
-      return builder!.call(context,value);
+      return builder!.call(context, fieldState);
     }
 
     final selectedItems = controller.value??[];

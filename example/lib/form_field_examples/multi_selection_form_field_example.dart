@@ -54,7 +54,7 @@ class _MultiSelectionFormFieldExampleState extends State<MultiSelectionFormField
         ),
         
         controller: _controller,
-        decoration: InputDecoration(
+        decorationBuilder: (fieldState) => InputDecoration(
           label: Text("Selling Order Status"),
         ),
         onTap: (context) {

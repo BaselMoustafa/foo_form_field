@@ -1,9 +1,9 @@
-import 'base/value_field_controller.dart';
+import 'base/foo_field_controller.dart';
 
-class BoolFieldController extends ValueFieldController<bool> {
+class BoolFieldController extends FooFieldController<bool> {
   BoolFieldController({
     super.initialValue,
-    super.enabled,
-    super.forcedErrorText,
-  }) : super(areEqual: (bool x, bool y) => x == y);
+  }) : super(areEqual: (bool x, bool y) => x == y) {
+    value = initialValue;
+  }
 }

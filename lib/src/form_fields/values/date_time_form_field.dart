@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../foo_form_field.dart';
-import '../common/extentions/date_time_extension.dart';
-enum X{
-  a,b,c;
-}
+import '../../../foo_form_field.dart';
+import '../../common/extentions/date_time_extension.dart';
+import '../../common/extentions/input_decoration_extension.dart';
+
 class DateTimeFormField extends StatelessWidget {
   const DateTimeFormField({
     super.key,
@@ -14,7 +13,8 @@ class DateTimeFormField extends StatelessWidget {
     this.onTap,
     this.firstDate,
     this.lastDate,
-    this.decoration,
+    this.decorationBuilder,
+    this.stateProvider,
   });
 
   /// Controller managing the selected date.
@@ -24,38 +24,51 @@ class DateTimeFormField extends StatelessWidget {
   final String? Function(DateTime? date)? dateFormatter;
 
   /// Custom widget builder overriding the decorated default.
-  final Widget Function(BuildContext context, DateTime? value)? builder;
+  final FooFormFieldBuilder<DateTime>? builder;
 
   /// Optional tap handler; when omitted a date picker is presented.
   final void Function(BuildContext context)? onTap;
+
   final DateTime? firstDate;
+  
   final DateTime? lastDate;
-  final InputDecoration? decoration;
+  
+  final DecorationBuilder<DateTime>? decorationBuilder;
+  
   final FooFormFieldProperties<DateTime>? properties;
+  
+  final FooFormFieldStateProvider<DateTime>? stateProvider;
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedValueFormField<DateTime>(
+    if(builder != null) {
+      return FooFormField(
+        controller: controller,
+        properties: properties,
+        builder: builder!,
+        stateProvider: stateProvider,
+      );
+    }
+    return DecoratedFormField(
       controller: controller,
       properties: properties,
-      decoration: _effectiveDecoration,
+      stateProvider: stateProvider,
+      decorationBuilder: _effectiveDecorationBuilder,
       onTap: _onTap,
       builder: _builder,
     );
   }
 
-  Widget _builder(BuildContext context, DateTime? value) {
-    
-    if(builder != null) {
-      return builder!(context, value);
-    }
+  Widget _builder(BuildContext context, FooFormFieldState<DateTime> fieldState) {
 
+    final value = fieldState.value;
+    
     return FittedBox(
       alignment: AlignmentDirectional.centerStart,
       fit: BoxFit.scaleDown,
       child: Text(
         dateFormatter?.call(value) ??
-            "${value?.hour}:${value?.minute} / ${value?.year}-${value?.month}-${value?.day}",
+          "${value?.hour}:${value?.minute} / ${value?.year}-${value?.month}-${value?.day}",
         textAlign: TextAlign.start,
       ),
     );
@@ -100,46 +113,19 @@ class DateTimeFormField extends StatelessWidget {
   }
 
   /// Applies default icons to the provided decoration if missing.
-  InputDecoration get _effectiveDecoration {
-    if (decoration == null) {
-      return InputDecoration(
+  InputDecoration  _effectiveDecorationBuilder(FooFormFieldState<DateTime> fieldState) {
+    InputDecoration toReturn = decorationBuilder?.call(fieldState) ?? InputDecoration();
+    toReturn = toReturn.merge(
+      secondary: InputDecoration(
         prefixIcon: Icon(Icons.timer),
         suffixIcon: controller.value != null
-            ? _ClearButton(controller: controller)
+            ? CloseButton(
+              onPressed: () => controller.clear(),
+            )
             : null,
-      );
-    }
-
-    InputDecoration toReturn = decoration!;
-
-    if (toReturn.prefixIcon == null) {
-      toReturn = toReturn.copyWith(prefixIcon: Icon(Icons.timer));
-    }
-
-    if (toReturn.suffixIcon == null) {
-      toReturn = toReturn.copyWith(
-        suffixIcon: controller.value != null
-            ? _ClearButton(controller: controller)
-            : null,
-      );
-    }
-
+      ),
+    );
     return toReturn;
   }
 }
 
-/// Button that clears the selected date.
-class _ClearButton extends StatelessWidget {
-  const _ClearButton({required this.controller});
-  final FooFieldController<DateTime, DateTime> controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        controller.clear();
-      },
-      child: Icon(Icons.clear),
-    );
-  }
-}

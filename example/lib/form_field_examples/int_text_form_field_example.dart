@@ -16,7 +16,6 @@ class IntTextFormFormFieldExample extends StatefulWidget {
 class _IntTextFormFormFieldExampleState extends State<IntTextFormFormFieldExample> {
   final _controller = IntTextEditingController(
     initialValue: 160,
-    enabled: false,
   );
 
   @override

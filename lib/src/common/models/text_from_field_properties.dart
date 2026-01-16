@@ -69,6 +69,7 @@ class TextFormFieldProperties<O> {
   final Clip? clipBehavior;
   final bool? stylusHandwritingEnabled;
   final bool? canRequestFocus;
+  final String? forceErrorText;
 
   TextFormFieldProperties({
     this.groupId = EditableText,
@@ -136,5 +137,6 @@ class TextFormFieldProperties<O> {
     this.clipBehavior,
     this.stylusHandwritingEnabled,
     this.canRequestFocus,
+    this.forceErrorText,
   });
 }

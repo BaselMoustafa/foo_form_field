@@ -4,22 +4,29 @@ class IntTextEditingController extends FooTextEditingController<int> {
 
   IntTextEditingController({
     super.initialValue,
-    super.enabled,
-    super.forcedErrorText,
   }):super(
-    mapper: IntToStringMapper()
+    areEqual: (int x, int y) => x == y,
   );
+
+  @override
+  String? toText(int? value) => value?.toString();
+
+  @override
+  int? fromText(String? text) => int.tryParse(text ?? '');
 
 }
 
 class IntRangeTextEditingController extends FooRangeTextEditingController<int, IntTextEditingController>{
   
   IntRangeTextEditingController({
-    required super.minController,
-    required super.maxController,
-    super.enabled,
-    super.forcedErrorText,
+    int? initialMin,
+    int? initialMax,
   }):super(
-    mapper: IntRangeToStringRangeMapper(),
+    minController: IntTextEditingController(
+      initialValue: initialMin,
+    ),
+    maxController: IntTextEditingController(
+      initialValue: initialMax,
+    ),
   );
 }

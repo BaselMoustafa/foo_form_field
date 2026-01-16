@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../foo_form_field.dart';
+import '../../../foo_form_field.dart';
 
 class DateOnlyFormField extends StatelessWidget {
   const DateOnlyFormField({
@@ -12,7 +12,8 @@ class DateOnlyFormField extends StatelessWidget {
     this.onTap,
     this.firstDate,
     this.lastDate,
-    this.decoration,
+    this.decorationBuilder,
+    this.stateProvider,
   });
 
   /// Controller managing the selected date.
@@ -22,31 +23,39 @@ class DateOnlyFormField extends StatelessWidget {
   final String? Function(DateOnly? date)? dateFormatter;
 
   /// Custom widget builder overriding the decorated default.
-  final Widget Function(BuildContext context, DateOnly? value)? builder;
+  final FooFormFieldBuilder<DateOnly>? builder;
 
   /// Optional tap handler; when omitted a date picker is presented.
   final void Function(BuildContext context)? onTap;
   final DateOnly? firstDate;
   final DateOnly? lastDate;
-  final InputDecoration? decoration;
+  final DecorationBuilder<DateOnly>? decorationBuilder;
   final FooFormFieldProperties<DateOnly>? properties;
+  final FooFormFieldStateProvider<DateOnly>? stateProvider;
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedValueFormField<DateOnly>(
+    if(builder != null) {
+      return FooFormField(
+        controller: controller,
+        properties: properties,
+        builder: builder!,
+        stateProvider: stateProvider,
+      );
+    }
+    return DecoratedFormField(
       controller: controller,
       properties: properties,
-      decoration: _effectiveDecoration,
+      stateProvider: stateProvider,
       onTap: _onTap,
       builder: _builder,
+      decorationBuilder: _effectiveDecorationBuilder,
     );
   }
 
-  Widget _builder(BuildContext context, DateOnly? value) {
+  Widget _builder(BuildContext context, FooFormFieldState<DateOnly> fieldState) {
     
-    if(builder != null) {
-      return builder!(context, value);
-    }
+    final value = fieldState.value;
 
     return FittedBox(
       alignment: AlignmentDirectional.centerStart,
@@ -83,47 +92,19 @@ class DateOnlyFormField extends StatelessWidget {
   }
 
   /// Applies default icons to the provided decoration if missing.
-  InputDecoration get _effectiveDecoration {
-    if (decoration == null) {
-      return InputDecoration(
+  InputDecoration _effectiveDecorationBuilder(FooFormFieldState<DateOnly> fieldState) {
+    InputDecoration toReturn = decorationBuilder?.call(fieldState) ?? InputDecoration();
+    toReturn = toReturn.merge(
+      secondary: InputDecoration(
         prefixIcon: Icon(Icons.calendar_today),
         suffixIcon: controller.value != null
-            ? _ClearButton(controller: controller)
+            ? CloseButton(
+              onPressed: () => controller.clear(),
+            )
             : null,
-      );
-    }
-
-    InputDecoration toReturn = decoration!;
-
-    if (toReturn.prefixIcon == null) {
-      toReturn = toReturn.copyWith(prefixIcon: Icon(Icons.calendar_today));
-    }
-
-    if (toReturn.suffixIcon == null) {
-      toReturn = toReturn.copyWith(
-        suffixIcon: controller.value != null
-            ? _ClearButton(controller: controller)
-            : null,
-      );
-    }
+      ),
+    );
 
     return toReturn;
   }
 }
-
-/// Button that clears the selected date.
-class _ClearButton extends StatelessWidget {
-  const _ClearButton({required this.controller});
-  final FooFieldController<DateOnly, DateOnly> controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        controller.clear();
-      },
-      child: Icon(Icons.clear),
-    );
-  }
-}
-

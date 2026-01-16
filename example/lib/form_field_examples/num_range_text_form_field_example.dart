@@ -15,13 +15,8 @@ class NumRangeTextFormFieldExampleScreen extends StatefulWidget {
 class _NumRangeTextFormFieldExampleScreenState extends State<NumRangeTextFormFieldExampleScreen> {
 
   final _controller = NumRangeTextEditingController(
-    minController: NumTextEditingController(
-      initialValue: 50.5,
-      enabled: false,
-    ),
-    maxController: NumTextEditingController(
-      initialValue: 100.75,
-    ),
+    initialMin: 50.5,
+    initialMax: 100.75,
   );
 
   @override

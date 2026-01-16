@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../foo_form_field.dart';
+import '../../../foo_form_field.dart';
 
 class TimeOfDayFormField extends StatelessWidget {
   const TimeOfDayFormField({
@@ -10,7 +10,8 @@ class TimeOfDayFormField extends StatelessWidget {
     this.timeFormatter,
     this.builder,
     this.onTap,
-    this.decoration,
+    this.decorationBuilder,
+    this.stateProvider,
   });
 
   /// Controller managing the selected time.
@@ -20,29 +21,37 @@ class TimeOfDayFormField extends StatelessWidget {
   final String? Function(TimeOfDay? time)? timeFormatter;
 
   /// Custom widget builder overriding the decorated default.
-  final Widget Function(BuildContext context, TimeOfDay? value)? builder;
+  final FooFormFieldBuilder<TimeOfDay>? builder;
 
   /// Optional tap handler; when omitted a time picker is presented.
   final void Function(BuildContext context)? onTap;
-  final InputDecoration? decoration;
+  final DecorationBuilder<TimeOfDay>? decorationBuilder;
   final FooFormFieldProperties<TimeOfDay>? properties;
+  final FooFormFieldStateProvider<TimeOfDay>? stateProvider;
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedValueFormField<TimeOfDay>(
+    if(builder != null) {
+      return FooFormField(
+        controller: controller,
+        properties: properties,
+        builder: builder!,
+        stateProvider: stateProvider,
+      );
+    }
+    return DecoratedFormField(
       controller: controller,
       properties: properties,
-      decoration: _effectiveDecoration,
+      stateProvider: stateProvider,
+      decorationBuilder: _effectiveDecorationBuilder,
       onTap: _onTap,
       builder: _builder,
     );
   }
 
-  Widget _builder(BuildContext context, TimeOfDay? value) {
+  Widget _builder(BuildContext context, FooFormFieldState<TimeOfDay> fieldState) {
     
-    if(builder != null) {
-      return builder!(context, value);
-    }
+    final value = fieldState.value;
 
     return FittedBox(
       alignment: AlignmentDirectional.centerStart,
@@ -75,47 +84,18 @@ class TimeOfDayFormField extends StatelessWidget {
   }
 
   /// Applies default icons to the provided decoration if missing.
-  InputDecoration get _effectiveDecoration {
-    if (decoration == null) {
-      return InputDecoration(
+  InputDecoration _effectiveDecorationBuilder(FooFormFieldState<TimeOfDay> fieldState) {
+    InputDecoration toReturn = decorationBuilder?.call(fieldState) ?? InputDecoration();
+    toReturn = toReturn.merge(
+      secondary: InputDecoration(
         prefixIcon: Icon(Icons.access_time),
         suffixIcon: controller.value != null
-            ? _ClearButton(controller: controller)
+            ? CloseButton(
+              onPressed: () => controller.clear(),
+            )
             : null,
-      );
-    }
-
-    InputDecoration toReturn = decoration!;
-
-    if (toReturn.prefixIcon == null) {
-      toReturn = toReturn.copyWith(prefixIcon: Icon(Icons.access_time));
-    }
-
-    if (toReturn.suffixIcon == null) {
-      toReturn = toReturn.copyWith(
-        suffixIcon: controller.value != null
-            ? _ClearButton(controller: controller)
-            : null,
-      );
-    }
-
+      ),
+    );
     return toReturn;
   }
 }
-
-/// Button that clears the selected time.
-class _ClearButton extends StatelessWidget {
-  const _ClearButton({required this.controller});
-  final FooFieldController<TimeOfDay, TimeOfDay> controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        controller.clear();
-      },
-      child: Icon(Icons.clear),
-    );
-  }
-}
-

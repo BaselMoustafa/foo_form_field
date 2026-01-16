@@ -20,7 +20,7 @@ class ControllerTestButtons<O,I> extends StatelessWidget {
   final O firstDummyValue;
   final O secondDummyValue;
   final String Function(O value) valueToString;
-  final FooFieldController<O,I> controller;
+  final FooFieldController<O> controller;
 
   @override
   Widget build(BuildContext context) {
@@ -35,53 +35,41 @@ class ControllerTestButtons<O,I> extends StatelessWidget {
             },
           ),
           TextButtonInput(
-            title: "Enable",
-            onPressed: () {
-              controller.enabled = true;
-            },
-          ),
-          TextButtonInput(
-            title: "Disable",
-            onPressed: () {
-              controller.enabled = false;
-            },
-          ),
-          TextButtonInput(
             title: "Clear",
             onPressed: () {
               controller.clear();
             },
           ),
-          TextButtonInput(
-            title: "Validate",
-            onPressed: () {
-              controller.validate();
-            },
-          ),
-          TextButtonInput(
-            title: "Get Is Valid",
-            onPressed: () {
-              log("Get isValid = ${controller.isValid}");
-            },
-          ),
-          TextButtonInput(
-            title: "Set Forced Error Text",
-            onPressed: () {
-              controller.forcedErrorText = 'forced error';
-            },
-          ),
-          TextButtonInput(
-            title: "Clear Forced Error Text",
-            onPressed: () {
-              controller.forcedErrorText = null;
-            },
-          ),
-          TextButtonInput(
-            title: "Save",
-            onPressed: () {
-              controller.save();
-            },
-          ),    
+          // TextButtonInput(
+          //   title: "Validate",
+          //   onPressed: () {
+          //     controller.validate();
+          //   },
+          // ),
+          // TextButtonInput(
+          //   title: "Get Is Valid",
+          //   onPressed: () {
+          //     log("Get isValid = ${controller.isValid}");
+          //   },
+          // ),
+          // TextButtonInput(
+          //   title: "Set Forced Error Text",
+          //   onPressed: () {
+          //     controller.forcedErrorText = 'forced error';
+          //   },
+          // ),
+          // TextButtonInput(
+          //   title: "Clear Forced Error Text",
+          //   onPressed: () {
+          //     controller.forcedErrorText = null;
+          //   },
+          // ),
+          // TextButtonInput(
+          //   title: "Save",
+          //   onPressed: () {
+          //     controller.save();
+          //   },
+          // ),    
           TextButtonInput(
             title: "Set ${valueToString(firstDummyValue)}",
             onPressed: () {

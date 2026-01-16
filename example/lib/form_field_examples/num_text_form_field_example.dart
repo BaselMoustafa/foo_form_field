@@ -16,7 +16,6 @@ class NumTextFormFormFieldExample extends StatefulWidget {
 class _NumTextFormFormFieldExampleState extends State<NumTextFormFormFieldExample> {
   final _controller = NumTextEditingController(
     initialValue: 160.5,
-    enabled: false,
   );
 
   @override

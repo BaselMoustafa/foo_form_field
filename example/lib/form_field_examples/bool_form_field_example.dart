@@ -17,7 +17,6 @@ class BoolFormFieldExample extends StatefulWidget {
 class _BoolFormFieldExampleState extends State<BoolFormFieldExample> {
   final _controller = BoolFieldController(
     initialValue: false,
-    enabled: false,
   );
 
   @override
