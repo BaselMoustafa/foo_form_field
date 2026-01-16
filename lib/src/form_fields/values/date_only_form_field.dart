@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../foo_form_field.dart';
-import '../../common/extentions/input_decoration_extension.dart';
 
 class DateOnlyFormField extends StatelessWidget {
   const DateOnlyFormField({
@@ -30,7 +29,7 @@ class DateOnlyFormField extends StatelessWidget {
   final void Function(BuildContext context)? onTap;
   final DateOnly? firstDate;
   final DateOnly? lastDate;
-  final InputDecoration Function(FooFormFieldState<DateOnly> fieldState)? decorationBuilder;
+  final DecorationBuilder<DateOnly>? decorationBuilder;
   final FooFormFieldProperties<DateOnly>? properties;
   final FooFormFieldStateProvider<DateOnly>? stateProvider;
 

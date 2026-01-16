@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 import '../../../foo_form_field.dart';
-import '../../common/extentions/input_decoration_extension.dart';
 
 class DecoratedFormField<Value> extends FooFormField<Value> {
+  
   DecoratedFormField({
     super.key,
     required super.controller,

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
 import '../../../../foo_form_field.dart';
 
-typedef DecorationBuilder<T> = InputDecoration Function(FooFormFieldState<T> fieldState);
 class DateOnlyRangeFormField extends StatelessWidget {
+  
   const DateOnlyRangeFormField({
     super.key,
     required this.controller,

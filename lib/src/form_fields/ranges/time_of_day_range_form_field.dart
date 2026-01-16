@@ -74,7 +74,7 @@ class TimeOfDayRangeFormField extends StatelessWidget {
     return TimeOfDayFormField(
       controller: controller.maxController,
       timeFormatter: timeFormatter,
-      decorationBuilder: maxFieldDecorationBuilder  ,
+      decorationBuilder: maxFieldDecorationBuilder,
       onTap: onTapMaxField,
       stateProvider: maxFieldStateProvider,
     );

@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 import '../../../foo_form_field.dart';
 import '../../common/widgets/field_with_error_text_widget.dart';
 import '../../common/widgets/selection_card.dart';
-
 class BooleanFormField extends StatelessWidget {
  
   const BooleanFormField({

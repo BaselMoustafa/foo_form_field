@@ -53,6 +53,7 @@ class _FooFormFieldState<Value> extends State<FooFormField<Value>> {
       _addListenerToCurrentController();
     }
   }
+  
   @override
   void dispose() {
     controller.removeListener(_onControllerValueChanged);

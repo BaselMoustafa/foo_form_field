@@ -8,7 +8,7 @@ class SingleSelectionFormField<Entity extends Object> extends StatelessWidget {
   final FooFormFieldProperties<Entity>? properties;
   final DecorationBuilder<Entity>? decorationBuilder;
   final void Function(BuildContext context) onTap;
-  final Widget Function(BuildContext context, FooFormFieldState<Entity> fieldState)? builder;
+  final FooFormFieldBuilder<Entity>? builder;
   final FooFormFieldStateProvider<Entity>? stateProvider;
 
   const SingleSelectionFormField({

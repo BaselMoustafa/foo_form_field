@@ -1,11 +1,7 @@
-
 import 'dart:ui';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../foo_form_field.dart';
-import '../../../common/extentions/foo_text_formatter_list_extension.dart';
 
 class FooTextFormField<Value> extends StatefulWidget {
   const FooTextFormField({
@@ -65,6 +61,7 @@ class _FooTextFormFieldState<Value> extends State<FooTextFormField<Value>> {
       _addListenerToCurrentController();
     }
   }
+
   @override
   void dispose() {
     controller.removeListener(_onControllerValueChanged);
@@ -176,7 +173,6 @@ class _FooTextFormFieldState<Value> extends State<FooTextFormField<Value>> {
   }
 
   void _onControllerValueChanged() {
-
     widget.properties?.onChanged?.call(
       controller.value,
     );

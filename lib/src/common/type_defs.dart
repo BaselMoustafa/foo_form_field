@@ -17,3 +17,5 @@ typedef RangeFormFieldBuilder<Value extends Comparable> = Widget Function(
   Widget maxField, 
   FooFormFieldState<Range<Value>> fieldState
 );
+
+typedef DecorationBuilder<T> = InputDecoration Function(FooFormFieldState<T> fieldState);
