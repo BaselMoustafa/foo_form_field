@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import '../../../foo_form_field.dart';
+import '../../common/extentions/date_time_extension.dart';
+import '../../common/extentions/input_decoration_extension.dart';
 
-import '../../foo_form_field.dart';
-import '../common/extentions/input_decoration_extension.dart';
-
-class DateOnlyFormField extends StatelessWidget {
-  const DateOnlyFormField({
+class DateTimeFormField extends StatelessWidget {
+  const DateTimeFormField({
     super.key,
     required this.controller,
     this.properties,
@@ -18,21 +18,26 @@ class DateOnlyFormField extends StatelessWidget {
   });
 
   /// Controller managing the selected date.
-  final DateOnlyFieldController controller;
+  final DateTimeFieldController controller;
 
   /// Formats the current date when using the default builder.
-  final String? Function(DateOnly? date)? dateFormatter;
+  final String? Function(DateTime? date)? dateFormatter;
 
   /// Custom widget builder overriding the decorated default.
-  final FooFormFieldBuilder<DateOnly>? builder;
+  final FooFormFieldBuilder<DateTime>? builder;
 
   /// Optional tap handler; when omitted a date picker is presented.
   final void Function(BuildContext context)? onTap;
-  final DateOnly? firstDate;
-  final DateOnly? lastDate;
-  final InputDecoration Function(FooFormFieldState<DateOnly> fieldState)? decorationBuilder;
-  final FooFormFieldProperties<DateOnly>? properties;
-  final FooFormFieldStateProvider<DateOnly>? stateProvider;
+
+  final DateTime? firstDate;
+  
+  final DateTime? lastDate;
+  
+  final DecorationBuilder<DateTime>? decorationBuilder;
+  
+  final FooFormFieldProperties<DateTime>? properties;
+  
+  final FooFormFieldStateProvider<DateTime>? stateProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -48,22 +53,22 @@ class DateOnlyFormField extends StatelessWidget {
       controller: controller,
       properties: properties,
       stateProvider: stateProvider,
+      decorationBuilder: _effectiveDecorationBuilder,
       onTap: _onTap,
       builder: _builder,
-      decorationBuilder: _effectiveDecorationBuilder,
     );
   }
 
-  Widget _builder(BuildContext context, FooFormFieldState<DateOnly> fieldState) {
-    
-    final value = fieldState.value;
+  Widget _builder(BuildContext context, FooFormFieldState<DateTime> fieldState) {
 
+    final value = fieldState.value;
+    
     return FittedBox(
       alignment: AlignmentDirectional.centerStart,
       fit: BoxFit.scaleDown,
       child: Text(
         dateFormatter?.call(value) ??
-            "${value?.year}-${value?.month}-${value?.day}",
+          "${value?.hour}:${value?.minute} / ${value?.year}-${value?.month}-${value?.day}",
         textAlign: TextAlign.start,
       ),
     );
@@ -76,28 +81,43 @@ class DateOnlyFormField extends StatelessWidget {
       return;
     }
 
-    final initialDate = controller.value?.toDateTime();
-
     final selectedDate = await showDatePicker(
       context: context,
-      initialDate: initialDate ?? DateTime.now(),
-      firstDate: firstDate?.toDateTime() ?? DateTime(1900),
-      lastDate: lastDate?.toDateTime() ?? DateTime(2100),
+      initialDate: controller.value,
+      firstDate: firstDate ?? DateTime(1900),
+      lastDate: lastDate ?? DateTime(2100),
     );
 
     if(selectedDate == null) {
       return;
     }
 
-    controller.value = DateOnly.fromDateTime(selectedDate);
+    final selectedTime = await showTimePicker(
+      // ignore: use_build_context_synchronously
+      context: context, 
+      initialTime: controller.value?.timeOfDay ?? TimeOfDay.now(),
+      
+    );
+
+    if (selectedTime == null) {
+      return;
+    }
+
+    controller.value = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      selectedTime.hour,
+      selectedTime.minute,
+    );
   }
 
   /// Applies default icons to the provided decoration if missing.
-  InputDecoration _effectiveDecorationBuilder(FooFormFieldState<DateOnly> fieldState) {
+  InputDecoration  _effectiveDecorationBuilder(FooFormFieldState<DateTime> fieldState) {
     InputDecoration toReturn = decorationBuilder?.call(fieldState) ?? InputDecoration();
     toReturn = toReturn.merge(
       secondary: InputDecoration(
-        prefixIcon: Icon(Icons.calendar_today),
+        prefixIcon: Icon(Icons.timer),
         suffixIcon: controller.value != null
             ? CloseButton(
               onPressed: () => controller.clear(),
@@ -105,7 +125,7 @@ class DateOnlyFormField extends StatelessWidget {
             : null,
       ),
     );
-
     return toReturn;
   }
 }
+

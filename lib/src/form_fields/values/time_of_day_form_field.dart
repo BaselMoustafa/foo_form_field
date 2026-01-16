@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../foo_form_field.dart';
-import '../common/extentions/input_decoration_extension.dart';
+import '../../../foo_form_field.dart';
+import '../../common/extentions/input_decoration_extension.dart';
 
 class TimeOfDayFormField extends StatelessWidget {
   const TimeOfDayFormField({

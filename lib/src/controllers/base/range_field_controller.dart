@@ -1,5 +1,5 @@
 
-import '../../common/ranges/ranges.dart';
+import '../../common/models/range.dart';
 import 'foo_field_controller.dart';
 
 class RangeFieldController<

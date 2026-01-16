@@ -2,9 +2,7 @@
 import 'package:flutter/material.dart';
 import '../../common/widgets/field_with_error_text_widget.dart';
 import '../../../foo_form_field.dart';
-typedef RangeFormFieldBuilder<Value extends Comparable> = Widget Function(
-  BuildContext context, Widget minField, Widget maxField, FooFormFieldState<Range<Value>> fieldState
-);
+
 
 /// Generic range form field that renders min/max inputs backed by a convertible controller.
 class RangeFormField<

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../foo_form_field.dart';
 
-typedef FooFormFieldBuilder<FieldValue> = Widget Function(BuildContext context, FooFormFieldState<FieldValue> fieldState);
-typedef FooFormFieldStateProvider<FieldValue> = void Function(FooFormFieldState<FieldValue> fieldState);
-
 class FooFormField<Value> extends StatefulWidget {
   const FooFormField({
     super.key,

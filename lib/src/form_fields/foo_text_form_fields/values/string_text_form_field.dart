@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../foo_form_field.dart';
+import '../../../../foo_form_field.dart';
 
 class StringTextFormField extends StatelessWidget {
   const StringTextFormField({

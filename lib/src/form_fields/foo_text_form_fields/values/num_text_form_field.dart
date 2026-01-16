@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../foo_form_field.dart';
-import '../../common/formatters/numeric_text_formatter.dart';
+import '../../../../foo_form_field.dart';
 
 class NumTextFormField extends StatelessWidget {
   const NumTextFormField({

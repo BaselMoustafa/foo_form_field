@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../foo_form_field.dart';
+import '../../../../foo_form_field.dart';
 
-class TimeOfDayRangeFormField extends StatelessWidget {
-  const TimeOfDayRangeFormField({
+class DateTimeRangeFormField extends StatelessWidget {
+  const DateTimeRangeFormField({
     super.key,
     required this.controller,
-    this.timeFormatter,
+    this.dateFormatter,
     this.rangeValidator,
     this.properties,
+    this.minDate,
+    this.maxDate,
     this.minFieldDecorationBuilder,
     this.maxFieldDecorationBuilder,
     this.onTapMinField,
@@ -21,25 +23,28 @@ class TimeOfDayRangeFormField extends StatelessWidget {
     this.stateProvider,
   });
 
-  final TimeOfDayRangeFieldController controller;
-  final FooFormFieldStateProvider<Range<TimeOfDay>>? stateProvider;
-  final String? Function(TimeOfDay? time)? timeFormatter;
+  final DateTimeRangeFieldController controller;
+  final FooFormFieldStateProvider<Range<DateTime>>? stateProvider;
+  final String? Function(DateTime? date)? dateFormatter;
   final RangeValidator? rangeValidator;
-  final FooFormFieldProperties<Range<TimeOfDay>>? properties;
+  final FooFormFieldProperties<Range<DateTime>>? properties;
 
-  final DecorationBuilder<TimeOfDay>? minFieldDecorationBuilder;
-  final DecorationBuilder<TimeOfDay>? maxFieldDecorationBuilder;
+  final DateTime? minDate;
+  final DateTime? maxDate;
+
+  final DecorationBuilder<DateTime>? minFieldDecorationBuilder;
+  final DecorationBuilder<DateTime>? maxFieldDecorationBuilder;
 
   final void Function(BuildContext context)? onTapMinField;
   final void Function(BuildContext context)? onTapMaxField;
 
   final Widget Function(BuildContext context)? minFieldBuilder;
   final Widget Function(BuildContext context)? maxFieldBuilder;
-  final RangeFormFieldBuilder<TimeOfDay>? builder;
-  
-  final FooFormFieldStateProvider<TimeOfDay>? minFieldStateProvider;
-  final FooFormFieldStateProvider<TimeOfDay>? maxFieldStateProvider;
 
+  final RangeFormFieldBuilder<DateTime>? builder;
+  
+  final FooFormFieldStateProvider<DateTime>? minFieldStateProvider;
+  final FooFormFieldStateProvider<DateTime>? maxFieldStateProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +63,11 @@ class TimeOfDayRangeFormField extends StatelessWidget {
     if(minFieldBuilder != null) {
       return minFieldBuilder!(context);
     }
-    return TimeOfDayFormField(
+    return DateTimeFormField(
       controller: controller.minController,
-      timeFormatter: timeFormatter,
+      dateFormatter: dateFormatter,
+      firstDate: minDate,
+      lastDate: controller.maxController.value?? maxDate,
       decorationBuilder: minFieldDecorationBuilder,
       onTap: onTapMinField,
       stateProvider: minFieldStateProvider,
@@ -71,13 +78,14 @@ class TimeOfDayRangeFormField extends StatelessWidget {
     if(maxFieldBuilder != null) {
       return maxFieldBuilder!(context);
     }
-    return TimeOfDayFormField(
+    return DateTimeFormField(
       controller: controller.maxController,
-      timeFormatter: timeFormatter,
-      decorationBuilder: maxFieldDecorationBuilder  ,
+      dateFormatter: dateFormatter,
+      firstDate: controller.minController.value?? minDate,
+      lastDate: maxDate,
+      decorationBuilder: maxFieldDecorationBuilder,
       onTap: onTapMaxField,
       stateProvider: maxFieldStateProvider,
     );
   }
 }
-
