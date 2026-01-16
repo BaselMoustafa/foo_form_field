@@ -79,7 +79,7 @@ class DateOnlyFormField extends StatelessWidget {
 
     final selectedDate = await showDatePicker(
       context: context,
-      initialDate: initialDate ?? DateTime.now(),
+      initialDate: initialDate,
       firstDate: firstDate?.toDateTime() ?? DateTime(1900),
       lastDate: lastDate?.toDateTime() ?? DateTime(2100),
     );
