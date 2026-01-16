@@ -19,7 +19,14 @@ class NumTextEditingController extends FooTextEditingController<num> {
 class NumRangeTextEditingController extends FooRangeTextEditingController<num, NumTextEditingController>{
   
   NumRangeTextEditingController({
-    required super.minController,
-    required super.maxController,
-  });
+    num? initialMin,
+    num? initialMax,
+  }):super(
+    minController: NumTextEditingController(
+      initialValue: initialMin,
+    ),
+    maxController: NumTextEditingController(
+      initialValue: initialMax,
+    ),
+  );
 }

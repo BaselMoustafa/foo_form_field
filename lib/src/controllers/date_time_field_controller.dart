@@ -12,7 +12,14 @@ class DateTimeFieldController extends FooFieldController<DateTime> {
 
 class DateTimeRangeFieldController extends RangeFieldController<DateTime,DateTimeFieldController> {
   DateTimeRangeFieldController({
-    required super.minController,
-    required super.maxController,
-  });
+    DateTime? initialMin,
+    DateTime? initialMax,
+  }):super(
+    minController: DateTimeFieldController(
+      initialValue: initialMin,
+    ),
+    maxController: DateTimeFieldController(
+      initialValue: initialMax,
+    ),
+  );
 }

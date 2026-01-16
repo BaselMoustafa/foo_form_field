@@ -13,8 +13,15 @@ class TimeOfDayFieldController extends FooFieldController<TimeOfDay> {
 
 class TimeOfDayRangeFieldController extends RangeFieldController<TimeOfDay,TimeOfDayFieldController> {
   TimeOfDayRangeFieldController({
-    required super.minController,
-    required super.maxController,
-  });
+    TimeOfDay? initialMin,
+    TimeOfDay? initialMax,
+  }):super(
+    minController: TimeOfDayFieldController(
+      initialValue: initialMin,
+    ),
+    maxController: TimeOfDayFieldController(
+      initialValue: initialMax,
+    ),
+  );
 }
 

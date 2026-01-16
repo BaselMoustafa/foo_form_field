@@ -19,7 +19,14 @@ class IntTextEditingController extends FooTextEditingController<int> {
 class IntRangeTextEditingController extends FooRangeTextEditingController<int, IntTextEditingController>{
   
   IntRangeTextEditingController({
-    required super.minController,
-    required super.maxController,
-  });
+    int? initialMin,
+    int? initialMax,
+  }):super(
+    minController: IntTextEditingController(
+      initialValue: initialMin,
+    ),
+    maxController: IntTextEditingController(
+      initialValue: initialMax,
+    ),
+  );
 }

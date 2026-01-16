@@ -12,8 +12,15 @@ class DateOnlyFieldController extends FooFieldController<DateOnly> {
 
 class DateOnlyRangeFieldController extends RangeFieldController<DateOnly,DateOnlyFieldController> {
   DateOnlyRangeFieldController({
-    required super.minController,
-    required super.maxController,
-  });
+    DateOnly? initialMin,
+    DateOnly? initialMax,
+  }):super(
+    minController: DateOnlyFieldController(
+      initialValue: initialMin,
+    ),
+    maxController: DateOnlyFieldController(
+      initialValue: initialMax,
+    ),
+  );
 }
 

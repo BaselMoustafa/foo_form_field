@@ -19,8 +19,8 @@ class RangeFieldController<
   }) : super(
       areEqual: (Range<Value> x, Range<Value> y) => x == y,
       initialValue: Range<Value>(
-        min: minController.value,
-        max: maxController.value,
+        min: minController.initialValue,
+        max: maxController.initialValue,
       )
     );
 
