@@ -33,8 +33,8 @@ class TimeOfDayRangeFormField extends StatelessWidget {
   final void Function(BuildContext context)? onTapMinField;
   final void Function(BuildContext context)? onTapMaxField;
 
-  final Widget Function(BuildContext context, TimeOfDay? value)? minFieldBuilder;
-  final Widget Function(BuildContext context, TimeOfDay? value)? maxFieldBuilder;
+  final Widget Function(BuildContext context)? minFieldBuilder;
+  final Widget Function(BuildContext context)? maxFieldBuilder;
   final RangeFormFieldBuilder<TimeOfDay>? builder;
   
   final FooFormFieldStateProvider<TimeOfDay>? minFieldStateProvider;
@@ -54,9 +54,9 @@ class TimeOfDayRangeFormField extends StatelessWidget {
     );
   }
 
-  Widget _minFieldBuilder( BuildContext context, TimeOfDay? value) {
+  Widget _minFieldBuilder( BuildContext context) {
     if(minFieldBuilder != null) {
-      return minFieldBuilder!(context, value);
+      return minFieldBuilder!(context);
     }
     return TimeOfDayFormField(
       controller: controller.minController,
@@ -67,9 +67,9 @@ class TimeOfDayRangeFormField extends StatelessWidget {
     );
   }
 
-  Widget _maxFieldBuilder( BuildContext context, TimeOfDay? value) {
+  Widget _maxFieldBuilder( BuildContext context) {
     if(maxFieldBuilder != null) {
-      return maxFieldBuilder!(context, value);
+      return maxFieldBuilder!(context);
     }
     return TimeOfDayFormField(
       controller: controller.maxController,

@@ -26,9 +26,9 @@ class RangeFormField<
 
   final RangeValidator rangeValidator;
 
-  final Widget Function(BuildContext context, Value? value) minFieldBuilder;
+  final Widget Function(BuildContext context) minFieldBuilder;
   
-  final Widget Function(BuildContext context, Value? value) maxFieldBuilder;
+  final Widget Function(BuildContext context) maxFieldBuilder;
 
   final RangeFormFieldBuilder<Value>? builder;
 
@@ -77,8 +77,8 @@ class RangeFormField<
 
   /// Builds the inner field layout, wrapping it with error presentation.
   Widget _builder(BuildContext context, FooFormFieldState<Range<Value>> fieldState) {
-    final minField = minFieldBuilder(context, controller.minController.value);
-    final maxField = maxFieldBuilder(context, controller.maxController.value);
+    final minField = minFieldBuilder(context);
+    final maxField = maxFieldBuilder(context);
 
     if (builder != null) {
       return builder!(context, minField, maxField, fieldState);

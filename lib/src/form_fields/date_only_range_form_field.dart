@@ -39,8 +39,8 @@ class DateOnlyRangeFormField extends StatelessWidget {
   final void Function(BuildContext context)? onTapMinField;
   final void Function(BuildContext context)? onTapMaxField;
 
-  final Widget Function(BuildContext context, DateOnly? value)? minFieldBuilder;
-  final Widget Function(BuildContext context, DateOnly? value)? maxFieldBuilder;
+  final Widget Function(BuildContext context)? minFieldBuilder;
+  final Widget Function(BuildContext context)? maxFieldBuilder;
   final RangeFormFieldBuilder<DateOnly>? builder;
   
   final FooFormFieldStateProvider<DateOnly>? minFieldStateProvider;
@@ -60,9 +60,9 @@ class DateOnlyRangeFormField extends StatelessWidget {
     );
   }
 
-  Widget _minFieldBuilder( BuildContext context, DateOnly? value) {
+  Widget _minFieldBuilder( BuildContext context) {
     if(minFieldBuilder != null) {
-      return minFieldBuilder!(context, value);
+      return minFieldBuilder!(context);
     }
     return DateOnlyFormField(
       controller: controller.minController,
@@ -75,9 +75,9 @@ class DateOnlyRangeFormField extends StatelessWidget {
     );
   }
 
-  Widget _maxFieldBuilder( BuildContext context, DateOnly? value) {
+  Widget _maxFieldBuilder( BuildContext context) {
     if(maxFieldBuilder != null) {
-      return maxFieldBuilder!(context, value);
+      return maxFieldBuilder!(context);
     }
     return DateOnlyFormField(
       controller: controller.maxController,

@@ -1,16 +1,5 @@
-
 import 'package:flutter/material.dart';
-
-import '../../common/formatters/numeric_text_formatter.dart';
-import '../../common/models/foo_form_field_state.dart';
-import '../../common/ranges/range_validators.dart';
-import '../../controllers/foo_text_editing_controllers/num_text_editing_controller.dart';
-import '../../common/models/foo_form_field_properties.dart';
-import '../../common/ranges/ranges.dart';
-import '../../common/models/text_from_field_properties.dart';
-import '../base/range_form_field.dart';
-import 'num_text_form_field.dart';
-
+import '../../../foo_form_field.dart';
 class NumRangeTextFormField extends StatelessWidget {
   
   const NumRangeTextFormField({
@@ -23,6 +12,7 @@ class NumRangeTextFormField extends StatelessWidget {
     this.minFieldFormatter,
     this.maxFieldFormatter,
     this.builder,
+    this.stateProvider,
   });
 
   final NumRangeTextEditingController controller;
@@ -32,22 +22,22 @@ class NumRangeTextFormField extends StatelessWidget {
   final NumTextFormatter? maxFieldFormatter;
   final FooFormFieldProperties<Range<num>>? properties;
   final RangeValidator? rangeValidator;
-  final Widget Function(BuildContext context, Widget minField, Widget maxField, FooFormFieldState<Range<String>> fieldState)? builder;
-
+  final RangeFormFieldBuilder<num>? builder;
+  final FooFormFieldStateProvider<Range<num>>? stateProvider;
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
-    // return RangeFormField<num, NumTextEditingController>(
-    //   controller: controller,
-    //   builder: builder,
-    //   properties: properties,
-    //   rangeValidator: rangeValidator,
-    //   minFieldBuilder: _minFieldBuilder,
-    //   maxFieldBuilder: _maxFieldBuilder,
-    // );
+    return RangeFormField<num, NumTextEditingController>(
+      stateProvider: stateProvider,
+      controller: controller,
+      builder: builder,
+      properties: properties,
+      rangeValidator: rangeValidator,
+      minFieldBuilder: _minFieldBuilder,
+      maxFieldBuilder: _maxFieldBuilder,
+    );
   }
 
-  Widget _minFieldBuilder(BuildContext context, String? value) {
+  Widget _minFieldBuilder(BuildContext context) {
     return NumTextFormField(
       controller: controller.minController,
       properties: minFieldProperties,
@@ -55,7 +45,7 @@ class NumRangeTextFormField extends StatelessWidget {
     );
   }
 
-  Widget _maxFieldBuilder(BuildContext context, String? value) {
+  Widget _maxFieldBuilder(BuildContext context) {
     return NumTextFormField(
       controller: controller.maxController,
       properties: maxFieldProperties,

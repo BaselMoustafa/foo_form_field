@@ -14,15 +14,25 @@ class TestScreen2 extends StatefulWidget {
 class _TestScreen2State extends State<TestScreen2> {
 
   bool _showField = true;
-  final _firstDateTimeController = IntTextEditingController(
-    initialValue: 10,
+  final _firstDateTimeController = IntRangeTextEditingController(
+    minController: IntTextEditingController(
+      initialValue: 10,
+    ),
+    maxController: IntTextEditingController(
+      initialValue: 20,
+    ),
   );
-  final _secondDateTimeController = IntTextEditingController(
-    initialValue: 20,
+  final _secondDateTimeController = IntRangeTextEditingController(
+    minController: IntTextEditingController(
+      initialValue: 80,
+    ),
+    maxController: IntTextEditingController(
+      initialValue: 90,
+    ),
   );
 
   bool _duplicateFirstDate = true;
-  FooFormFieldState<String>? _controlledFieldState;
+  FooFormFieldState<Range<int>>? _controlledFieldState;
 
   @override
   Widget build(BuildContext context) {
@@ -45,26 +55,27 @@ class _TestScreen2State extends State<TestScreen2> {
         child: Column(
           spacing: 25,
           children:!_showField ? []:[
-            IntTextFormField(
+            IntRangeTextFormField(
               controller: _firstDateTimeController,
-              properties: TextFormFieldProperties(
+              properties: FooFormFieldProperties(
                 onChanged: (value) {
                   log("First Date Changed Called: $value");
                 },
               ),
-              formatter: IntTextFormatter(
+              minFieldFormatter: IntTextFormatter(
                 allowNegative: true,
               ),
+              maxFieldFormatter: IntTextFormatter(),
             ),
 
-            IntTextFormField(
+            IntRangeTextFormField(
               stateProvider: (fieldState) {
                 log("State Provider Called: ${fieldState.isValid}");
                 _controlledFieldState = fieldState;
               },
               controller:_duplicateFirstDate ? _firstDateTimeController : _secondDateTimeController,
-              properties: TextFormFieldProperties(
-                validator: (int? value) {
+              properties: FooFormFieldProperties(
+                validator: (Range<int>? value) {
                   log("Duplicated Date Validator Called: $value");
                   if (value == null) {
                     return 'This field is required';
@@ -75,16 +86,13 @@ class _TestScreen2State extends State<TestScreen2> {
                 onChanged: (value) {
                   log("Duplicated Date Changed Called: $value");
                 },
-                decoration: InputDecoration(
-                  label: Text('Duplicated ${_duplicateFirstDate ? 'First' : 'Second'} Date'),
-                ),
               ),
 
             ),
 
-            IntTextFormField(
+            IntRangeTextFormField(
               controller: _secondDateTimeController,
-              properties: TextFormFieldProperties(
+              properties: FooFormFieldProperties(
                 onChanged: (value) {
                   log("Second Date Changed Called: $value");
                 },
@@ -93,7 +101,11 @@ class _TestScreen2State extends State<TestScreen2> {
 
             ElevatedButton(
               onPressed: () {
-                _firstDateTimeController.value = math.Random().nextInt(100);
+                log("Changing First To Random Value: ${math.Random().nextInt(100)}");
+                _firstDateTimeController.value = Range<int>(
+                  min: math.Random().nextInt(100),
+                  max: math.Random().nextInt(100),
+                );
               },
               child: Text('Change First To Random Value'),
             ),

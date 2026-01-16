@@ -9,12 +9,14 @@ class StringTextFormField extends StatelessWidget {
     this.properties, 
     this.formatter, 
     this.keyboardType,
+    this.stateProvider,
   });
 
   final StringTextEditingController controller;
   final TextFormFieldProperties<String>? properties;
   final StringTextFormatter? formatter;
   final TextInputType? keyboardType;
+  final FooFormFieldStateProvider<String>? stateProvider;
 
   factory StringTextFormField.integer({
     required StringTextEditingController controller,
@@ -40,6 +42,7 @@ class StringTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FooTextFormField(
+      stateProvider: stateProvider,
       controller: controller,
       keyboardType: keyboardType,
       properties: properties,
