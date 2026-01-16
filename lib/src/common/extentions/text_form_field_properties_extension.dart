@@ -1,10 +1,13 @@
 
+import 'dart:ui';
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../foo_form_field.dart';
-import 'input_decoration_extension.dart';
 
-extension FooFormFieldPropertiesExtension<T> on TextFormFieldProperties<T>? {
+extension TextFormFieldPropertiesExtension<T> on TextFormFieldProperties<T>? {
   
   TextFormFieldProperties<T> merge({
     required TextFormFieldProperties<T>? secondary,
@@ -95,4 +98,154 @@ extension FooFormFieldPropertiesExtension<T> on TextFormFieldProperties<T>? {
     );
   }
 
+  TextFormFieldProperties<T> addRequiredValidator({
+    required String message,
+  }){
+    return copyWith(
+      validator: (value) {
+        if (value == null || value.toString().trim().isEmpty) {
+          return message;
+        }
+        return this?.validator?.call(value);
+      },
+    );
+  }
+
+  TextFormFieldProperties<T> copyWith({
+    InputDecoration? decoration,
+    List<TextInputFormatter>? inputFormatters,
+    Object? groupId,
+    FocusNode? focusNode,
+    TextCapitalization? textCapitalization,
+    TextInputAction? textInputAction,
+    TextStyle? style,
+    StrutStyle? strutStyle,
+    TextDirection? textDirection,
+    TextAlign? textAlign,
+    TextAlignVertical? textAlignVertical,
+    bool? autofocus,
+    bool? readOnly,
+    bool? showCursor,
+    String? obscuringCharacter,
+    bool? obscureText,
+    bool? autocorrect,
+    SmartDashesType? smartDashesType,
+    SmartQuotesType? smartQuotesType,
+    bool? enableSuggestions,
+    MaxLengthEnforcement? maxLengthEnforcement,
+    int? maxLines,
+    int? minLines,
+    bool? expands,
+    int? maxLength,
+    void Function(T? value)? onChanged,
+    GestureTapCallback? onTap,
+    bool? onTapAlwaysCalled,
+    TapRegionCallback? onTapOutside,
+    TapRegionUpCallback? onTapUpOutside,
+    VoidCallback? onEditingComplete,
+    ValueChanged<T?>? onFieldSubmitted,
+    void Function(T? value)? onSaved,
+    String? Function(T? value)? validator,
+    FormFieldErrorBuilder? errorBuilder,
+    bool? ignorePointers,
+    double? cursorWidth,
+    double? cursorHeight,
+    Radius? cursorRadius,
+    Color? cursorColor,
+    Color? cursorErrorColor,
+    Brightness? keyboardAppearance,
+    EdgeInsets? scrollPadding,
+    bool? enableInteractiveSelection,
+    TextSelectionControls? selectionControls,
+    InputCounterWidgetBuilder? buildCounter,
+    ScrollPhysics? scrollPhysics,
+    Iterable<String>? autofillHints,
+    AutovalidateMode? autovalidateMode,
+    ScrollController? scrollController,
+    String? restorationId,
+    bool? enableIMEPersonalizedLearning,
+    MouseCursor? mouseCursor,
+    SpellCheckConfiguration? spellCheckConfiguration,
+    TextMagnifierConfiguration? magnifierConfiguration,
+    UndoHistoryController? undoController,
+    AppPrivateCommandCallback? onAppPrivateCommand, 
+    bool? cursorOpacityAnimates,
+    BoxHeightStyle? selectionHeightStyle,
+    BoxWidthStyle? selectionWidthStyle,
+    DragStartBehavior? dragStartBehavior,
+    ContentInsertionConfiguration? contentInsertionConfiguration,
+    Clip? clipBehavior,
+    bool? stylusHandwritingEnabled,
+    bool? canRequestFocus,
+    String? forceErrorText,
+  }){
+    return TextFormFieldProperties(
+      decoration: decoration ?? this?.decoration,
+      autocorrect: autocorrect ?? this?.autocorrect,
+      autofillHints: autofillHints ?? this?.autofillHints,
+      autovalidateMode: autovalidateMode ?? this?.autovalidateMode,
+      buildCounter: buildCounter ?? this?.buildCounter,
+      cursorColor: cursorColor ?? this?.cursorColor,
+      cursorHeight: cursorHeight ?? this?.cursorHeight,
+      cursorOpacityAnimates:cursorOpacityAnimates ?? this?.cursorOpacityAnimates,
+      showCursor: showCursor ?? this?.showCursor,
+      textInputAction: textInputAction ?? this?.textInputAction,
+      textCapitalization: textCapitalization ?? this?.textCapitalization,
+      textDirection: textDirection ?? this?.textDirection,
+      textAlign: textAlign ?? this?.textAlign,
+      textAlignVertical: textAlignVertical ?? this?.textAlignVertical,
+      enableInteractiveSelection: enableInteractiveSelection ?? this?.enableInteractiveSelection,
+      enableSuggestions: enableSuggestions ?? this?.enableSuggestions,
+      enableIMEPersonalizedLearning: enableIMEPersonalizedLearning ?? this?.enableIMEPersonalizedLearning,
+      autofocus: autofocus ?? this?.autofocus,
+      obscureText: obscureText ?? this?.obscureText,
+      obscuringCharacter: obscuringCharacter ?? this?.obscuringCharacter,
+      readOnly: readOnly ?? this?.readOnly,
+      maxLength: maxLength ?? this?.maxLength,
+      maxLines: maxLines ?? this?.maxLines,
+      minLines: minLines ?? this?.minLines,
+      onTap: onTap ?? this?.onTap,
+      onFieldSubmitted: onFieldSubmitted ?? this?.onFieldSubmitted,
+      onTapOutside: onTapOutside ?? this?.onTapOutside,
+      onChanged: onChanged ?? this?.onChanged,
+      onEditingComplete: onEditingComplete ?? this?.onEditingComplete,
+      onSaved: onSaved ?? this?.onSaved,
+      canRequestFocus: canRequestFocus ?? this?.canRequestFocus,
+      clipBehavior: clipBehavior ?? this?.clipBehavior,
+      style: style ?? this?.style,
+      contentInsertionConfiguration:contentInsertionConfiguration ?? this?.contentInsertionConfiguration,
+      cursorErrorColor: cursorErrorColor ?? this?.cursorErrorColor,
+      cursorRadius: cursorRadius ?? this?.cursorRadius,
+      cursorWidth: cursorWidth ?? this?.cursorWidth,
+      dragStartBehavior: dragStartBehavior ?? this?.dragStartBehavior,
+      expands: expands ?? this?.expands,
+      inputFormatters: inputFormatters ?? this?.inputFormatters,
+      maxLengthEnforcement: maxLengthEnforcement ?? this?.maxLengthEnforcement,
+      mouseCursor: mouseCursor ?? this?.mouseCursor,
+      scrollPadding: scrollPadding ?? this?.scrollPadding,
+      scrollPhysics: scrollPhysics ?? this?.scrollPhysics,
+      errorBuilder: errorBuilder ?? this?.errorBuilder,
+      focusNode: focusNode ?? this?.focusNode,
+      ignorePointers: ignorePointers ?? this?.ignorePointers,
+      restorationId: restorationId ?? this?.restorationId,
+      selectionControls: selectionControls ?? this?.selectionControls,
+      selectionHeightStyle: selectionHeightStyle ?? this?.selectionHeightStyle,
+      selectionWidthStyle: selectionWidthStyle ?? this?.selectionWidthStyle,
+      keyboardAppearance: keyboardAppearance ?? this?.keyboardAppearance,
+      magnifierConfiguration: magnifierConfiguration ?? this?.magnifierConfiguration,
+      scrollController: scrollController ?? this?.scrollController,
+      onAppPrivateCommand: onAppPrivateCommand ?? this?.onAppPrivateCommand,
+      undoController: undoController ?? this?.undoController,
+      onTapUpOutside: onTapUpOutside ?? this?.onTapUpOutside,
+      smartDashesType: smartDashesType ?? this?.smartDashesType,
+      onTapAlwaysCalled: onTapAlwaysCalled ?? this?.onTapAlwaysCalled,
+      spellCheckConfiguration:spellCheckConfiguration ?? this?.spellCheckConfiguration,
+      smartQuotesType: smartQuotesType ?? this?.smartQuotesType,
+      strutStyle: strutStyle ?? this?.strutStyle,
+      stylusHandwritingEnabled:stylusHandwritingEnabled ?? this?.stylusHandwritingEnabled,
+      validator: validator ?? this?.validator,
+      groupId: groupId ?? this?.groupId ?? Object(),
+      forceErrorText: forceErrorText ?? this?.forceErrorText,
+    );
+  }
 }

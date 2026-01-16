@@ -20,23 +20,4 @@ class FooFormFieldProperties<Value> {
     this.forceErrorText,
   });
 
-  FooFormFieldProperties<Value> copyWith({
-    AutovalidateMode? autovalidateMode,
-    FormFieldErrorBuilder? errorBuilder,
-    String? restorationId,
-    void Function(Value? value)? onChanged,
-    String? Function(Value? value)? validator,
-    void Function(Value? value)? onSaved,
-    String? forceErrorText,
-  }) {
-    return FooFormFieldProperties(
-      autovalidateMode: autovalidateMode ?? this.autovalidateMode,
-      errorBuilder: errorBuilder ?? this.errorBuilder,
-      restorationId: restorationId ?? this.restorationId,
-      onChanged: onChanged ?? this.onChanged,
-      validator: validator ?? this.validator,
-      onSaved: onSaved ?? this.onSaved,
-      forceErrorText: forceErrorText ?? this.forceErrorText,
-    );
-  }
 }

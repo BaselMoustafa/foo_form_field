@@ -5,6 +5,7 @@ export 'src/common/extentions/foo_text_formatter_list_extension.dart';
 export 'src/common/extentions/input_decoration_extension.dart';
 export 'src/common/extentions/date_time_extension.dart';
 export 'src/common/extentions/decoration_builder_extension.dart';
+export 'src/common/extentions/foo_form_field_properties_extension.dart';
 export 'src/common/extentions/text_form_field_properties_extension.dart';
 
 //Formatters exports
