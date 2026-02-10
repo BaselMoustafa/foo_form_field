@@ -58,7 +58,12 @@ class _SelectionListViewState extends State<SelectionListView> {
     _scrollController = widget.properties?.controller ?? ScrollController();
     _scrollController.addListener(_onScrollChanged);
     widget.controller.selectedValueNotifier.addListener(_refresh);
+    if (widget.controller is GetStateManagementMixin) {
+      (widget.controller as GetStateManagementMixin).getItemsStateNotifier.addListener(_refresh);
+    }
+    
     WidgetsBinding.instance.addPostFrameCallback(_afterFirstBuild);
+
   }
 
   @override
@@ -67,6 +72,10 @@ class _SelectionListViewState extends State<SelectionListView> {
     if (widget.properties?.controller==null) {
       _scrollController.dispose();
     }
+    if (widget.controller is GetStateManagementMixin) {
+      (widget.controller as GetStateManagementMixin).getItemsStateNotifier.addListener(_refresh);
+    }
+    widget.controller.selectedValueNotifier.removeListener(_refresh);
     widget.controller.selectedValueNotifier.removeListener(_refresh);
     super.dispose();
   }
@@ -148,17 +157,13 @@ class _SelectionListViewState extends State<SelectionListView> {
   }
 
   void _refresh() {
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   void _afterFirstBuild(Duration _) {
     widget.controller.initForSelection();
     if (_controller is GetStateManagementMixin) {
-      final controller = _controller as GetStateManagementMixin;
-      final getItemsState = controller.getItemsState;
-      if (getItemsState is GetItemsStateInitial) {
-        widget.get?.call(context);
-      }
+      widget.get?.call(context);
     }
   }
 
