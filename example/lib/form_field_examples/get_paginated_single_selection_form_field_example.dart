@@ -59,10 +59,7 @@ class _GetPaginatedSingleSelectionFormFieldExampleState
           } else if (state is GetProductsFailed) {
             _controller.markAsFailed(message: state.message);
           } else if (state is GetProductsLoading) {
-            if (_controller.items.isEmpty) {
-              // Only mark as loading if it's the first page
-              _controller.markAsLoading();
-            }
+            _controller.markAsLoading();
             // For pagination, the loading indicator is handled by paginationIndicatorWidget
           }
         },
