@@ -21,13 +21,11 @@ abstract class BaseSingleSelectionFieldController<Value> extends SelectionFieldC
     } else {
       selectedValue = e;
     }
-    notifyListeners();
   }
 
   @override
   void initForSelection() {
     selectedValue = value;
-    notifyListeners();
   }
 }
 

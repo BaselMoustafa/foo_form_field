@@ -1,4 +1,6 @@
 
+import 'package:flutter/material.dart';
+
 import '../../foo_form_field.dart';
 import '../common/get_items_state.dart';
 
@@ -8,7 +10,9 @@ import '../common/get_items_state.dart';
 /// that can be committed to the underlying field value.
 abstract class SelectionFieldController<SelectedValue,Entity> extends FooFieldController<SelectedValue> {
 
-  SelectedValue? _selectedValue;
+  late final selectedValueNotifier = ValueNotifier<SelectedValue?>(
+    initialValue
+  );
 
   List<Entity> items = [];
 
@@ -20,42 +24,58 @@ abstract class SelectionFieldController<SelectedValue,Entity> extends FooFieldCo
 
   bool isSelected(Entity value);
 
-  SelectedValue? get selectedValue => _selectedValue;
+  /// Initializes the selection by resetting the selected value to null.
+  void initForSelection();
+
+  SelectedValue? get selectedValue => selectedValueNotifier.value;
 
   void toggleSelectionFor(Entity e);
 
   set selectedValue(SelectedValue? newSelectedValue) {
-    _selectedValue = newSelectedValue;
-    notifyListeners();
+    selectedValueNotifier.value = newSelectedValue;
   }
 
   /// Commits the current selected value to the field value,
   /// then resets the selected value to null.
   void commit() {
-    value = _selectedValue;
-    _selectedValue = null;
-    notifyListeners();
+    value = selectedValueNotifier.value;
   }
 
-  /// Initializes the selection by resetting the selected value to null.
-  void initForSelection();
+  @override
+  void dispose() {
+    selectedValueNotifier.dispose();
+    super.dispose();
+  }
 }
 
 mixin GetStateManagementMixin<SelectedValue,Entity> on SelectionFieldController<SelectedValue,Entity> {
-  GetItemsState getItemsState = GetItemsStateInitial();
+  
+  final getItemsStateNotifier = ValueNotifier<GetItemsState>(
+    GetItemsStateInitial()
+  );
+
+  GetItemsState get getItemsState => getItemsStateNotifier.value;
+
+  set getItemsState(GetItemsState newState){
+    getItemsStateNotifier.value = newState;
+  }
 
   void markAsLoading(){
     getItemsState = GetItemsStateLoading();
-    notifyListeners();
   }
 
   void markAsFailed({
     required String message,
   }){
     getItemsState = GetItemsStateFailed(
-      message: message,
+      message: message
     );
-    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    getItemsStateNotifier.dispose();
+    super.dispose();
   }
 }
 
@@ -69,7 +89,6 @@ mixin GetOnceStateManagementMixin<SelectedValue,Entity> on GetStateManagementMix
       items: newItems,
       hasMore: false,
     );
-    notifyListeners();
   }
 }
 
@@ -83,7 +102,6 @@ mixin PaginationStateManagementMixin<SelectedValue,Entity> on GetStateManagement
       items: newItems,
       hasMore: hasMore,
     );
-    notifyListeners();
   }
 
   void addItems({

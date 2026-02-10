@@ -69,13 +69,11 @@ abstract class BaseMultiSelectionFieldController<Entity> extends SelectionFieldC
         selectedValue!.add(e);
       }
     }
-    notifyListeners();
   }
 
   @override
   void initForSelection() {
     selectedValue = List.from(value ?? []);
-    notifyListeners();
   }
 }
 

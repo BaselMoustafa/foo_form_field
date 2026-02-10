@@ -52,32 +52,12 @@ class _SelectionListViewState extends State<SelectionListView> {
   
   List get _items  => widget.controller.items;
 
-  bool get _withPaginationIndicator{
-    
-    if (widget.controller is PaginationStateManagementMixin) {
-      final controller = widget.controller as PaginationStateManagementMixin;
-      if (controller.getItemsState is GetItemsStateSuccess) {
-        final getItemsState = controller.getItemsState as GetItemsStateSuccess;
-        if (getItemsState.hasMore) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  int get _itemCount => _items.length + (_withPaginationIndicator ? 1 : 0);
-
-  SelectionFieldController get _controller => widget.controller;
-
-  SelectionListViewProperties get _properties => widget.properties ?? SelectionListViewProperties.defaultProperties();
-
   @override
   void initState() {
     super.initState();
     _scrollController = widget.properties?.controller ?? ScrollController();
     _scrollController.addListener(_onScrollChanged);
-    widget.controller.addListener(_refresh);
+    widget.controller.selectedValueNotifier.addListener(_refresh);
     WidgetsBinding.instance.addPostFrameCallback(_afterFirstBuild);
   }
 
@@ -87,7 +67,7 @@ class _SelectionListViewState extends State<SelectionListView> {
     if (widget.properties?.controller==null) {
       _scrollController.dispose();
     }
-    widget.controller.removeListener(_refresh);
+    widget.controller.selectedValueNotifier.removeListener(_refresh);
     super.dispose();
   }
 
@@ -215,4 +195,24 @@ class _SelectionListViewState extends State<SelectionListView> {
       ),
     );
   }
+
+  bool get _withPaginationIndicator{
+    
+    if (widget.controller is PaginationStateManagementMixin) {
+      final controller = widget.controller as PaginationStateManagementMixin;
+      if (controller.getItemsState is GetItemsStateSuccess) {
+        final getItemsState = controller.getItemsState as GetItemsStateSuccess;
+        if (getItemsState.hasMore) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  int get _itemCount => _items.length + (_withPaginationIndicator ? 1 : 0);
+
+  SelectionFieldController get _controller => widget.controller;
+
+  SelectionListViewProperties get _properties => widget.properties ?? SelectionListViewProperties.defaultProperties();
 }
