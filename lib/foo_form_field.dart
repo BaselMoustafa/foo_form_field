@@ -45,6 +45,7 @@ export 'src/controllers/bool_field_controller.dart';
 export 'src/controllers/date_time_field_controller.dart';
 export 'src/controllers/date_only_field_controller.dart';
 export 'src/controllers/time_of_day_field_controller.dart';
+export 'src/controllers/selection_field_controller.dart';
 export 'src/controllers/single_selection_field_controller.dart';
 export 'src/controllers/multi_selection_field_controller.dart';
 
