@@ -5,7 +5,7 @@ import '../../../foo_form_field.dart';
 abstract class FooTextEditingController<Value> extends FooFieldController<Value> {
 
   bool _isInitialized = false;
-  late final TextEditingController textEditingController;
+  late final TextEditingController? textEditingController;
 
   FooTextEditingController({
     required super.initialValue,
@@ -30,27 +30,30 @@ abstract class FooTextEditingController<Value> extends FooFieldController<Value>
 
   void _invokeSyncers(){
     addListener(_onValueChanged);
-    textEditingController.addListener(_onTextEditingControllerChanged);
+    textEditingController?.addListener(_onTextEditingControllerChanged);
   }
 
   void _removeSyncers() {
     removeListener(_onValueChanged);
-    textEditingController.removeListener(_onTextEditingControllerChanged);
+    textEditingController?.removeListener(_onTextEditingControllerChanged);
   }
 
   @override
   void dispose() {
     _removeSyncers();
-    textEditingController.dispose();
+    textEditingController?.dispose();
     super.dispose();
   }
 
   void _onTextEditingControllerChanged() {
-    value = fromText(textEditingController.text);
+    if (value==null && textEditingController!.text=="") {
+      return ;
+    }
+    value = fromText(textEditingController!.text);
   }
 
   void _onValueChanged() {
-    textEditingController.text = toText(value) ?? '';
+    textEditingController?.text = toText(value) ?? '';
   }
 
 }
