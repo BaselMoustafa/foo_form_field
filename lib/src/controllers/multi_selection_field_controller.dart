@@ -62,11 +62,13 @@ abstract class BaseMultiSelectionFieldController<Entity> extends SelectionFieldC
       selectedValue!.removeWhere(
         (item) => areEqualValues(item, e),
       );
+      selectedValue = List.from(selectedValue!);
     } else {
       if (selectedValue == null) {
         selectedValue = [e];
       } else {
         selectedValue!.add(e);
+        selectedValue = List.from(selectedValue!);
       }
     }
   }
